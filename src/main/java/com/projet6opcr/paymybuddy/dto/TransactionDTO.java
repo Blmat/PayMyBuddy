@@ -14,7 +14,7 @@ public class TransactionDTO {
     private double amount;
     private String reason;
     private LocalDate date;
-    private User debtorId;
-    private User creditorId;
+    private User receiverId;
+    private User senderId;
 
 }

@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public interface TransactionService {
 
-    void transferRequest(TransactionDTO transactionDTO);
+    void sendMoney(TransactionDTO transactionDTO);
 
     List<Transaction> getTransactions();
 

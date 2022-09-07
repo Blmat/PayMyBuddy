@@ -23,8 +23,11 @@ public class Transaction {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column (name= "date")
-    private LocalDate date;
+    @ManyToOne
+    private User creditor;
+
+    @ManyToOne
+    private User debtor;
 
     @Column(name="amount")
     private double amount;
@@ -32,14 +35,15 @@ public class Transaction {
     @Column(name="reason")
     private String reason;
 
-    @ManyToOne
-    private User debtor;
+    @Column (name= "date")
+    private LocalDate date;
 
-    @ManyToOne
-    private User creditor;
 
     @Column (name="commission")
     private Double commission;
+
+    public Transaction(Long id, Long id1, LocalDate now, double amount, String reason) {
+    }
 
 
 

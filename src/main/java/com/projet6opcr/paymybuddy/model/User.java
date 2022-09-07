@@ -4,8 +4,9 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.Objects;
-import java.util.Optional;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -18,7 +19,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @OneToOne
@@ -30,14 +31,23 @@ public class User {
     @Column(name = "lastname")
     private String lastName;
 
-    @Column(name = "email", length = 50)
+    @Column(name = "email", unique = true, nullable = false)
+    @Email
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "balance")
+    @Column(name = "balance",nullable = false)
     private Double balance;
+
+    @ManyToMany
+    @JoinTable(
+            name = "friends",
+            joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn(name = "friendId"))
+    @ToString.Exclude
+    private Set<User> friends;
 
     @Override
     public boolean equals(Object o) {
