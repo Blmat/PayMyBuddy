@@ -1,44 +1,59 @@
 package com.projet6opcr.paymybuddy.model;
 
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
-@Data
-@Table(name = "transactions")
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "transaction")
 public class Transaction {
 
-    public Transaction() {
-    }
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "transaction_id", nullable = false)
-    private Long transactionId;
+    @Column(name = "id", nullable = false)
+    private Long id;
 
-    public Transaction( LocalDate date, double amount, String reason) {
-        this.date = date;
-        this.amount = amount;
-        this.reason = reason;
-    }
-    @Column(name = "date")
+    @Column (name= "date")
     private LocalDate date;
 
-    @Column(name = "amount")
+    @Column(name="amount")
     private double amount;
 
-    @Column(name = "reason")
+    @Column(name="reason")
     private String reason;
 
-    public Long getTransactionId() {
-        return transactionId;
+    @ManyToOne
+    private User debtor;
+
+    @ManyToOne
+    private User creditor;
+
+    @Column (name="commission")
+    private Double commission;
+
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Transaction that = (Transaction) o;
+        return id != null && Objects.equals(id, that.id);
     }
 
-    public void setTransactionId(Long transactionId) {
-        this.transactionId = transactionId;
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
-
 }
 

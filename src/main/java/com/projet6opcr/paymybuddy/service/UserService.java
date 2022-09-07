@@ -3,11 +3,16 @@ package com.projet6opcr.paymybuddy.service;
 import com.projet6opcr.paymybuddy.model.User;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public interface UserService {
 
-    public User findByEmail(String email);
-    public User saveUser(User user);
+    Optional<User> findByEmail(String email);
+    User saveUser(UserDTO userDTO);
 
-    void deleteUserById(Integer id);
+    void addFriend(String friendEmail);
+
+    Optional<User> findUserById(Long id);
+    void deleteUserById(Long id);
 }

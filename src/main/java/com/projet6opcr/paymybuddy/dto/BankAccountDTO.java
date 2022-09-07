@@ -1,20 +1,15 @@
 package com.projet6opcr.paymybuddy.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class BankAccountDTO {
 
     private String bankName;
     private String iban;
     private String bic;
-
-    public BankAccountDTO(){
-    }
-
-    public BankAccountDTO(String bankName, String iban, String bic) {
-        this.bankName = bankName;
-        this.iban = iban;
-        this.bic = bic;
-    }
 }

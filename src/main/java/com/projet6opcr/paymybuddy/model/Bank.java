@@ -1,31 +1,24 @@
 package com.projet6opcr.paymybuddy.model;
 
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "banks")
-@Data
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class Bank {
 
-    public Bank() {
-    }
-
-    public Bank(User userId, String bankName, String iban, String bic) {
-        this.userId = userId;
-        this.bankName = bankName;
-        this.iban = iban;
-        this.bic = bic;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bankId;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_Id")
-    private User userId;
+    private Long id;
 
     @Column(name = "bank_name")
     private String bankName;
@@ -36,4 +29,16 @@ public class Bank {
     @Column(name = "bic")
     private String bic;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Bank bank = (Bank) o;
+        return bank != null && Objects.equals(bank, bank.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
