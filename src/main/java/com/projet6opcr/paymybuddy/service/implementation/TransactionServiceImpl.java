@@ -1,4 +1,4 @@
-package com.projet6opcr.paymybuddy.service;
+package com.projet6opcr.paymybuddy.service.implementation;
 
 import com.projet6opcr.paymybuddy.constant.COMMISSION;
 import com.projet6opcr.paymybuddy.dto.TransactionDTO;
@@ -6,6 +6,7 @@ import com.projet6opcr.paymybuddy.model.Transaction;
 import com.projet6opcr.paymybuddy.model.User;
 import com.projet6opcr.paymybuddy.repository.TransactionRepository;
 import com.projet6opcr.paymybuddy.repository.UserRepository;
+import com.projet6opcr.paymybuddy.service.TransactionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -19,7 +20,7 @@ import java.util.List;
 @Service
 @Slf4j
 @Transactional
-public class TransactionServiceImpl implements TransactionService{
+public class TransactionServiceImpl implements TransactionService {
 
     @Autowired
     private TransactionRepository transactionRepository;

@@ -12,8 +12,6 @@ public interface UserService {
     Optional<User> findByEmail(String email);
     void saveUser(User user);
 
-    void addFriend(String friendEmail);
-
     Optional<User> findUserById(Long id);
     void deleteUserById(Long id);
 

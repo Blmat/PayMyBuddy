@@ -1,7 +1,8 @@
-package com.projet6opcr.paymybuddy.service;
+package com.projet6opcr.paymybuddy.service.implementation;
 
 import com.projet6opcr.paymybuddy.model.User;
 import com.projet6opcr.paymybuddy.repository.UserRepository;
+import com.projet6opcr.paymybuddy.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -38,10 +39,6 @@ public class UserServiceImpl implements UserService {
         return Optional.ofNullable(userRepository.findByEmail(email));
 //        return Optional.ofNullable(userRepository.findByEmail(email)
 //                .orElseThrow(() -> new UserNotFoundException("Sorry, this user doesn't exist")));
-    }
-
-    @Override
-    public void addFriend(String friendEmail) {//todo faire cette methode
     }
 
     @Override
