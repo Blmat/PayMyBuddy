@@ -2,12 +2,9 @@ package com.projet6opcr.paymybuddy.service;
 
 import com.projet6opcr.paymybuddy.constant.COMMISSION;
 import com.projet6opcr.paymybuddy.dto.TransactionDTO;
-import com.projet6opcr.paymybuddy.exception.NoMoneyException;
-import com.projet6opcr.paymybuddy.exception.NoMuchMoney;
 import com.projet6opcr.paymybuddy.model.Transaction;
 import com.projet6opcr.paymybuddy.model.User;
 import com.projet6opcr.paymybuddy.repository.TransactionRepository;
-//import com.projet6opcr.paymybuddy.repository.UserRepository;
 import com.projet6opcr.paymybuddy.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +13,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Slf4j

@@ -13,13 +13,8 @@ import java.util.Optional;
 public class ControllerWeb {
 
     @GetMapping("/*")
-    public String publicPage() {
-        return "Coucou petit utilisateur sans pouvoir";
-    }
-
-    @GetMapping("/users")
     public String privatePage(Authentication authentication) {
-        return "Welcome VIP room ~["
+        return "Bienvenue ~["
                 + getName(authentication)
                 +" ]~ !"  ;
     }
@@ -30,7 +25,7 @@ public class ControllerWeb {
                 .map(OAuth2AuthenticationToken.class::cast)
                 .map(OAuth2AuthenticationToken::getPrincipal)
                 .map(DefaultOidcUser.class::cast)
-                .map(StandardClaimAccessor::getEmail)
+                .map(StandardClaimAccessor::getFullName)
                 .orElse(authentication.getName());
     }
 }
