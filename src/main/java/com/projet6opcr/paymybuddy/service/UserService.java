@@ -1,6 +1,5 @@
 package com.projet6opcr.paymybuddy.service;
 
-import com.projet6opcr.paymybuddy.dto.UserDTO;
 import com.projet6opcr.paymybuddy.model.User;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +10,7 @@ import java.util.Optional;
 public interface UserService {
 
     Optional<User> findByEmail(String email);
-    User saveUser(UserDTO userDTO);
+    void saveUser(User user);
 
     void addFriend(String friendEmail);
 

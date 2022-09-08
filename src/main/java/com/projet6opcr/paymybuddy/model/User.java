@@ -41,14 +41,6 @@ public class User {
     @Column(name = "balance",nullable = false)
     private Double balance;
 
-    @ManyToMany
-    @JoinTable(
-            name = "friends",
-            joinColumns = @JoinColumn(name = "id"),
-            inverseJoinColumns = @JoinColumn(name = "friendId"))
-    @ToString.Exclude
-    private Set<User> friends;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

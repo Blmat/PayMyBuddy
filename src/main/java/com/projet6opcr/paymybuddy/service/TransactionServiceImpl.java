@@ -23,7 +23,6 @@ public class TransactionServiceImpl implements TransactionService{
 
     @Autowired
     private TransactionRepository transactionRepository;
-
     @Autowired
     private UserRepository userRepository;
 

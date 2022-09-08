@@ -1,38 +1,36 @@
 package com.projet6opcr.paymybuddy.service;
 
-import com.projet6opcr.paymybuddy.dto.UserDTO;
-import com.projet6opcr.paymybuddy.exception.UserNotFoundException;
 import com.projet6opcr.paymybuddy.model.User;
 import com.projet6opcr.paymybuddy.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.validator.internal.constraintvalidators.bv.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Id;
-import java.util.*;
-import java.util.regex.Pattern;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
 public class UserServiceImpl implements UserService {
-
+    @Autowired
     private UserRepository userRepository;
 
-    private BCryptPasswordEncoder passwordEncoder;
-
     @Override
-    public User saveUser(UserDTO userDTO) {
+    public void saveUser(User user) {
+        if (user != null) {
+            String firstName = user.getFirstName();
+            String lastName = user.getLastName();
+            String userMail = user.getEmail();
 
-        User user = new User(null, null, userDTO.getFirstname(),
-                userDTO.getLastname(), userDTO.getEmail(), passwordEncoder.encode(userDTO.getPassword()), (double) 0, null);
+            String encodedPassword = new BCryptPasswordEncoder().encode(user.getPassword());
+            user.setPassword(encodedPassword);
 
-        return userRepository.save(user);
-
+            userRepository.save(user);
+            log.info(
+                    "[User service] Created a new user with the following information : Mail={} firstName={} lastName={}",
+                    userMail, firstName, lastName);
+        }
     }
 
     @Override
@@ -43,17 +41,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addFriend(String friendEmail) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        User currentUser = userRepository.findByEmail(username);
-
-        Set<User> contacts = currentUser.getFriends();
-
-        User friend = userRepository.findByEmail(friendEmail);
-        contacts.add(friend);
-        currentUser.setFriends(contacts);
-        userRepository.save(currentUser);
+    public void addFriend(String friendEmail) {//todo faire cette methode
     }
 
     @Override
@@ -66,9 +54,15 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
+    /**
+     * This method returns true if an address mail exists in database
+     *
+     * @param email String : Mail address
+     * @return A boolean set to true if the mail address has been found
+     */
     @Override
     public boolean existsByEmail(String email) {
-        return false;
+        return (userRepository.findByEmail(email) != null);
     }
 
 
