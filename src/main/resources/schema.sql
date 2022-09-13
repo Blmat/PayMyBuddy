@@ -1,40 +1,65 @@
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS banks;
-DROP TABLE IF EXISTS relation;
-DROP TABLE IF EXISTS transaction;
+ DROP TABLE IF EXISTS users;
+ DROP TABLE IF EXISTS banks;
+ DROP TABLE IF EXISTS relation;
+ DROP TABLE IF EXISTS transaction;
 
-CREATE TABLE users
-(
-    id        LONG PRIMARY KEY,
-    firstname VARCHAR(255),
-    lastname  VARCHAR(255),
-    email     VARCHAR(255),
-    password  VARCHAR(255),
-    balance   DOUBLE,
-    bank_id   LONG
-);
 
-CREATE TABLE banks
-(
-    id        LONG PRIMARY KEY,
-    bank_name VARCHAR(255),
-    iban      VARCHAR(300),
-    bic       VARCHAR(300),
-    user_id   LONG
-);
-CREATE TABLE relation
-(
-    id    LONG PRIMARY KEY,
-    buddy LONG,
-    owner LONG
-);
-CREATE TABLE transaction
-(
-    id         LONG PRIMARY KEY,
-    amount     double,
-    reason     VARCHAR(300),
-    date       date,
-    commission double,
-    creditor   varchar(200),
-    debtor     varchar(200)
-);
+
+ CREATE TABLE users
+ (
+     `id`        INT NOT NULL AUTO_INCREMENT,
+     `bank_id`   INT NOT NULL,
+     `firstname` VARCHAR(255) NOT NULL,
+     `lastname` VARCHAR(255) NOT NULL,
+     `email`    VARCHAR(255) NOT NULL,
+     `password`  VARCHAR(255) NOT NULL,
+     `balance`  DECIMAL(9, 2) NOT NULL DEFAULT 0,
+      PRIMARY KEY (`id`)
+ );
+
+ CREATE TABLE banks
+ (
+     `bank_id`   INT NOT NULL AUTO_INCREMENT,
+     `bank_name` VARCHAR(255) NOT NULL,
+     `iban`      VARCHAR(300) NOT NULL,
+     `bic`       VARCHAR(300) NOT NULL,
+     `user_id`   INT NOT NULL,
+     PRIMARY KEY (`bank_id`),
+     INDEX `fk_bank_account_user1_idx` (`user_id` ASC),
+     CONSTRAINT `fk_bank_account_user1`
+         FOREIGN KEY (`user_id`)
+             REFERENCES `pmbdb`.`users` (`id`)
+             ON DELETE NO ACTION
+             ON UPDATE NO ACTION
+ );
+ CREATE TABLE relation
+ (
+     `id`    INT NOT NULL AUTO_INCREMENT,
+     `buddy` INT NOT NULL,
+     `owner`INT NOT NULL,
+     PRIMARY KEY (`id`),
+     INDEX `fk_relation_user2_idx` (`buddy` ASC),
+     CONSTRAINT `fk_relation_user1`
+         FOREIGN KEY (`owner`)
+             REFERENCES `pmbdb`.`users` (`id`)
+             ON DELETE NO ACTION
+             ON UPDATE NO ACTION,
+     CONSTRAINT `fk_relation_user2`
+         FOREIGN KEY (`buddy`)
+             REFERENCES `pmbdb`.`users` (`id`)
+             ON DELETE NO ACTION
+             ON UPDATE NO ACTION
+ );
+ CREATE TABLE transaction
+ (
+     `id`         INT NOT NULL AUTO_INCREMENT,
+     `amount`     DECIMAL(9, 2) NOT NULL,
+     `reason`     VARCHAR(300),
+     `date`      datetime NOT NULL DEFAULT now(),
+     `commission`  DECIMAL(9, 2) NOT NULL DEFAULT 0,
+     `creditor`   INT NOT NULL,
+     `debtor`     INT NOT NULL,
+      PRIMARY KEY (`id`),
+     INDEX `fk_internal_transfert_user1_idx` (`creditor` ASC),
+     INDEX `fk_internal_transfert_user2_idx` (`debtor` ASC)
+ );
