@@ -16,36 +16,33 @@ import java.util.Objects;
 @Table(name = "transaction")
 public class Transaction {
 
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private Integer id;
 
     @ManyToOne
+    @JoinColumn(name = "creditor")
     private User creditor;
 
     @ManyToOne
+    @JoinColumn(name = "debtor")
     private User debtor;
 
-    @Column(name="amount")
+    @Column(name = "amount")
     private double amount;
 
-    @Column(name="reason")
+    @Column(name = "reason")
     private String reason;
 
-    @Column (name= "date")
+    @Column(name = "date")
     private LocalDate date;
 
-
-    @Column (name="commission")
+    @Column(name = "commission")
     private Double commission;
 
-    public Transaction(Long id, Long id1, LocalDate now, double amount, String reason) {
+    public Transaction(int id, int id1, LocalDate now, double amount, String reason) {
     }
-
-
 
     @Override
     public boolean equals(Object o) {

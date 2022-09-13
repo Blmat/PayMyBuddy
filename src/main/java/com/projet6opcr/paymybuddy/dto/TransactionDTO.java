@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TransactionDTO {
+
     private double amount;
     private String reason;
     private LocalDate date;
