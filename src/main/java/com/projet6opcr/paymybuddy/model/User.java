@@ -2,18 +2,18 @@ package com.projet6opcr.paymybuddy.model;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Set;
 
 @Entity
-@Getter
-@Setter
-@ToString
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,7 +53,25 @@ public class User {
     public Set<User> getFriends() {
         return friends;
     }
-    /******************************************************************/
+    /********************************************************************/
+
+    /********* Ce constructeur est utilisé pour enregistrer un utilisateur****/
+    public User(String email, String password, String firstName, String lastName) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+    /**********************************************************************/
+
+
+    /*************************Constructeur pour la connexion**************/
+    public User(User user) {
+        this.email = user.getEmail();
+        this.password = user.getPassword();
+    }
+    /**********************************************************************/
+
 
     @Override
     public boolean equals(Object o) {
@@ -66,6 +84,44 @@ public class User {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    /** UserDetails username est utilisé avec l'email*/
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+
+    @Override
+    public boolean isEnabled() {
+        return false;
     }
 }
 

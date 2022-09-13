@@ -13,11 +13,10 @@ public interface UserService {
 
     void saveUser(User user);
 
-    Optional<User> findUserById(Integer id);
+    User findUserById(int id);
 
     void deleteUserById(Integer id);
 
     boolean existsByEmail(String email);
 
-    List<User> findAll();
 }
