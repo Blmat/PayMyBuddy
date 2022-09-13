@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -38,21 +39,21 @@ public class User {
     @JoinColumn(name = "bank_id")
     private Bank bankId;
 
+    /******************Ajout d'un ami***********************************/
+    @ManyToMany
+    @JoinTable(
+            name = "relation",
+            joinColumns = @JoinColumn(name = "owner"),
+            inverseJoinColumns = @JoinColumn(name = "buddy"))
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "relation",
-//            joinColumns = @JoinColumn(name = "buddy"),
-//            inverseJoinColumns = @JoinColumn(name = "owner"))
-
-//    private Set<User> relation;
-//    public Set<User> getRelation() {
-//        return relation;
-//    }
-//    public void setFriends(Set<User> relation) {
-//        this.relation = relation;
-//    }
-
+    private Set<User> friends;
+    public void setFriends(Set<User> friends) {
+        this.friends = friends;
+    }
+    public Set<User> getFriends() {
+        return friends;
+    }
+    /******************************************************************/
 
     @Override
     public boolean equals(Object o) {
