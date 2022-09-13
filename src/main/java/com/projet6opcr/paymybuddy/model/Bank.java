@@ -15,11 +15,9 @@ import java.util.Objects;
 @NoArgsConstructor
 public class Bank {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    private int bank_id;
 
     @Column(name = "bank_name")
     private String bankName;
@@ -30,12 +28,24 @@ public class Bank {
     @Column(name = "bic")
     private String bic;
 
+    @JoinColumn(name = "user_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    private User user_id;
+
+    public Bank(User userId, String bankName, String iban, String bic) {
+        this.user_id = userId;
+        this.bankName = bankName;
+        this.iban = iban;
+        this.bic = bic;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         Bank bank = (Bank) o;
-        return bank != null && Objects.equals(bank, bank.id);
+        return bank != null && Objects.equals(bank, bank.iban);
     }
 
     @Override
