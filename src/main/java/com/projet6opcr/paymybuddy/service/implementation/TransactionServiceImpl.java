@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -29,12 +30,21 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<Transaction> getTransactions() {
-        return null;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        User currentUser = userRepository.findByEmail(username);
+        List<Transaction> transactions = (List<Transaction>) transactionRepository.findAll();
+
+        return transactions.stream()
+                .filter(c -> (c.getDebtor().equals(currentUser.getId()))
+                        ||
+                        c.getCreditor().equals(currentUser.getId()))
+                .collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public void sendMoney(TransactionDTO transactionDTO){
+    public void sendMoney(TransactionDTO transactionDTO) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         User currentUser = userRepository.findByEmail(username);
@@ -50,6 +60,4 @@ public class TransactionServiceImpl implements TransactionService {
 
         transactionRepository.save(transaction);
     }
-
-
 }
