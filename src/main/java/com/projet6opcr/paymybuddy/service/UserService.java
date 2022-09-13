@@ -10,12 +10,14 @@ import java.util.Optional;
 public interface UserService {
 
     Optional<User> findByEmail(String email);
+
     void saveUser(User user);
 
     Optional<User> findUserById(Long id);
+
     void deleteUserById(Long id);
 
     boolean existsByEmail(String email);
 
-     List<User> findAll();
+    List<User> findAll();
 }
