@@ -1,7 +1,6 @@
 package com.projet6opcr.paymybuddy.service.implementation;
 
-import com.projet6opcr.paymybuddy.dto.BankAccountDTO;
-import com.projet6opcr.paymybuddy.model.Bank;
+import com.projet6opcr.paymybuddy.model.BankAccount;
 import com.projet6opcr.paymybuddy.model.User;
 import com.projet6opcr.paymybuddy.repository.BankRepository;
 import com.projet6opcr.paymybuddy.repository.UserRepository;
@@ -18,24 +17,38 @@ import java.util.Optional;
 @Slf4j
 public class BankServiceImpl implements BankService {
 
-    @Autowired
-    private BankRepository bankRepository;
+    private final BankRepository bankRepository;
+
+    public BankServiceImpl(BankRepository bankRepository) {
+        this.bankRepository = bankRepository;
+    }
 
     @Autowired
     private UserRepository userRepository;
 
 
-
     @Override
-    public void addBank(BankAccountDTO bankAccountDTO) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        User currentUser = userRepository.findByEmail(username);
+    public void addBank(BankAccount bank) {
+        if (bank != null) {
+            String bankName = bank.getBankName();
+            String bic = bank.getBic();
+            String iban = bank.getIban();
 
-        Bank bank = new Bank(currentUser, bankAccountDTO.getBankName(), bankAccountDTO.getIban(),
-                bankAccountDTO.getBic());
+            bankRepository.save(bank);
+            log.info(
+                    "[Bank service] Created a new bank account with the following information : Bank name={} bic={} Iban={}",
+                    bankName, bic, iban);
+        }
 
-        bankRepository.save(bank);
+
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String username = authentication.getName();
+//        User currentUser = userRepository.findByEmail(username);
+//
+//        Bank bank1 = new Bank(currentUser, bank.getBankName(), bank.getIban(),
+//                bank.getBic());
+//
+//        bankRepository.save(bank);
     }
 
 
@@ -68,7 +81,7 @@ public class BankServiceImpl implements BankService {
     }
 
     @Override
-    public Optional<Bank> getBank(){
+    public Optional<BankAccount> getBank(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         User currentUser = userRepository.findByEmail(username);

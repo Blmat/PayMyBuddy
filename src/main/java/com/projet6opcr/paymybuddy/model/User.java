@@ -36,8 +36,8 @@ public class User implements UserDetails {
     private Double balance;
 
     @OneToOne(mappedBy = "user_id")
-    @JoinColumn(name = "bank_id")
-    private Bank bankId;
+    @JoinColumn(name = "iban")
+    private BankAccount bankId;
 
     /******************Ajout d'un ami***********************************/
     @ManyToMany
@@ -65,7 +65,7 @@ public class User implements UserDetails {
     /**********************************************************************/
 
 
-    /*************************Constructeur pour la connexion**************/
+    /********************Constructeur pour la connexion********************/
     public User(User user) {
         this.email = user.getEmail();
         this.password = user.getPassword();

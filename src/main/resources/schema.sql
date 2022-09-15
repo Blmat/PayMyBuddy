@@ -1,5 +1,5 @@
  DROP TABLE IF EXISTS users;
- DROP TABLE IF EXISTS banks;
+ DROP TABLE IF EXISTS bank_account;
  DROP TABLE IF EXISTS relation;
  DROP TABLE IF EXISTS transaction;
 
@@ -17,14 +17,13 @@
       PRIMARY KEY (`id`)
  );
 
- CREATE TABLE banks
+ CREATE TABLE bank_account
  (
-     `bank_id`   INT NOT NULL AUTO_INCREMENT,
      `bank_name` VARCHAR(255) NOT NULL,
      `iban`      VARCHAR(300) NOT NULL,
      `bic`       VARCHAR(300) NOT NULL,
      `user_id`   INT NOT NULL,
-     PRIMARY KEY (`bank_id`),
+     PRIMARY KEY (`iban`),
      INDEX `fk_bank_account_user1_idx` (`user_id` ASC),
      CONSTRAINT `fk_bank_account_user1`
          FOREIGN KEY (`user_id`)

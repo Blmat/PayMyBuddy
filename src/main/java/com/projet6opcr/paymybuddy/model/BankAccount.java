@@ -7,13 +7,13 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "banks")
+@Table(name = "bank_account")
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Bank {
+public class BankAccount {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +32,7 @@ public class Bank {
     @OneToOne(cascade = CascadeType.ALL)
     private User user_id;
 
-    public Bank(User userId, String bankName, String iban, String bic) {
+    public BankAccount(User userId, String bankName, String iban, String bic) {
         this.user_id = userId;
         this.bankName = bankName;
         this.iban = iban;
@@ -44,7 +44,7 @@ public class Bank {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Bank bank = (Bank) o;
+        BankAccount bank = (BankAccount) o;
         return bank != null && Objects.equals(bank, bank.iban);
     }
 

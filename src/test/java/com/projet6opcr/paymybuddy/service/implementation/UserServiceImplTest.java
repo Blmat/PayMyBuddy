@@ -1,8 +1,7 @@
-package serviceTest;
+package com.projet6opcr.paymybuddy.service.implementation;
 
 import com.projet6opcr.paymybuddy.model.User;
 import com.projet6opcr.paymybuddy.repository.UserRepository;
-import com.projet6opcr.paymybuddy.service.implementation.UserServiceImpl;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,7 +31,7 @@ class UserServiceImplTest {
     static User john;
 
     @BeforeAll
-    static void setUp() throws Exception {
+    static void setUp(){
         user1 = new User();
         user1.setId(1);
         user1.setFirstName("Jacob");
@@ -81,6 +80,7 @@ class UserServiceImplTest {
         // When
         var response = userService.findByEmail("jboy@email.com");
         // Then
+        assertThat(response).isPresent();
         assertThat(response.get().getEmail()).isEqualTo("jboy@email.com");
         assertThat(response.get().getId()).isEqualTo(1);
         assertThat(response.get().getLastName()).isEqualTo("Boyd");
@@ -88,7 +88,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void deleteUserById() {
+    void deleteUserByIdTest() {
 
         // When
         userService.deleteUserById(user1.getId());
@@ -97,7 +97,7 @@ class UserServiceImplTest {
     }
 
     @Test
-    void existsByEmail() {
+    void existsByEmailTest() {
 
         john = new User();
         john.setEmail("MrWick@dog.fr");
@@ -109,5 +109,19 @@ class UserServiceImplTest {
         Boolean response = userService.existsByEmail("MrWick@dog.fr");
         // Then
         assertThat(response).isTrue();
+    }
+    @Test
+    void notExistsByEmailTest() {
+
+        john = new User();
+        john.setEmail("MrWick@dog.fr");
+        john.setId(4);
+
+        //Given
+        when(userRepositoryMock.findByEmail(john.getEmail())).thenReturn(null);
+        // When
+        Boolean response = userService.existsByEmail("MrWick@dog.fr");
+        // Then
+        assertThat(response).isFalse();
     }
 }
