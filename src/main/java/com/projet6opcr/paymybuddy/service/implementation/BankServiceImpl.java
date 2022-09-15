@@ -6,7 +6,6 @@ import com.projet6opcr.paymybuddy.repository.BankRepository;
 import com.projet6opcr.paymybuddy.repository.UserRepository;
 import com.projet6opcr.paymybuddy.service.BankService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -18,26 +17,28 @@ import java.util.Optional;
 public class BankServiceImpl implements BankService {
 
     private final BankRepository bankRepository;
+    private final UserRepository userRepository;
 
-    public BankServiceImpl(BankRepository bankRepository) {
+
+    public BankServiceImpl(BankRepository bankRepository, UserRepository userRepository) {
         this.bankRepository = bankRepository;
+        this.userRepository = userRepository;
     }
 
-    @Autowired
-    private UserRepository userRepository;
-
-
+    public boolean checkIfUserIfBankAccountExists(Integer userId) {
+        return (bankRepository.findById(userId).isPresent());
+    }
     @Override
     public void addBank(BankAccount bank) {
         if (bank != null) {
-            String bankName = bank.getBankName();
+            String accountName = bank.getAccountName();
             String bic = bank.getBic();
             String iban = bank.getIban();
 
             bankRepository.save(bank);
             log.info(
                     "[Bank service] Created a new bank account with the following information : Bank name={} bic={} Iban={}",
-                    bankName, bic, iban);
+                    accountName, bic, iban);
         }
 
 

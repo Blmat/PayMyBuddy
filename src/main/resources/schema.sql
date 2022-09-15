@@ -19,7 +19,7 @@
 
  CREATE TABLE bank_account
  (
-     `bank_name` VARCHAR(255) NOT NULL,
+     `account_name` VARCHAR(255) NOT NULL,
      `iban`      VARCHAR(300) NOT NULL,
      `bic`       VARCHAR(300) NOT NULL,
      `user_id`   INT NOT NULL,

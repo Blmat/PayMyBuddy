@@ -1,5 +1,6 @@
 package com.projet6opcr.paymybuddy.model;
 
+import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -17,28 +18,20 @@ public class BankAccount {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int bank_id;
-
-    @Column(name = "bank_name")
-    private String bankName;
-
-    @Column(name = "iban")
+    @Column(name = "iban",nullable = false)
     private String iban;
 
+    @Column(name = "account_name")
+    @NotNull
+    private String accountName;
+
     @Column(name = "bic")
+    @NotNull
     private String bic;
 
     @JoinColumn(name = "user_id")
     @OneToOne(cascade = CascadeType.ALL)
     private User user_id;
-
-    public BankAccount(User userId, String bankName, String iban, String bic) {
-        this.user_id = userId;
-        this.bankName = bankName;
-        this.iban = iban;
-        this.bic = bic;
-    }
-
 
     @Override
     public boolean equals(Object o) {

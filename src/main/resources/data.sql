@@ -8,11 +8,11 @@ VALUES (1,1 ,'Jacob', 'Boyd', 'jboy@email.com', 'mdp1',  1000.0),
 
 COMMIT;
 
-INSERT INTO bank_account (bank_name, iban, bic, user_id)
-VALUES ('evasionFiscale', 'IBANEVASIONFISCALE', 'BICSTYLO',1),
-       ('donnelessous', 'IBANDONNELESSOUS', 'BICETCOLEGRAM',2),
-       ('jaimemabanque', 'IBANJAIMEMAMBANQUE', 'BICBICETGROMINET',3),
-       ('jaimemabanque', 'IBANJAIMEPASMAMBANQUE', 'BICBICETGROMINET',4);
+INSERT INTO bank_account (account_name, iban, bic, user_id)
+VALUES ('jacobCompteCourant', 'IBANEVASIONFISCALE', 'BICSTYLO',1),
+       ('TenleyCompteCourant', 'IBANDONNELESSOUS', 'BICETCOLEGRAM',2),
+       ('jJohnCompteCourant', 'IBANJAIMEMAMBANQUE', 'BICBICETGROMINET',3),
+       ('FrodonCompteCourant', 'IBANJAIMEPASMAMBANQUE', 'BICBICETGROMINET',4);
 COMMIT;
 
 INSERT INTO relation (id, buddy, owner)
