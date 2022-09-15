@@ -25,8 +25,9 @@ public class BankServiceImpl implements BankService {
         this.userRepository = userRepository;
     }
 
-    public boolean checkIfUserIfBankAccountExists(Integer userId) {
-        return (bankRepository.findById(userId).isPresent());
+    @Override
+    public boolean checkIfBankAccountUserExists(Integer userId) {
+        return (bankRepository. findById(userId) != null);
     }
     @Override
     public void addBank(BankAccount bank) {

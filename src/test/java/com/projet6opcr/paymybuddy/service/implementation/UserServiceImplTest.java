@@ -101,7 +101,6 @@ class UserServiceImplTest {
 
         john = new User();
         john.setEmail("MrWick@dog.fr");
-        john.setId(4);
 
         //Given
         when(userRepositoryMock.findByEmail(john.getEmail())).thenReturn(john);
@@ -115,7 +114,6 @@ class UserServiceImplTest {
 
         john = new User();
         john.setEmail("MrWick@dog.fr");
-        john.setId(4);
 
         //Given
         when(userRepositoryMock.findByEmail(john.getEmail())).thenReturn(null);

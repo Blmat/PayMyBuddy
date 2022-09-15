@@ -57,14 +57,26 @@ class BankServiceImplTest {
     }
 
     @Test
-    void checkIfUserIfBankAccountExistsTest() {
+    void checkIfBankAccountUserExistsTest() {
 
         //Given
         when(bankRepository.findById(userMock.getId())).thenReturn(Optional.ofNullable(bank));
         // When
-        Boolean response = bankService.checkIfUserIfBankAccountExists(userMock.getId());
+        Boolean response = bankService.checkIfBankAccountUserExists(userMock.getId());
         // Then
         assertThat(response).isTrue();
+
+    }
+
+    @Test
+    void checkIfBankAccountUserExists_fail_Test() {
+
+        //Given
+        when(bankRepository.findById(userMock.getId())).thenReturn(null);
+        // When
+        Boolean response = bankService.checkIfBankAccountUserExists(1);
+        // Then
+        assertThat(response).isFalse();
 
     }
 
