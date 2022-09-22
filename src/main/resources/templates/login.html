@@ -1,39 +1,41 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Pay My Buddy</title>
     <link rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" type="text/css">
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 
+    <title>PayMyBuddy</title>
 
 </head>
-
 <body>
 <main>
     <div class="modal modal-signin position-static d-block py-5" tabindex="-1" role="dialog" id="modalSigning">
         <div class="modal-dialog" role="document">
             <div class="modal-content rounded-5 shadow">
                 <div class="modal-header p-5 pb-0 border-bottom-0">
-                    <button class="btn btn-logo btn-success btn-lg mx-auto" type="button">Pay My Buddy</button>
-                </div>
+                    <button class="btn btn-logo btn-success btn-lg mx-auto" title="Welcome!" type="button">Pay My Buddy</button>
 
+<!--                    <img class ="email" src="image/mail.png" title=" enter email here!" alt="logo-email"/>-->
+
+                </div>
                 <form class="" th:action="@{/log}" method="post">
-                    <div class="modal-body p-12 pt-3 pb-2">
-                        <div class="form-floating mb-3">
+                    <div class="modal-body p-12 pt-3 pb-5">
+                        <div class="form-floating mb-2">
                             <label for="floatingInput"></label>
-                            <input type="email" name="username"
+                            <input type="email" name="username" title=" enter your email here!"
                                    class="form-control rounded-4 mt-3"
-                                            id="floatingInput" placeholder="Email">
+                                   id="floatingInput" placeholder= " &#9993; Email">
+
                         </div>
                         <div class="form-floating mb-4">
                             <label for="floatingPassword"></label>
-                            <input type="password" name="password"
+                            <input type="password" name="password" title=" enter your password here!"
                                    class="form-control rounded-4 mt-3"
-                                            id="floatingPassword" placeholder="Password">
+                                   id="floatingPassword" placeholder="&#8277;Password">
                         </div>
                         <div class="row justify-content-center">
                             <div class="center ">
@@ -46,14 +48,16 @@
                         <div class="modal-header p-5 pb-4 border-bottom-0">
                             <button class="btn btn-primary btn-lg mx-auto px-5 m-2" type="submit">Login</button>
                         </div>
+                        <div class="modal-header pb-6 embed-responsive-16by9 border-bottom-0">
+                            <button class="btn btn-dark mx-auto px-5">Connect with...</button>
+                        </div>
                     </div>
                 </form>
-
-                <a th:href="@{/signup}">
-                    <div class="modal-header pb+8 mb-5 border-bottom-0">
-                        <button class="btn btn-dark mx-auto px-5">Create account</button>
-                    </div>
-                </a>
+<!--                <a th:href="@{/signup}">-->
+<!--                    <div class="modal-header pb-6 embed-responsive-16by9 border-bottom-0">-->
+<!--                        <button class="btn btn-dark mx-auto px-5">Connect with...</button>-->
+<!--                    </div>-->
+<!--                </a>-->
             </div>
         </div>
     </div>

@@ -1,19 +1,21 @@
 package com.projet6opcr.paymybuddy.service;
 
-import com.projet6opcr.paymybuddy.model.User;
+import com.projet6opcr.paymybuddy.model.BankAccount;
+import com.projet6opcr.paymybuddy.model.UserAccount;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import javax.validation.constraints.NotBlank;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public interface UserService {
 
-    Optional<User> findByEmail(String email);
+    Optional<UserAccount> findByEmail(String email);
 
-    void saveUser(User user);
+    void saveUser(UserAccount userAccount);
 
-    User findUserById(int id);
+    Optional<UserAccount> findUserById(Integer id);
 
     void deleteUserById(Integer id);
 

@@ -1,5 +1,7 @@
 package com.projet6opcr.paymybuddy.model;
 
+import com.sun.istack.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.Hibernate;
@@ -7,38 +9,51 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "users")
-public class User implements UserDetails {
+public class UserAccount implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private int id;
+    private Integer id;
 
     @Column(name = "firstname")
+    @NotNull
+    @NotBlank
     private String firstName;
 
     @Column(name = "lastname")
+    @NotNull
+    @NotBlank
     private String lastName;
 
     @Column(name = "email", unique = true, nullable = false)
+    @NotNull
+    @NotBlank
     private String email;
 
     @Column(name = "password", nullable = false)
+    @NotNull
+    @NotBlank
     private String password;
 
     @Column(name = "balance",nullable = false)
+    @NotNull
+    @NotBlank
     private Double balance;
 
-    @OneToOne(mappedBy = "user_id")
-    @JoinColumn(name = "iban")
-    private BankAccount bankId;
+    @OneToOne
+    @JoinColumn(name = "bank_id")
+    private BankAccount bank;
 
     /******************Ajout d'un ami***********************************/
     @ManyToMany
@@ -47,17 +62,17 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "owner"),
             inverseJoinColumns = @JoinColumn(name = "buddy"))
 
-    private Set<User> friends;
-    public void setFriends(Set<User> friends) {
+    private Set<UserAccount> friends;
+    public void setFriends(Set<UserAccount> friends) {
         this.friends = friends;
     }
-    public Set<User> getFriends() {
+    public Set<UserAccount> getFriends() {
         return friends;
     }
     /********************************************************************/
 
     /********* Ce constructeur est utilisé pour enregistrer un utilisateur****/
-    public User(String email, String password, String firstName, String lastName) {
+    public UserAccount(String email, String password, String firstName, String lastName) {
         this.email = email;
         this.password = password;
         this.firstName = firstName;
@@ -67,18 +82,21 @@ public class User implements UserDetails {
 
 
     /********************Constructeur pour la connexion********************/
-    public User(User user) {
-        this.email = user.getEmail();
-        this.password = user.getPassword();
+    public UserAccount(UserAccount userAccount) {
+        this.email = userAccount.getEmail();
+        this.password = userAccount.getPassword();
     }
     /**********************************************************************/
 
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "owner")      // Table relation
+    private List<Relation> listRelations;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        User user = (User) o;
+        UserAccount userAccount = (UserAccount) o;
         return false;
     }
 
