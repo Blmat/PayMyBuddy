@@ -3,11 +3,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-
     <title>PayMyBuddy</title>
 
 </head>
@@ -17,10 +15,9 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content rounded-5 shadow">
                 <div class="modal-header p-5 pb-0 border-bottom-0">
-                    <button class="btn btn-logo btn-success btn-lg mx-auto" title="Welcome!" type="button">Pay My Buddy</button>
-
-<!--                    <img class ="email" src="image/mail.png" title=" enter email here!" alt="logo-email"/>-->
-
+                    <button class="btn btn-logo btn-success btn-lg mx-auto" disabled title="Welcome!" type="button">
+                        Pay My Buddy
+                    </button>
                 </div>
                 <form class="" th:action="@{/log}" method="post">
                     <div class="modal-body p-12 pt-3 pb-5">
@@ -28,7 +25,7 @@
                             <label for="floatingInput"></label>
                             <input type="email" name="username" title=" enter your email here!"
                                    class="form-control rounded-4 mt-3"
-                                   id="floatingInput" placeholder= " &#9993; Email">
+                                   id="floatingInput" placeholder=" &#9993; Email">
 
                         </div>
                         <div class="form-floating mb-4">
@@ -39,9 +36,12 @@
                         </div>
                         <div class="row justify-content-center">
                             <div class="center ">
-                                <input type="checkbox" class="form-check-input align-middle" id="exampleCheck1">
-                                <label class="form-check-label fs-4 align-middle p-8" for="exampleCheck1">Remember
-                                    me</label>
+                                <div>
+                                    <input type="checkbox" class="form-check-input align-middle" id="Remember me"
+                                           name="Remember me"
+                                           checked>
+                                    <label for="Remember me">Remember me</label>
+                                </div>
                             </div>
                         </div>
 
@@ -49,15 +49,20 @@
                             <button class="btn btn-primary btn-lg mx-auto px-5 m-2" type="submit">Login</button>
                         </div>
                         <div class="modal-header pb-6 embed-responsive-16by9 border-bottom-0">
-                            <button class="btn btn-dark mx-auto px-5">Connect with...</button>
+                            <button disabled class="btn btn-block mx-auto px-5">Or connect with...</button>
+                            <img  width="50"  src="/image/logo-facebook.png"
+                                  title="lien vers connexion facebook" alt="logo-facebook"/>
+                            <img  width="60"  src="/image/logo-google.png"
+                                  title="lien vers connexion google" alt="logo-google"/>
+                        </div>
+<!--                        <div class="nav-item" >-->
+<!--                        <img  width="50"  src="/image/logo-facebook.png"-->
+<!--                               title="lien vers connexion facebook" alt="logo-facebook"/>-->
+<!--                        <img  width="60"  src="/image/logo-google.png"-->
+<!--                              title="lien vers connexion google" alt="logo-google"/>-->
                         </div>
                     </div>
                 </form>
-<!--                <a th:href="@{/signup}">-->
-<!--                    <div class="modal-header pb-6 embed-responsive-16by9 border-bottom-0">-->
-<!--                        <button class="btn btn-dark mx-auto px-5">Connect with...</button>-->
-<!--                    </div>-->
-<!--                </a>-->
             </div>
         </div>
     </div>

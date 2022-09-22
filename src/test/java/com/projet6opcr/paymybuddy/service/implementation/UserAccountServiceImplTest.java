@@ -1,5 +1,6 @@
 package com.projet6opcr.paymybuddy.service.implementation;
 
+import com.projet6opcr.paymybuddy.exception.UserNotFoundException;
 import com.projet6opcr.paymybuddy.model.UserAccount;
 import com.projet6opcr.paymybuddy.repository.UserRepository;
 import com.projet6opcr.paymybuddy.service.ConnectedUserDetailsService;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -34,7 +36,7 @@ class UserAccountServiceImplTest {
     static UserAccount john;
 
     @BeforeAll
-    static void setUp(){
+    static void setUp() {
         userAccount1 = new UserAccount();
         userAccount1.setId(1);
         userAccount1.setFirstName("Jacob");
@@ -52,20 +54,48 @@ class UserAccountServiceImplTest {
     }
 
     @Test
+    @DisplayName("ajout d'un ami existant dans la BDD")
     void addFriendTest() {
-        ConnectedUserDetailsService connectedUserDetailsService = new ConnectedUserDetailsService(userRepositoryMock);
+        //GIVEN
+        //WHEN
+        when(principalUser.getCurrentUserOrThrowException()).thenReturn(userAccount1);
+        lenient().when(userRepositoryMock.findByEmail(userAccount1.getEmail())).thenReturn(Optional.of(buddy1));
+        when(userRepositoryMock.save(any())).thenAnswer(i -> i.getArguments()[0]);
 
-        when(userRepositoryMock.findByEmail(userAccount1.getEmail())).thenReturn(Optional.of(userAccount1));
-        when(connectedUserDetailsService.loadUserByUsername((userAccount1.getUsername()))).thenReturn(userAccount1);
-
-
-        // When
+        var response = userService.addFriend(userAccount1.getEmail());
 
         // Then
-        var response= userService.addFriend(String.valueOf(buddy1));
-
-        System.out.println(response);
+        Assertions.assertThat(response)
+                .satisfies(u -> {
+                    Assertions.assertThat(u.getId()).isEqualTo(userAccount1.getId());
+                    Assertions.assertThat(u.getFriends()).contains(buddy1);
+                });
     }
+
+    @Test
+    @DisplayName("ce test doit retourner null car personne n'est trouvé")
+    void addFriendNullTest() {
+        //GIVEN
+        //WHEN
+        when(principalUser.getCurrentUserOrThrowException()).thenReturn(userAccount1);
+        lenient().when(userRepositoryMock.findByEmail(userAccount1.getEmail())).thenReturn(Optional.of(buddy1));
+
+        var response = userService.addFriend(userAccount1.getEmail());
+
+        // Then
+        assertThat(response).isNull();
+    }
+
+    @Test
+    @DisplayName("ce test doit retourner une erreur car la personne n'existe pas dans la BDD")
+    void addFriendErrorTest() {
+        //GIVEN
+        //WHEN
+        when(principalUser.getCurrentUserOrThrowException()).thenReturn(userAccount1);
+
+        assertThrows(UserNotFoundException.class, () -> userService.addFriend(userAccount1.getEmail()));
+    }
+
 
 
     @Test
