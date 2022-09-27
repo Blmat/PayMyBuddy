@@ -7,7 +7,6 @@ import java.util.Optional;
 
 @Service
 public interface BankService {
-    Optional<BankAccount> getBank() throws Exception;
     boolean checkIfBankAccountUserExists(Integer userId);
 
 }
