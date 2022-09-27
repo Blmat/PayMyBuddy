@@ -22,12 +22,18 @@ public class Relation implements Serializable {
     @Column(name = "id")
     private Integer id;
 
+    @ManyToOne
     @JoinColumn(name = "owner")
-    private int owner;
+    private UserAccount owner;
 
+    @ManyToOne
     @JoinColumn(name = "buddy")
-    private int buddy;
+    private UserAccount buddy;
 
+    public Relation(UserAccount owner, UserAccount buddy) {
+        this.owner = owner;
+        this.buddy = buddy;
+    }
 
     @Override
     public boolean equals(Object o) {

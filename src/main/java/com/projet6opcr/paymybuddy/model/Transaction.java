@@ -23,11 +23,11 @@ public class Transaction {
 
     @ManyToOne
     @JoinColumn(name = "creditor")
-    private User creditor;
+    private UserAccount creditor;
 
     @ManyToOne
     @JoinColumn(name = "debtor")
-    private User debtor;
+    private UserAccount debtor;
 
     @Column(name = "amount")
     private double amount;

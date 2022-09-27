@@ -16,7 +16,7 @@ public class ControllerWeb {
     public String privatePage(Authentication authentication) {
         return "Bienvenue ~["
                 + getName(authentication)
-                +" ]~ !"  ;
+                +" ]~ !";
     }
 
     private String getName(Authentication authentication) {
@@ -25,7 +25,7 @@ public class ControllerWeb {
                 .map(OAuth2AuthenticationToken.class::cast)
                 .map(OAuth2AuthenticationToken::getPrincipal)
                 .map(DefaultOidcUser.class::cast)
-                .map(StandardClaimAccessor::getFullName)
+                .map(StandardClaimAccessor::getEmail)
                 .orElse(authentication.getName());
     }
 }

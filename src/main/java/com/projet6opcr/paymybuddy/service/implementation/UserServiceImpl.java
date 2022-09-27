@@ -1,20 +1,19 @@
 package com.projet6opcr.paymybuddy.service.implementation;
 
+import com.projet6opcr.paymybuddy.exception.InsufficientBalanceException;
 import com.projet6opcr.paymybuddy.exception.UserNotFoundException;
 import com.projet6opcr.paymybuddy.model.BankAccount;
 import com.projet6opcr.paymybuddy.model.UserAccount;
 import com.projet6opcr.paymybuddy.repository.UserRepository;
+import com.projet6opcr.paymybuddy.service.PrincipalUser;
 import com.projet6opcr.paymybuddy.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @Slf4j
@@ -89,34 +88,25 @@ public class UserServiceImpl implements UserService {
                 "[Bank service] Money are added.");
 
         return user.getBalance();
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String email = authentication.getName();
-//        Optional<UserAccount> currentUser = userRepository.findByEmail(email);
-//
-//        currentUser.get().setBalance(currentUser.get().getBalance() + amount);
-//        userRepository.save(currentUser);
     }
 
     /**
      * Cette méthode sert à transférer de l'argent sur le compte d'un utilisateur
      *
      * @param amount Double : l'argent à mettre sur le compte
-     * @return la somme qu'il y a sur le compte de l'utilisateur.
      */
     @Override
-    public void transferMoney(Double amount) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        Optional<UserAccount> currentUserAccount = userRepository.findByEmail(username);
+    public void transferMoney(String friendEmail, Double amount) throws InsufficientBalanceException{
+        UserAccount currentUserAccount = principalUser.getCurrentUserOrThrowException();
+         userRepository.findByEmail(friendEmail)
+                .orElseThrow(() -> new UserNotFoundException("User not found with email = " + friendEmail));
 
-        if (currentUserAccount.isPresent() && currentUserAccount.get().getBalance() - amount >= 0)
-            currentUserAccount.get().setBalance(currentUserAccount.get().getBalance() - amount);
+        if (currentUserAccount.getBalance() - amount >= 0)
+            currentUserAccount.setBalance(currentUserAccount.getBalance() - amount);
         else {
-            log.error("Insufficient balance");
-            return;
+            throw new InsufficientBalanceException("sorry you don't have enough money ");
         }
-        userRepository.save(currentUserAccount.get());
-
+        userRepository.save(currentUserAccount);
     }
 
     /**
@@ -145,12 +135,4 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
-    @Override
-    public Set<UserAccount> getUsers() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        Optional<UserAccount> currentUser = userRepository.findByEmail(username);
-
-        return currentUser.get().getFriends();
-    }
 }

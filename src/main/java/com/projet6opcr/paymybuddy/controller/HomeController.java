@@ -1,7 +1,7 @@
 //package com.projet6opcr.paymybuddy.controller;
 //
 //import com.projet6opcr.paymybuddy.dto.UserDTO;
-//import com.projet6opcr.paymybuddy.model.User;
+//import com.projet6opcr.paymybuddy.model.UserAccount;
 //import org.springframework.stereotype.Controller;
 //import org.springframework.ui.Model;
 //import org.springframework.validation.BindingResult;
@@ -36,7 +36,7 @@
 //            return "user";
 //        }
 //
-//        User user = userService.addUser(user);
+//        UserAccount user = userService.addUser(user);
 //
 //        return "redirect:/home";
 //

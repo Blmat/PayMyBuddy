@@ -3,7 +3,7 @@ package com.projet6opcr.paymybuddy.service.implementation;
 import com.projet6opcr.paymybuddy.constant.COMMISSION;
 import com.projet6opcr.paymybuddy.dto.TransactionDTO;
 import com.projet6opcr.paymybuddy.model.Transaction;
-import com.projet6opcr.paymybuddy.model.User;
+import com.projet6opcr.paymybuddy.model.UserAccount;
 import com.projet6opcr.paymybuddy.repository.TransactionRepository;
 import com.projet6opcr.paymybuddy.repository.UserRepository;
 import com.projet6opcr.paymybuddy.service.TransactionService;
@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,13 +33,13 @@ public class TransactionServiceImpl implements TransactionService {
     public List<Transaction> getTransactions() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        User currentUser = userRepository.findByEmail(username);
-        List<Transaction> transactions = (List<Transaction>) transactionRepository.findAll();
+        Optional<UserAccount> currentUser = userRepository.findByEmail(username);
+        List<Transaction> transactions = transactionRepository.findAll();
 
         return transactions.stream()
-                .filter(c -> (c.getDebtor().equals(currentUser.getId()))
+                .filter(c -> (c.getDebtor().equals(currentUser.get().getId()))
                         ||
-                        c.getCreditor().equals(currentUser.getId()))
+                        c.getCreditor().equals(currentUser.get().getId()))
                 .collect(Collectors.toList());
     }
 
@@ -47,16 +48,16 @@ public class TransactionServiceImpl implements TransactionService {
     public void sendMoney(TransactionDTO transactionDTO) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        User currentUser = userRepository.findByEmail(username);
+        Optional<UserAccount> currentUser = userRepository.findByEmail(username);
 
-        User friend = userRepository.findByEmail(String.valueOf(transactionDTO.getReceiverId()));
-        Transaction transaction = new Transaction(currentUser.getId(), friend.getId(),
+        Optional<UserAccount> friend = userRepository.findByEmail(String.valueOf(transactionDTO.getReceiverId()));
+        Transaction transaction = new Transaction(currentUser.get().getId(), friend.get().getId(),
                 LocalDate.now(), transactionDTO.getAmount(), transactionDTO.getReason());
-        if (currentUser.getBalance() - (transactionDTO.getAmount() + (transactionDTO.getAmount() * COMMISSION.TRANSACTION_COMMISSION)) >= 0)
-            currentUser.setBalance(currentUser.getBalance() - (transactionDTO.getAmount() + (transactionDTO.getAmount() * 0.005)));
+        if (currentUser.get().getBalance() - (transactionDTO.getAmount() + (transactionDTO.getAmount() * COMMISSION.TRANSACTION_COMMISSION)) >= 0)
+            currentUser.get().setBalance(currentUser.get().getBalance() - (transactionDTO.getAmount() + (transactionDTO.getAmount() * 0.005)));
         else
             log.error("Insufficient balance");
-        friend.setBalance(friend.getBalance() + transactionDTO.getAmount());
+        friend.get().setBalance(friend.get().getBalance() + transactionDTO.getAmount());
 
         transactionRepository.save(transaction);
     }
