@@ -7,7 +7,6 @@ import com.projet6opcr.paymybuddy.repository.TransactionRepository;
 import com.projet6opcr.paymybuddy.repository.UserRepository;
 import com.projet6opcr.paymybuddy.service.PrincipalUser;
 import com.projet6opcr.paymybuddy.service.TransactionService;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,7 +24,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class TransactionServiceImplTest {
-
+    TransactionService transactionService;
     @Mock
     TransactionRepository transactionRepository;
     @Mock
@@ -33,11 +32,8 @@ class TransactionServiceImplTest {
     @Mock
     PrincipalUser principalUser;
 
-    TransactionService transactionService;
-
     static UserAccount userCreditor;
     static UserAccount userDebtor;
-
     TransactionDTO transaction1;
     TransactionDTO transaction2;
 
@@ -49,11 +45,6 @@ class TransactionServiceImplTest {
         transaction2 = new TransactionDTO(19.91, "smartphone", LocalDate.now(), userDebtor, userCreditor);
 
         transactionService = new TransactionServiceImpl(transactionRepository, userRepository, principalUser);
-    }
-
-    @AfterEach
-    void clear() {
-
     }
 
     @Test
@@ -75,7 +66,7 @@ class TransactionServiceImplTest {
 
     @Test
     @DisplayName("Erreur à la transaction  car il y a pas suffisamment de fond")
-    void sendMoneyErrorTest() {
+    void sendMoneyErrorTest(){
 
         lenient().when(userRepository.findByEmail(userCreditor.getEmail())).thenReturn(Optional.ofNullable(userCreditor));
         when(userRepository.save(any())).thenAnswer(i -> i.getArguments()[0]);
