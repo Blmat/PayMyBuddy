@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MainController {
 
-    @GetMapping("/login_ap")
+    @GetMapping("/log")
     public String login(Model model) {
 
         model.addAttribute("name", "blabla");
@@ -18,5 +18,10 @@ public class MainController {
     @GetMapping("/*")
     public String index() {
         return "index";
+    }
+
+    @GetMapping("/registration")
+    public String registration() {
+        return "registration";
     }
 }

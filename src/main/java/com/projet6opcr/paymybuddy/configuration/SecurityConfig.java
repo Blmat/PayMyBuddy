@@ -7,7 +7,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -16,36 +15,36 @@ public class SecurityConfig{
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
       return http.authorizeRequests()
-              .antMatchers("/" , "/loginAp").permitAll()
-              .antMatchers("/user").hasRole("USER")
-              .and()
-              .formLogin()
-              .loginProcessingUrl("/login_ap")       // link to submit username-password
-              .loginPage("/login_ap")
-              .usernameParameter("username")      // username field in login form
-              .passwordParameter("password")      // password field in login form
-              .defaultSuccessUrl("/")
-              .failureUrl("/login?error")
-              .and()
-              .logout()
-              .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-              .logoutSuccessUrl("/login")
-              .invalidateHttpSession(true)        // set invalidation state when logout
-              .deleteCookies("JSESSIONID")
-              .and()
-              .exceptionHandling()
-              .accessDeniedPage("/403")
-              .and().build();
-
-//              .antMatchers("/" , "/login_ap").permitAll()
+//              .antMatchers("/" , "/loginAp").permitAll()
 //              .antMatchers("/user").hasRole("USER")
-//              .anyRequest().authenticated()
 //              .and()
 //              .formLogin()
-//              .permitAll()
+//              .loginProcessingUrl("/login_ap")       // link to submit username-password
+//              .loginPage("/login_ap")
+//              .usernameParameter("username")      // username field in login form
+//              .passwordParameter("password")      // password field in login form
+//              .defaultSuccessUrl("/")
+//              .failureUrl("/login?error")
 //              .and()
-//              .oauth2Login()
+//              .logout()
+//              .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+//              .logoutSuccessUrl("/login")
+//              .invalidateHttpSession(true)        // set invalidation state when logout
+//              .deleteCookies("JSESSIONID")
+//              .and()
+//              .exceptionHandling()
+//              .accessDeniedPage("/error")
 //              .and().build();
+
+              .antMatchers("/" , "/login_ap").permitAll()
+              .antMatchers("/user").hasRole("USER")
+              .anyRequest().authenticated()
+              .and()
+              .formLogin()
+              .permitAll()
+              .and()
+              .oauth2Login()
+              .and().build();
     }
 
     @Bean
