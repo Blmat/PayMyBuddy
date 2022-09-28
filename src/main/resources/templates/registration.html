@@ -22,7 +22,7 @@
 
             <h1>Registration</h1>
 
-            <form th:action="@{/registration}" method="post" th:object="${user}">
+            <form th:action="@{/registration}" method="post">
                 <div class="form-group">
                     <label class="floatingInput" for="firstname"> First Name </label>
                     <input title="enter your first name here" id="firstname" class="form-control"
@@ -51,10 +51,13 @@
                     <span>Already registered? <a href="/log">Login
 								here</a></span>
                     <button disabled class="btn btn-block mx-auto px-5">Or connect with...</button>
-                    <img align-middle width="40" src="/image/logo-facebook.png"
-                         title="lien vers connexion facebook" alt="logo-facebook"/>
-                    <img  align-middle width="50" src="/image/logo-google.png"
-                         title="lien vers connexion google" alt="logo-google"/>
+                    <div class="container">
+                        <tr><td><a href="/oauth2/authorization/facebook" src="image/logo-facebook.png"
+                                   title="lien vers connexion facebook" alt="logo-facebook">Facebook</a></td></tr>
+                        <br>
+                        <tr><td><a href="/oauth2/authorization/google" image src="image/logo-google.png"
+                                   title="lien vers connexion google" alt="logo-google">Google</a></td></tr>
+                    </div>
                 </div>
             </form>
         </div>
@@ -62,3 +65,8 @@
 </div>
 </body>
 </html>
+
+<!--<img align-middle width="40" src="/image/logo-facebook.png"-->
+<!--     title="lien vers connexion facebook" alt="logo-facebook"/>-->
+<!--<img  align-middle width="50" src="/image/logo-google.png"-->
+<!--      title="lien vers connexion google" alt="logo-google"/>-->
