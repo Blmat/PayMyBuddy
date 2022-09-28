@@ -1,70 +1,65 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
     <title>PayMyBuddy</title>
 
 </head>
 <body>
-<main>
-    <div class="modal modal-signin position-static d-block py-5" tabindex="-1" role="dialog" id="modalSigning">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content rounded-5 shadow">
-                <div class="modal-header p-5 pb-0 border-bottom-0">
-                    <button class="btn btn-logo btn-success btn-lg mx-auto" disabled title="Welcome!" type="button">
-                        Pay My Buddy
-                    </button>
-                </div>
-                <form class="" th:action="@{/log}" method="post">
-                    <div class="modal-body p-12 pt-3 pb-5">
-                        <div class="form-floating mb-2">
-                            <label for="floatingInput"></label>
-                            <input type="email" name="username" title=" enter your email here!"
-                                   class="form-control rounded-4 mt-3"
-                                   id="floatingInput" placeholder=" &#9993; Email">
+<div class="modal modal-signin position-static d-block py-5" tabindex="-1" role="dialog" id="modalSigning">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-5 shadow">
+            <div class="modal-header p-5 pb-0 border-bottom-0">
+                <button class="btn btn-logo btn-success btn-lg mx-auto" disabled title="Welcome!" type="button">
+                    Pay My Buddy
+                </button>
+            </div>
 
-                        </div>
-                        <div class="form-floating mb-4">
-                            <label for="floatingPassword"></label>
-                            <input type="password" name="password" title=" enter your password here!"
-                                   class="form-control rounded-4 mt-3"
-                                   id="floatingPassword" placeholder="&#8277;Password">
-                        </div>
-                        <div class="row justify-content-center">
-                            <div class="center ">
-                                <div>
-                                    <input type="checkbox" class="form-check-input align-middle" id="Remember me"
-                                           name="Remember me"
-                                           checked>
-                                    <label for="Remember me">Remember me</label>
-                                </div>
+            <div class="form-signin">
+                <form th:action="@{/login_ap}" method="post" class="modal-body p-12 pt-3 pb-5">
+                    <div class="form-floating mb-2">
+                        <label for="floatingInput"></label>
+                        <input type="email" name="username" title=" enter your email here!"
+                               class="form-control rounded-4 mt-3"
+                               id="floatingInput" placeholder=" &#9993; Email">
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        <label for="floatingPassword"></label>
+                        <input type="password" name="password" title=" enter your password here!"
+                               class="form-control rounded-4 mt-3"
+                               id="floatingPassword" placeholder="&#8277;Password">
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="center ">
+                            <div>
+                                <input type="checkbox" class="form-check-input align-middle" id="Remember me"
+                                       name="Remember me"
+                                       checked>
+                                <label for="Remember me">Remember me</label>
                             </div>
                         </div>
-
-                        <div class="modal-header p-5 pb-4 border-bottom-0">
-                            <button class="btn btn-primary btn-lg mx-auto px-5 m-2" type="submit">Login</button>
-                        </div>
-                        <div class="modal-header pb-6 embed-responsive-16by9 border-bottom-0">
-                            <button disabled class="btn btn-block mx-auto px-5">Or connect with...</button>
-                            <img  width="50"  src="/image/logo-facebook.png"
-                                  title="lien vers connexion facebook" alt="logo-facebook"/>
-                            <img  width="60"  src="/image/logo-google.png"
-                                  title="lien vers connexion google" alt="logo-google"/>
-                        </div>
-<!--                        <div class="nav-item" >-->
-<!--                        <img  width="50"  src="/image/logo-facebook.png"-->
-<!--                               title="lien vers connexion facebook" alt="logo-facebook"/>-->
-<!--                        <img  width="60"  src="/image/logo-google.png"-->
-<!--                              title="lien vers connexion google" alt="logo-google"/>-->
-                        </div>
                     </div>
+
+                    <div class="modal-header p-5 pb-4 border-bottom-0">
+                        <button class="btn btn-primary btn-lg mx-auto px-5 m-2" type="submit">Login</button>
+                    </div>
+
+                    <div class="modal-header pb-6 embed-responsive-16by9 border-bottom-0">
+                        <button disabled class="btn btn-block mx-auto px-5">Or connect with...</button>
+                        <img width="50" src="/image/logo-facebook.png"
+                             title="lien vers connexion facebook" alt="logo-facebook"/>
+                        <img width="60" src="/image/logo-google.png"
+                             title="lien vers connexion google" alt="logo-google"/>
+                    </div>
+                    <p class="mt-5 mb-3 text-muted text-center">&copy; 2022-2023</p>
                 </form>
             </div>
         </div>
     </div>
-</main>
+</div>
 </body>
+</html>
