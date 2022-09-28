@@ -84,8 +84,9 @@ class TransactionServiceImplTest {
         lenient().when(userRepository.findByEmail(userDebtor.getEmail())).thenReturn(Optional.of(userDebtor));
         lenient().when(userRepository.save(any())).thenAnswer(i -> i.getArguments()[0]);
 
-       var response= assertThrows(InsufficientBalanceException.class, () ->  transactionService.sendMoney(userCreditor.getEmail(), transaction2));
+        var response = assertThrows(InsufficientBalanceException.class, () -> transactionService.sendMoney(userCreditor.getEmail(), transaction2));
 
-        assertThat(response).hasMessage("sorry you don't have enough money ");    }
+        assertThat(response).hasMessage("sorry you don't have enough money ");
+    }
 
 }
