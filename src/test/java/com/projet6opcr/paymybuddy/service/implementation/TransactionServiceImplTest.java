@@ -59,17 +59,18 @@ class TransactionServiceImplTest {
     @Test
     @DisplayName("transaction ok car il y a suffisamment de fond")
     void sendMoneyTest() {
-
+        /*initialisation de la personne qui va recevoir l'argent*/
         lenient().when(userRepository.findByEmail(userCreditor.getEmail())).thenReturn(Optional.ofNullable(userCreditor));
         when(userRepository.save(any())).thenAnswer(i -> i.getArguments()[0]);
 
+        /*initialisation de la personne qui va donner l'argent*/
         when(principalUser.getCurrentUserOrThrowException()).thenReturn(userDebtor);
         lenient().when(userRepository.findByEmail(userDebtor.getEmail())).thenReturn(Optional.of(userDebtor));
         lenient().when(userRepository.save(any())).thenAnswer(i -> i.getArguments()[0]);
 
         transactionService.sendMoney(userCreditor.getEmail(), transaction1);
 
-//        verify(userRepository, times(1)).findByEmail(userCreditor.getEmail());
+        verify(userRepository, times(1)).findByEmail(userCreditor.getEmail());
     }
 
     @Test

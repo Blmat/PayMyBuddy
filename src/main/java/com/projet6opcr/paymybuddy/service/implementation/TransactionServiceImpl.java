@@ -76,8 +76,9 @@ public class TransactionServiceImpl implements TransactionService {
             currentUser.setBalance(currentUser.getBalance() - (transactionDTO.getAmount() + (transactionDTO.getAmount() * 0.005)));
         else
            throw new InsufficientBalanceException("sorry you don't have enough money ");
-        friend.setBalance(friend.getBalance() + transactionDTO.getAmount());
 
+        friend.setBalance(friend.getBalance() + transactionDTO.getAmount());
+        log.info("successful transfer");
         transactionRepository.save(transaction);
     }
 }
