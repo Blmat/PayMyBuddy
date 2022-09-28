@@ -12,8 +12,11 @@ public class MainController {
 
         model.addAttribute("name", "blabla");
 
-    @GetMapping("/home")
-    public String home() {
-        return "home";
+        return "login_ap";
+    }
+
+    @GetMapping("/*")
+    public String index() {
+        return "index";
     }
 }

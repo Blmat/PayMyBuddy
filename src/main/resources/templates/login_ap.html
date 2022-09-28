@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">>
 
 <head>
     <meta charset="UTF-8">
@@ -47,14 +48,9 @@
                     <div class="modal-header p-5 pb-4 border-bottom-0">
                         <button class="btn btn-primary btn-lg mx-auto px-5 m-2" type="submit">Login</button>
                     </div>
-
-                    <div class="modal-header pb-6 embed-responsive-16by9 border-bottom-0">
-                        <button disabled class="btn btn-block mx-auto px-5">Or connect with...</button>
-                        <img width="50" src="/image/logo-facebook.png"
-                             title="lien vers connexion facebook" alt="logo-facebook"/>
-                        <img width="60" src="/image/logo-google.png"
-                             title="lien vers connexion google" alt="logo-google"/>
-                    </div>
+                        <button disabled class="btn btn-block mx-auto px-5">
+						<span>New user? <a type="submit" href="/registration">Register
+								here</a></span></button>
                     <p class="mt-5 mb-3 text-muted text-center">&copy; 2022-2023</p>
                 </form>
             </div>
