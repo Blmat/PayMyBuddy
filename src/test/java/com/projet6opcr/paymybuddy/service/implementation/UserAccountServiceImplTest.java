@@ -156,7 +156,7 @@ class UserAccountServiceImplTest {
 
         verify(userRepositoryMock, times(1)).deleteById(userAccount1.getId());
     }
-
+/******************************* exist By Email Test *************************************************************/
     @Test
     @DisplayName("test OK car la personne existe bien dans la BDD")
     void existsByEmailTest() {
