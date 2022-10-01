@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public interface UserService {
@@ -20,4 +21,16 @@ public interface UserService {
 
     boolean existsByEmail(String email);
 
+    BankAccount addBankAccount(Integer userInt, BankAccount bankAccount);
+
+    void transferMoney(String friendEmail, Double amount);
+
+    UserAccount addFriend(String friendEmail);
+
+    @NotBlank
+    Double addMoney(String userMail, Double amount);
+
+    void deleteUserById(Integer id);
+
+    void saveUser(UserAccount userAccount);
 }

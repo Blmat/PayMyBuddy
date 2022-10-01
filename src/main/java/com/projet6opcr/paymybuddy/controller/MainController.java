@@ -1,21 +1,17 @@
 package com.projet6opcr.paymybuddy.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class MainController {
 
-    @GetMapping("/log")
-    public String login(Model model) {
-
-        model.addAttribute("name", "blabla");
-
-        return "login_ap";
+    @GetMapping("/login")
+    public String login() {
+        return "login";
     }
 
-    @GetMapping("/*")
+    @GetMapping("/")
     public String index() {
         return "index";
     }
@@ -23,5 +19,10 @@ public class MainController {
     @GetMapping("/registration")
     public String registration() {
         return "registration";
+    }
+
+    @GetMapping("/error")
+    public String error() {
+        return "error";
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -14,36 +15,59 @@ public class SecurityConfig{
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-      return http.authorizeRequests()
-//              .antMatchers("/" , "/loginAp").permitAll()
-//              .antMatchers("/user").hasRole("USER")
+      return http
+//              .authorizeRequests()
+//              .antMatchers(
+//                      "/",
+//                      "/js/**",
+//                      "/css/**",
+//                      "/img/**",
+//                      "/webjars/**").permitAll()
+//              .antMatchers("/user/**").hasRole("USER")
+//              .anyRequest().authenticated()
 //              .and()
 //              .formLogin()
-//              .loginProcessingUrl("/login_ap")       // link to submit username-password
-//              .loginPage("/login_ap")
-//              .usernameParameter("username")      // username field in login form
-//              .passwordParameter("password")      // password field in login form
-//              .defaultSuccessUrl("/")
-//              .failureUrl("/login?error")
+//              .loginPage("/login")
+//              .permitAll()
 //              .and()
 //              .logout()
+//              .invalidateHttpSession(true)
+//              .clearAuthentication(true)
 //              .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//              .logoutSuccessUrl("/login")
-//              .invalidateHttpSession(true)        // set invalidation state when logout
-//              .deleteCookies("JSESSIONID")
+//              .logoutSuccessUrl("/login?logout")
+//              .permitAll()
 //              .and()
 //              .exceptionHandling()
 //              .accessDeniedPage("/error")
 //              .and().build();
-
-              .antMatchers("/" , "/login_ap").permitAll()
-              .antMatchers("/user").hasRole("USER")
+              .authorizeRequests()
+              .antMatchers( "/",
+                      "/js/**",
+                      "/css/**",
+                      "/img/**",
+                      "/webjars/**").permitAll()
+              .antMatchers("/user/**").hasRole("USER")
               .anyRequest().authenticated()
               .and()
               .formLogin()
+              .loginProcessingUrl("/login")
+              .loginPage("/login")
               .permitAll()
+              .usernameParameter("username")
+              .passwordParameter("password")
               .and()
               .oauth2Login()
+              .loginPage("/registration")
+              .and()
+              .logout()
+              .invalidateHttpSession(true)
+              .clearAuthentication(true)
+              .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+              .logoutSuccessUrl("/index")
+              .permitAll()
+              .and()
+              .exceptionHandling()
+              .accessDeniedPage("/error")
               .and().build();
     }
 
