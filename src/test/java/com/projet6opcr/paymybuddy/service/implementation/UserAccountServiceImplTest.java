@@ -99,6 +99,22 @@ class UserAccountServiceImplTest {
     /***********************************************************************************************************/
 
     @Test
+    void getConnectedUserTest() {
+        when(principalUser.getCurrentUserOrThrowException()).thenReturn(userAccount1);
+
+        var response = userService.getConnectedUser();
+
+        assertThat(response)
+                .satisfies(r -> {
+                    assertThat(r).isNotNull();
+                    assertThat(r).isEqualTo(userAccount1);
+                });
+
+
+    }
+
+
+    @Test
     @DisplayName("Ce test doit retourner User1 qui à était trouvé grâce à son id")
     void findUserByIdTest() {
 
@@ -123,7 +139,10 @@ class UserAccountServiceImplTest {
         when(userRepositoryMock.save(any(UserAccount.class))).thenReturn(userAccount1);
         // Then
         userService.saveUser(userAccount1);
+        userRepositoryMock.save(userAccount1);
         verify(userRepositoryMock, times(1)).save(userAccount1);
+        assertThat(userAccount1.getFirstName()).isEqualTo(userAccount1.getFirstName());
+
     }
 
     @Test
@@ -155,29 +174,6 @@ class UserAccountServiceImplTest {
         userService.deleteUserById(userAccount1.getId());
 
         verify(userRepositoryMock, times(1)).deleteById(userAccount1.getId());
-    }
-/******************************* exist By Email Test *************************************************************/
-    @Test
-    @DisplayName("test OK car la personne existe bien dans la BDD")
-    void existsByEmailTest() {
-        //Given
-        john = new UserAccount();
-        john.setEmail("MrWick@dog.fr");
-        // When
-        when(userRepositoryMock.findByEmail(john.getEmail())).thenReturn(Optional.ofNullable(john));
-        // Then
-        Boolean response = userService.existsByEmail("MrWick@dog.fr");
-
-        assertThat(response).isTrue();
-    }
-
-    @Test
-    @DisplayName("retourne faux car la personne n'est pas trouvé")
-    void existsByEmailFalseTest() {
-        // Then
-        Boolean response = userService.existsByEmail("notTheGoodMail@mail.fr");
-
-        assertThat(response).isFalse();
     }
 
     /***************************************addBankAccountTest**************************************************************/

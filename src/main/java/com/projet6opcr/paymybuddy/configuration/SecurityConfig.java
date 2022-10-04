@@ -16,35 +16,12 @@ public class SecurityConfig{
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
       return http
-//              .authorizeRequests()
-//              .antMatchers(
-//                      "/",
-//                      "/js/**",
-//                      "/css/**",
-//                      "/img/**",
-//                      "/webjars/**").permitAll()
-//              .antMatchers("/user/**").hasRole("USER")
-//              .anyRequest().authenticated()
-//              .and()
-//              .formLogin()
-//              .loginPage("/login")
-//              .permitAll()
-//              .and()
-//              .logout()
-//              .invalidateHttpSession(true)
-//              .clearAuthentication(true)
-//              .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//              .logoutSuccessUrl("/login?logout")
-//              .permitAll()
-//              .and()
-//              .exceptionHandling()
-//              .accessDeniedPage("/error")
-//              .and().build();
               .authorizeRequests()
               .antMatchers( "/",
                       "/js/**",
                       "/css/**",
                       "/img/**",
+                      "/registration**",
                       "/webjars/**").permitAll()
               .antMatchers("/user/**").hasRole("USER")
               .anyRequest().authenticated()
@@ -58,6 +35,7 @@ public class SecurityConfig{
               .and()
               .oauth2Login()
               .loginPage("/registration")
+              .defaultSuccessUrl("/home?success")
               .and()
               .logout()
               .invalidateHttpSession(true)
@@ -70,16 +48,4 @@ public class SecurityConfig{
               .accessDeniedPage("/error")
               .and().build();
     }
-
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return web-> web.ignoring()
-                .antMatchers("/registration**", "/css/**", "/img/**");
-    }
-
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
 }

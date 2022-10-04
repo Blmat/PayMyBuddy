@@ -2,19 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Registration</title>
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <title>Registration</title>
 
 </head>
 <body>
-<!-- success message -->
-<br>
-<div th:if="${param.success}" style="width: 20%; margin: 0 auto;">
-    <div class="alert alert-info" style="display: flex; justify-content: center">You've successfully registered, clap
-        clap clap !
-    </div>
-</div>
 
 <div class="container">
     <div class="row">
@@ -52,21 +45,21 @@
 								here</a></span>
                     <button disabled class="btn btn-block mx-auto px-5">Or connect with...</button>
                     <div class="container">
-                        <tr><td><a href="/oauth2/authorization/facebook" src="image/logo-facebook.png"
-                                   title="lien vers connexion facebook" alt="logo-facebook">Facebook</a></td></tr>
+
+                        <tr>
+                            <td><a href="/oauth2/authorization/facebook"
+                                   title="lien vers connexion facebook" alt="logo-facebook">Facebook</a></td>
+                        </tr>
                         <br>
-                        <tr><td><a href="/oauth2/authorization/google" image src="image/logo-google.png"
-                                   title="lien vers connexion google" alt="logo-google">Google</a></td></tr>
+                        <a href="/oauth2/authorization/google"
+                           title="lien vers connexion google" alt="logo-google">Google</a>
                     </div>
                 </div>
+
             </form>
+
         </div>
     </div>
 </div>
 </body>
 </html>
-
-<!--<img align-middle width="40" src="/image/logo-facebook.png"-->
-<!--     title="lien vers connexion facebook" alt="logo-facebook"/>-->
-<!--<img  align-middle width="50" src="/image/logo-google.png"-->
-<!--      title="lien vers connexion google" alt="logo-google"/>-->

@@ -25,4 +25,9 @@ public class MainController {
     public String error() {
         return "error";
     }
+
+    @GetMapping("/home")
+    public String getHome() {
+        return "/home";
+    }
 }

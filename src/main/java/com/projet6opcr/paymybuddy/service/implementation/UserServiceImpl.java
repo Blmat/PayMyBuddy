@@ -1,5 +1,6 @@
 package com.projet6opcr.paymybuddy.service.implementation;
 
+import com.projet6opcr.paymybuddy.dto.UserDTO;
 import com.projet6opcr.paymybuddy.exception.InsufficientBalanceException;
 import com.projet6opcr.paymybuddy.exception.UserNotFoundException;
 import com.projet6opcr.paymybuddy.model.BankAccount;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import java.util.HashSet;
 import java.util.Optional;
 
 @Service
@@ -47,17 +49,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUser(UserAccount userAccount) {
-        if (userAccount != null) {
+        UserAccount user = new UserAccount(userAccount.getFirstName(),
+                userAccount.getLastName(), userAccount.getEmail(),
+                userAccount.getPassword());
 
-            String encodedPassword = new BCryptPasswordEncoder().encode(userAccount.getPassword());
-            userAccount.setPassword(encodedPassword);
-
-            userRepository.save(userAccount);
-            log.info(
-                    "[User service] Created a new user with the following information : Mail={} firstName={} lastName={}",
-                    userMail, firstName, lastName);
-        }
+        userRepository.save(user);
+        log.info(
+                "[UserAccount service] Created a new userAccount with the following information : Mail={} firstName={} lastName={}",
+                userAccount.getEmail(), userAccount.getFirstName(), userAccount.getLastName());
     }
+
 
     @Override
     public BankAccount addBankAccount(Integer userId, @Valid BankAccount bankAccount) {
@@ -108,17 +109,6 @@ public class UserServiceImpl implements UserService {
             throw new InsufficientBalanceException("sorry you don't have enough money ");
         }
         userRepository.save(currentUserAccount);
-    }
-
-    /**
-     * This method returns true if an address mail exists in database
-     *
-     * @param email String : Mail address
-     * @return A boolean set to true if the mail address has been found
-     */
-    @Override
-    public boolean existsByEmail(String email) {
-        return (userRepository.findByEmail(email).isPresent());
     }
 
     @Override

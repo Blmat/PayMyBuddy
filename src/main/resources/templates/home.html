@@ -1,45 +1,55 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+>
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
-          integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 
 
     <title>Home</title>
 </head>
+<!-- success message -->
+<br>
+<div th:if="${param.success}" style="width: 20%; margin: 0 auto;">
+    <div class="alert alert-info" style="display: flex; justify-content: center">You've successfully registered, clap
+        clap clap !
+    </div>
+</div>
+
+
 <body>
 <!-- Navigation menu -->
-<nav class="navbar navbar-expand ">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#" th:href="@{/home}">
-            <button class="btn btn-success center-block">Pay
-                my buddy</button></a>
 
+<div class="modal modal-signin position-static d-block " tabindex="-1" role="application" id="modalSigning">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-5 shadow">
+            <div class="modal-header p-0 pb-0 border-bottom-0"></div>
+<nav class="navbar navbar-expand ">
+    <div class="container-fluid" role="document">
+        <a class="navbar-brand" href="#" th:href="@{/home}">
+            <button disabled class="btn btn-success center-block">Pay
+                my buddy</button></a>
     </div>
 </nav>
 <!-- End Navigation menu -->
 <div class="container px-4">
 
-    <div class="row mt-3 mb-1 justify-content-between">
+    <div class="row mt-3 mb-0 justify-content-between">
         <div class="ml-4">
-            <span class="text-left"><h4>Welcome to Pay My Buddy</h4></span>
+            <span class="text-left"><h4>Welcome.</h4></span>
         </div>
     </div>
-</div>
 <br>
+
 <!-- error message -->
 <div th:if="${param.error}" style="display: flex; justify-content: flex-start; width: 15%; margin-left: 10px;">
     <div class = "alert alert-danger">Insufficient balance</div>
 </div>
-<div style=" height: 40px; width: 20%; display: flex; justify-content: flex-start">
+<div class="modal-header p-0 pb-4 border-bottom-0">
     <button style="margin-left: 10px;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addBalance">
-        Credit your account
+        Add money
     </button>
     <div class="modal-dialog">
         <!-- Modal -->
@@ -68,7 +78,7 @@
     </div>
 
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#transferMoney">
-        Withdraw Money
+        transfer on your account
     </button>
     <div class="modal-dialog">
         <!-- Modal -->
@@ -83,7 +93,7 @@
                             <div class="form-group">
                                 <label>Amount <input type="text" name="amount" class="form-control">
                                 </label><br>
-                                <button type="submit" class="btn btn-primary">Withdraw</button>
+                                <button type="submit" class="btn btn-primary">transfert</button>
                             </div>
                         </form>
                     </div>
@@ -110,5 +120,7 @@
         src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
         integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
         crossorigin="anonymous"></script>
+</div>
+
 </body>
 </html>

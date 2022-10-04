@@ -1,5 +1,6 @@
 package com.projet6opcr.paymybuddy.service;
 
+import com.projet6opcr.paymybuddy.dto.UserDTO;
 import com.projet6opcr.paymybuddy.model.BankAccount;
 import com.projet6opcr.paymybuddy.model.UserAccount;
 import org.springframework.stereotype.Service;
