@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns="http://www.w3.org/1999/xhtml">
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>transfer</title>
@@ -19,26 +19,16 @@
         <div>
             <nav class="navbar navbar-expand border-bottom border-secondary">
                 <button class="btn btn-success center-block" disabled>Pay
-                    my buddy
-                </button>
+                    my buddy</button>
                 <div>
                     <ul class="navbar-nav-right">
-                        <li class="navbar-brand ">
-                            <a class="nav-link active text-dark" href="home.html">Home</a>
-                        </li>
-                        <li class="navbar-brand">
-                            <a class="nav-link text-primary" href="transaction.html">Transfer</a>
-                        </li>
-                        <li class="navbar-brand">
-                            <a class="nav-link text-dark" href=profile.html>Profile</a>
-                        </li>
-                        <li class="navbar-brand">
-                            <a class="nav-link text-dark" href="contact.html">Contact</a>
-                        </li>
-                        <form th:action="@{/logout}" method="post" >
-
-                            <input type="submit" class="nav-link text-dark" value="Log off"/>
-                        </form>
+                        <li class="navbar-brand "><a class="nav-link active text-dark" href="home.html">Home</a></li>
+                        <li class="navbar-brand"><a class="nav-link text-primary" href="transaction.html">Transfer</a></li>
+                        <li class="navbar-brand"><a class="nav-link text-dark" href=profile.html>Profile</a></li>
+                        <li class="navbar-brand"><a class="nav-link text-dark" href="contact.html">Contact</a></li>
+                        <li class="navbar-brand"><a sec:authorize="isAuthenticated()"></a><form
+                                th:action="@{/logout}" method="post" >
+                            <input type="submit" class="nav-link text-dark" href="login.html" value="Log off"/>
                     </ul>
                 </div>
             </nav>
@@ -82,8 +72,10 @@
                                             th:text="${friend.firstName} +' '+ ${friend.lastName}"></option>
                                 </select>
                             </label>
-                            <!-------------End button-------------->
                         </div>
+                            <!-------------End button-------------->
+
+                            <!-------- Money to transfert---------->
                         <div class="d-flex col-4">
                             <div class=" align-self-center ">
                                 <label>
@@ -95,6 +87,8 @@
                             <h2>€</h2>
                         </div>
                     </div>
+                    <!-------------End button-------------->
+
                     <div class="text-center  mb-5 ">
                         <input type="text" name="comment" size="50"
                                class="btn btn-lg border border-secondary ml-4 col-10" placeholder="Description ...">
