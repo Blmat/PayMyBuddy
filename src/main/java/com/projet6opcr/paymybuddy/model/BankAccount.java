@@ -21,7 +21,7 @@ public class BankAccount {
     @Column(name = "iban",nullable = false)
     private String iban;
 
-    @Column(name = "account_name")
+    @Column(name = "bank_name")
     @NotNull
     private String accountName;
 
