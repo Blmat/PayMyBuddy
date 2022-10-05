@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+
+<body>
+<div class="container border border-secondary rounded">
+
+<!-- Navigation menu -->
+<header>
+    <div>
+        <nav class="navbar navbar-expand border-bottom border-secondary">
+            <button class="btn btn-success center-block" disabled>Pay
+                my buddy
+            </button>
+            <div>
+                <ul class="navbar-nav-right">
+                    <li class="navbar-brand "><a class="nav-link text-dark" href="home.html">Home</a></li>
+                    <li class="navbar-brand"><a class="nav-link text-primary" href="transaction.html">Transfer</a></li>
+                    <li class="navbar-brand"><a class="nav-link text-dark" href=profile.html>Profile</a></li>
+                    <li class="navbar-brand"><a class="nav-link text-dark" href="contact.html">Contact</a></li>
+                    <li class="navbar-brand"><a sec:authorize="isAuthenticated()" th:action="@{/logout}"
+                                                methods="post" type="submit" class="nav-link text-dark"
+                                                href="login.html">Log Off</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <!-- End Navigation menu -->
+    <nav class="navbar navbar-expand bg-light mb-3 mt-0.5">
+        <ul class="navbar-nav">
+            <li class="navbar-brand ">
+                <a class="nav-link text-dark " th:href="@{/home.html}">Home</a>
+            </li>
+            <li class="navbar-brand ">
+                <a class="nav-link text-dark ">/</a>
+            </li>
+            <li class="navbar-brand">
+                <a class="nav-link text-primary" th:href="@{/transaction.html}">Transfert</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<div class="container col-10 mb-3">
+    <h2 class="mb-5 text-center  ">Transfer money to/from your bank</h2>
+
+    <form th:action="@{/bankTransfer}" method="post">
+        <div class="container bg-light border border-secondary rounded mb-3 ">
+            <div class=" d-flex ">
+                <div class="col-4 ">
+                    <br>
+                    <br>
+                    <div class="text-right mb-4 mr-4">
+                    </div>
+                </div>
+                <div class="col-4 "></div>
+                <div class="col-4 ">
+                    <br>
+                    <br>
+                    <div class="text-center mb-4 mr-5">
+                    </div>
+                </div>
+            </div>
+            <div class=" d-flex ">
+                <div class="align-self-center col-5 ">
+                    <label>
+                        <select class=" btn btn-lg border border-secondary dropdown-toggle  col-12"
+                                type="text" name="accountType">
+                            <option>Select Bank Account</option>
+                            <option sec:each="bankAccount : ${bankAccounts}" sec:value="${bankAccount.accountType}"
+                                    sec:text="${bankAccount.accountType}"></option>
+                        </select>
+                    </label>
+                    <small sec:if="${bankError}" sec:text="${bankError}"
+                           class="form-text text-danger font-weight-bold text-center"></small>
+                </div>
+                <div class="text-center align-self-center col-3">
+                    <label>
+                        <select class="btn btn-lg border border-secondary " type="text" name="transferType">
+                            <option value="bank">⏪</option>
+                            <option value="account">⏩</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="col-3 border border-secondary rounded bg-white">
+                    <h1 sec:text="${user.getBalance()}" size="8" class="text-center bg-white"></h1>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="d-flex">
+                <div class="d-flex justify-content-end col-6">
+                    <div class="text-right">
+                        <label>
+                            <input name="amount" class="btn btn-lg border border-secondary  col-6" placeholder="0€"
+                                   value="0">
+                        </label>
+                        <small sec:if="${error}" sec:text="${error}"
+                               class="form-text text-danger font-weight-bold "></small>
+                        <small sec:if="${success}" sec:text="${success}"
+                               class="form-text text-success font-weight-bold"></small>
+                    </div>
+                    <div>
+                        <h2>€</h2>
+                    </div>
+                </div>
+                <div class="col-6 text-left">
+                    <button type="submit" class=" btn btn-success btn-lg col-6  "> Transfer</button>
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <div class=" d-flex justify-content-around text-center bg-light ">
+                <div class=" col-6">
+                    <a class="  btn btn-primary btn-lg btn-block" th:href="@{/homepage}" href="home.html"> Back
+                        home </a>
+                </div>
+                <div class=" col-6">
+                    <a class=" btn btn-primary btn-lg btn-block" th:href="@{/transferForm}" href="transaction.html"> Pay
+                        a buddy </a>
+                </div>
+                <br>
+                <br>
+                <br>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
