@@ -19,23 +19,24 @@
         <div>
             <nav class="navbar navbar-expand border-bottom border-secondary">
                 <button class="btn btn-success center-block" disabled>Pay
-                    my buddy</button>
+                    my buddy
+                </button>
                 <div>
                     <ul class="navbar-nav-right">
                         <li class="navbar-brand "><a class="nav-link active text-dark" href="home.html">Home</a></li>
-                        <li class="navbar-brand"><a class="nav-link text-primary" href="transaction.html">Transfer</a></li>
+                        <li class="navbar-brand"><a class="nav-link text-primary" href="transaction.html">Transfer</a>
+                        </li>
                         <li class="navbar-brand"><a class="nav-link text-dark" href=profile.html>Profile</a></li>
                         <li class="navbar-brand"><a class="nav-link text-dark" href="contact.html">Contact</a></li>
-                        <li class="navbar-brand"><a sec:authorize="isAuthenticated()"></a><form
-                                th:action="@{/logout}" method="post" >
-                            <input type="submit" class="nav-link text-dark" href="login.html" value="Log off"/>
+                        <li class="navbar-brand"><a sec:authorize="isAuthenticated()" th:action="@{/logout}"
+                                                    methods="post" type="submit" class="nav-link text-dark" href="login.html">Log Off</a></li>
                     </ul>
                 </div>
             </nav>
         </div>
         <!-- End Navigation menu -->
 
-        <nav class="navbar navbar-expand bg-light mb-3 mt-0.5">
+        <nav class="navbar navbar-expand bg-light mb-2 mt-0.5">
             <ul class="navbar-nav">
                 <li class="navbar-brand ">
                     <a class="nav-link text-dark " th:href="@{/homepage}">Home</a>
@@ -50,6 +51,7 @@
         </nav>
     </header>
 
+    <!------------------Send Money view------------------------>
     <div class="container col-10 mb-3">
         <div class=" d-flex justify-content-between">
             <h3 class="mb-3">Send Money</h3>
@@ -58,29 +60,31 @@
         <form th:action="@{/transfer}" method="post" class="bg-light border border-secondary rounded mb-4">
             <div class="d-flex ">
                 <div class=" d-flex flex-column mt-4 col-9">
-                    <small class="mb-2 form-text alert-warning text-center">&#9888;Pay My Buddy <b>take 5%</b>
+                    <small class="mb-2 form-text text-warning text-center">&#9888;Pay My Buddy <b>take 5%</b>
                         commission on all transactions&#9888;</small>
                     <div class=" d-flex mb-2  ">
                         <div class="col-8 align-self-center text-right ">
 
                             <!-------- Select buddy button---------->
                             <label>
-                                <select class="btn btn-lg border border-secondary text-center col-12 dropdown-toggle " type="text"
+                                <select class="btn btn-lg border border-secondary text-center col-12 dropdown-toggle "
+                                        type="text"
                                         name="friendEmail">
-                                    <option>Select A Connection </option>
+                                    <option>Select A Connection</option>
                                     <option th:each="friend : ${friends}" th:value="${friend.email}"
                                             th:text="${friend.firstName} +' '+ ${friend.lastName}"></option>
                                 </select>
                             </label>
                         </div>
-                            <!-------------End button-------------->
+                        <!-------------End button-------------->
 
-                            <!-------- Money to transfert---------->
+                        <!-------- Money to transfert---------->
                         <div class="d-flex col-4">
                             <div class=" align-self-center ">
                                 <label>
                                     <input name="amount" size="8"
-                                           class="btn btn-lg border border-secondary text-center col-12" placeholder="0€"
+                                           class="btn btn-lg border border-secondary text-center col-12"
+                                           placeholder="0€"
                                            value="0 &euro;">
                                 </label>
                             </div>
@@ -90,8 +94,10 @@
                     <!-------------End button-------------->
 
                     <div class="text-center  mb-5 ">
-                        <input type="text" name="comment" size="50"
-                               class="btn btn-lg border border-secondary ml-4 col-10" placeholder="Description ...">
+                        <label>
+                            <input type="text" name="comment" size="50"
+                                   class="btn btn-lg border border-secondary ml-4 col-10" placeholder="Description ...">
+                        </label>
                         <small id="emailHelpError" th:if="${error}" th:text="${error}"
                                class="form-text text-danger font-weight-bold text-center"></small>
                         <small id="emailHelpSuccess" th:if="${success}" th:text="${success}"
@@ -104,12 +110,14 @@
                 </div>
             </div>
         </form>
+
+        <!---------------------My Transaction view------------------------------->
         <div>
+            <h3 class="mb-3">My Transactions</h3>
             <table class="table table-striped border border-secondary">
-                <thead class="bg-success text-center text-white">
+                <thead class="bg-success text-lg-center text-white">
                 <tr>
-                    <th scope="col"><br><h5>From</h5><br></th>
-                    <th scope="col"><br><h5>To</h5><br></th>
+                    <th scope="col"><br><h5>Connection</h5><br></th>
                     <th scope="col"><br><h5>Description</h5><br></th>
                     <th scope="col"><br><h5>Amount</h5><br></th>
                 </tr>
@@ -117,19 +125,18 @@
                 <tbody class="text-center ">
                 <tr th:each="friendTransaction : ${friendTransactionPage}">
                     <td th:if="${friendTransaction.userName} == ${user.firstName}"><br><h5 class="text-primary">
-                        you</h5><br></td>
+                        your buddy</h5><br></td>
                     <td th:if="${friendTransaction.userName} == ${user.firstName}"><br><h5
                             th:text="${friendTransaction.creditorName}"></h5><br></td>
-                    <td th:if="${friendTransaction.userName} != ${user.firstName}"><br><h5
-                            th:text="${friendTransaction.userName}"></h5><br></td>
-                    <td th:if="${friendTransaction.userName} != ${user.firstName}"><br><h5 class="text-primary">you</h5>
+                    <td th:if="${friendTransaction.userName} != ${user.firstName}"><br><h5 class="text-primary">
+                        &euro;</h5>
                         <br></td>
-                    <td><br><h5 th:text="${friendTransaction.comment}"></h5><br></td>
-                    <td><br><h5 th:text="${friendTransaction.amount}"></h5><br></td>
                 </tr>
                 </tbody>
             </table>
         </div>
+
+        <!------------------------Select page------------------------------------>
         <form th:action="@{/transferPage}" method="get">
             <nav th:if="${numberOfPage}">
                 <ul class="pagination justify-content-center ">
@@ -137,7 +144,6 @@
                         <button type="submit" th:if="${friendTransactionPage.getNumber} >= 1" class="page-link"
                                 th:value="${friendTransactionPage.getNumber} -1" name="pageNumber">&laquo;
                         </button>
-                        <a th:if="${friendTransactionPage.getNumber} == 0" class="page-link">&laquo; </a>
                     </li>
                     <li class="page-item" th:each="number : ${numberOfPage}">
                         <button type="submit" th:if="${number} != ${friendTransactionPage.getNumber}" class="page-link"
@@ -147,11 +153,8 @@
                     <li class="page-item ">
                         <button type="submit"
                                 th:if="${friendTransactionPage.getNumber} != ${friendTransactionPage.getTotalPages} - 1"
-                                class="page-link" th:value="${friendTransactionPage.getNumber} +1" name="pageNumber">
-                            &raquo;
+                                class="page-link" th:value="${friendTransactionPage.getNumber} +1" name="pageNumber">&raquo;
                         </button>
-                        <a th:if="${friendTransactionPage.getNumber} == ${friendTransactionPage.getTotalPages} - 1"
-                           class="page-link">&raquo;</a>
                     </li>
                 </ul>
             </nav>
