@@ -13,7 +13,7 @@ public class MainController {
 
     @GetMapping("/")
     public String index() {
-        return "index";
+        return "login";
     }
 
     @GetMapping("/registration")
@@ -39,5 +39,10 @@ public class MainController {
     @GetMapping("/transfert")
     public String getTransfert() {
         return "/transaction";
+    }
+
+    @GetMapping("contact")
+    public String getContact() {
+        return "/contact";
     }
     }

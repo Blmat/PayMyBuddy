@@ -10,13 +10,11 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
 </head>
+<body><!-- success message -->
 <div class="container border border-secondary rounded">
     <div class="alert alert-info" style="display: flex; justify-content: center">You've successfully registered, clap
         clap clap !
     </div>
-
-    <body><!-- success message -->
-    <br>
     <header>
         <!-- Navigation menu -->
         <div>
@@ -41,13 +39,13 @@
         <nav class="navbar navbar-expand bg-light mb-3 mt-0.5">
             <ul class="navbar-nav">
                 <li class="navbar-brand ">
-                    <a class="nav-link text-dark " th:href="@{/home.html}">Home</a>
+                    <a class="nav-link text-dark " th:href="@{/home}">Home</a>
                 </li>
                 <li class="navbar-brand ">
                     <a class="nav-link text-dark ">/</a>
                 </li>
                 <li class="navbar-brand">
-                    <a class="nav-link text-primary" th:href="@{/home.html}">Home</a>
+                    <a class="nav-link text-primary" th:href="@{/home}">Home</a>
                 </li>
             </ul>
         </nav>
@@ -78,13 +76,8 @@
                 <a class="btn btn-primary btn-lg col-9" th:href="@{/addConnectionForm}" href="contact.html"> Add <br>
                     Buddy </a>
             </div>
-            <div>
-                <br>
-                <br>
-                <br>
-                <br>
-            </div>
         </div>
     </div>
-</div>
+    </div>
+</body>
 </html>
