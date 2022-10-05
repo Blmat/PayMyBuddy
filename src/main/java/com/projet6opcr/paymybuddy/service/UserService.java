@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public interface UserService {

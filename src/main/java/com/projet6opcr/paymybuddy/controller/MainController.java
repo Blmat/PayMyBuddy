@@ -30,4 +30,14 @@ public class MainController {
     public String getHome() {
         return "/home";
     }
-}
+
+    @GetMapping("/profile")
+    public String getProfile() {
+        return "/profile";
+    }
+
+    @GetMapping("/transfert")
+    public String getTransfert() {
+        return "/transaction";
+    }
+    }

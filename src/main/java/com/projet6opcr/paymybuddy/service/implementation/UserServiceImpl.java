@@ -10,12 +10,10 @@ import com.projet6opcr.paymybuddy.service.PrincipalUser;
 import com.projet6opcr.paymybuddy.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import java.util.HashSet;
 import java.util.Optional;
 
 @Service

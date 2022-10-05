@@ -1,51 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <link rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
 
 
-    <title>Your Contacts</title>
+    <title> Contacts </title>
 
-     <!--<style>
-         body {
-             padding-top: 50px;
-             padding-bottom: 50px;
-         }
-
-         .special {
-             padding-top: 50px;
-         }
-     </style>-->
 </head>
+
 <body>
+<div class="container active border-secondary rounded">
 <!-- Navigation menu -->
-<nav class="navbar navbar-expand ">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#" th:href="@{/}">
-            <button class="btn btn-success center-block">Pay
-                my buddy</button></a>
+<<nav class="navbar navbar-expand border-bottom border-secondary">
+    <button class="btn btn-success center-block" disabled>Pay
+        my buddy</button>
         <div>
             <ul class="nav navbar-right">
-                <li class="nav-item"><a class="nav-link active" href="home">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="/transfer">Transfer</a></li>
-                <li class="nav-item"><a class="nav-link" href="profile">Profile</a></li>
-                <li class="nav-item"><a class="nav-link" href="contact">Contact</a></li>
-                <li class="nav-item" sec:authorize="isAuthenticated()"><form
-                        th:action="@{/logout}" method="post">
-                    <input class="nav-link btn btn-primary" type="submit"
-                           value="Log Out" />
+                <li class="navbar-brand"><a class="nav-link active text-dark" href="home.html">Home</a></li>
+                <li class="navbar-brand"><a class="nav-link text-dark" href="transaction.html">Transfer</a></li>
+                <li class="navbar-brand"><a class="nav-link text-dark" href="profile.html">Profile</a></li>
+                <li class="navbar-brand"><a class="nav-link text-primary" href="contact.html">Contact</a></li>
+                <li class="navbar-brand"><a sec:authorize="isAuthenticated()"></a><form
+                        th:action="@{/logout}" method="post" >
+                    <input type="submit" class="nav-link text-dark" href="login.html" value="Log off"/>
                 </form></li>
             </ul>
         </div>
-    </div>
 </nav>
 <!-- End Navigation menu -->
 <div class="container px-4">
