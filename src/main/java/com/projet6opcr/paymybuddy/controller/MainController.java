@@ -43,6 +43,12 @@ public class MainController {
 
     @GetMapping("contact")
     public String getContact() {
-        return "/contact";
+        return "contact";
     }
+
+    @GetMapping("buddy")
+    public String getBuddy() {
+        return "buddy";
     }
+
+}

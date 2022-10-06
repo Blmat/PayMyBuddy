@@ -23,6 +23,6 @@ public class UserController {
     @PostMapping("/addFriend")
     public String addFriend(@RequestParam("friendEmail") String email){
         userService.addFriend(email);
-        return "/contact";
+        return "buddy";
     }
 }
