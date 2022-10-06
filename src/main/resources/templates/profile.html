@@ -23,11 +23,12 @@
                 <div>
                     <ul class="navbar-nav-right">
                         <li class="navbar-brand "><a class="nav-link active text-dark" href="home.html">Home</a></li>
-                        <li class="navbar-brand"><a class="nav-link text-dark" href="transaction.html">Transfer</a></li>
-                        <li class="navbar-brand"><a class="nav-link text-primary" href=profile.html>Profile</a></li>
+                        <li class="navbar-brand"><a class="nav-link text-dark" href="transfert.html">Transfer</a></li>
+                        <li class="navbar-brand"><a class="nav-link text-primary" href="profile.html">Profile</a></li>
                         <li class="navbar-brand"><a class="nav-link text-dark" href="contact.html">Contact</a></li>
-                        <li class="navbar-brand"><a sec:authorize="isAuthenticated()" th:action="@{/logout}"
-                                                    methods="post" type="submit" class="nav-link text-dark" href="login.html">Log Off</a></li>
+                        <li class="navbar-brand"><a sec:authorize="isAuthenticated()" methods="post"
+                                                    type="submit" class="nav-link text-dark"
+                                                    href="login.html">Log Off</a></li>
                     </ul>
                 </div>
             </nav>
@@ -37,13 +38,13 @@
         <nav class="navbar navbar-expand bg-light mb-3 mt-0.5">
             <ul class="navbar-nav">
                 <li class="navbar-brand ">
-                    <a class="nav-link text-dark " th:href="@{/homepage}">Home</a>
+                    <a class="nav-link text-dark " th:href="@{/home}">Home</a>
                 </li>
                 <li class="navbar-brand ">
                     <a class="nav-link text-dark" >/</a>
                 </li>
                 <li class="navbar-brand">
-                    <a class="nav-link text-primary" th:href="@{/transferForm}">Profile</a>
+                    <a class="nav-link text-primary" th:href="@{/transfert}">Profile</a>
                 </li>
             </ul>
         </nav>
@@ -77,7 +78,7 @@
         </div>
     </div>
     <div class="text-center">
-        <a type="submit" class="mb-5 btn btn-danger  col-4  " th:href="@{/changePasswordForm}"> <h6>Change password</h6> </a>
+        <a  class="mb-5 btn btn-danger  col-4  "> <h6>Change password</h6> </a>
     </div>
 
     <br>
@@ -85,10 +86,10 @@
     <br>
     <div class=" d-flex justify-content-around text-center bg-light " >
         <div class=" col-6">
-            <a class="  btn btn-primary btn-lg btn-block" th:href="@{/homepage}" href="home.html" > Back home </a>
+            <a class="  btn btn-primary btn-lg btn-block" th:href="@{/home}" href="home.html" > Back home </a>
         </div>
         <div class=" col-6">
-            <a class=" btn btn-primary btn-lg btn-block"  th:href="@{/transferForm}" href="transaction.html"> Pay a buddy </a>
+            <a class=" btn btn-primary btn-lg btn-block"  th:href="@{/transfert}" href="transfert.html"> Pay a buddy </a>
         </div>
         <br>
         <br>

@@ -38,7 +38,7 @@ public class MainController {
 
     @GetMapping("/transfert")
     public String getTransfert() {
-        return "/transaction";
+        return "transfert";
     }
 
     @GetMapping("contact")

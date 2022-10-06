@@ -23,13 +23,13 @@
             </button>
             <div>
                 <ul class="navbar-nav-right">
-                    <li class="navbar-brand "><a class="nav-link text-dark" href="home.html">Home</a></li>
-                    <li class="navbar-brand"><a class="nav-link text-primary" href="transaction.html">Transfer</a></li>
+                    <li class="navbar-brand "><a class="nav-link text-dark" href=home.html>Home</a></li>
+                    <li class="navbar-brand"><a class="nav-link text-primary" href=transfert.html>Transfer</a></li>
                     <li class="navbar-brand"><a class="nav-link text-dark" href=profile.html>Profile</a></li>
-                    <li class="navbar-brand"><a class="nav-link text-dark" href="contact.html">Contact</a></li>
-                    <li class="navbar-brand"><a sec:authorize="isAuthenticated()" th:action="@{/logout}"
-                                                methods="post" type="submit" class="nav-link text-dark"
-                                                href="login.html">Log Off</a></li>
+                    <li class="navbar-brand"><a class="nav-link text-dark" href=contact.html>Contact</a></li>
+                    <li class="navbar-brand"><a sec:authorize="isAuthenticated()" methods="post"
+                                                type="submit" class="nav-link text-dark"
+                                                href=login.html>Log Off</a></li>
                 </ul>
             </div>
         </nav>
@@ -44,7 +44,7 @@
                 <a class="nav-link text-dark ">/</a>
             </li>
             <li class="navbar-brand">
-                <a class="nav-link text-primary" th:href="@{/transaction.html}">Transfert</a>
+                <a class="nav-link text-primary" th:href="@{/templates/transfert.html}">Transfert</a>
             </li>
         </ul>
     </nav>
@@ -125,11 +125,11 @@
             <br>
             <div class=" d-flex justify-content-around text-center bg-light ">
                 <div class=" col-6">
-                    <a class="  btn btn-primary btn-lg btn-block" th:href="@{/homepage}" href="home.html"> Back
+                    <a class="  btn btn-primary btn-lg btn-block" th:href="@{/home}" href="home.html"> Back
                         home </a>
                 </div>
                 <div class=" col-6">
-                    <a class=" btn btn-primary btn-lg btn-block" th:href="@{/transferForm}" href="transaction.html"> Pay
+                    <a class=" btn btn-primary btn-lg btn-block" th:href="@{/transfert}" href="transfert.html"> Pay
                         a buddy </a>
                 </div>
                 <br>
