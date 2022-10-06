@@ -23,13 +23,12 @@
                 </button>
                 <div>
                     <ul class="navbar-nav-right">
-                        <li class="navbar-brand "><a class="nav-link active text-dark" href="home.html">Home</a></li>
-                        <li class="navbar-brand"><a class="nav-link text-primary" href="transfert.html">Transfer</a>
-                        </li>
-                        <li class="navbar-brand"><a class="nav-link text-dark" href=profile.html>Profile</a></li>
-                        <li class="navbar-brand"><a class="nav-link text-dark" href="contact.html">Contact</a></li>
+                        <li class="navbar-brand "><a class="nav-link active text-dark" th:href="@{/home}">Home</a></li>
+                        <li class="navbar-brand"><a class="nav-link text-primary" th:href="@{/transfert}">Transfer</a></li>
+                        <li class="navbar-brand"><a class="nav-link text-dark" th:href="@{/profile}">Profile</a></li>
+                        <li class="navbar-brand"><a class="nav-link text-dark" th:href="@{/contact}">Contact</a></li>
                         <li class="navbar-brand"><a sec:authorize="isAuthenticated()" th:action="@{/logout}"
-                                                    methods="post" type="submit" class="nav-link text-dark" href="login.html">Log Off</a></li>
+                                                    methods="post" type="submit" class="nav-link text-dark" th:href="@{/login}">Log Off</a></li>
                     </ul>
                 </div>
             </nav>
@@ -45,7 +44,7 @@
                     <a class="nav-link text-primary ">/</a>
                 </li>
                 <li class="navbar-brand">
-                    <a class="nav-link text-primary" th:href="@{/transaction}">Transfer</a>
+                    <a class="nav-link text-primary" th:href="@{/transfert}">Transfer</a>
                 </li>
             </ul>
         </nav>
@@ -55,9 +54,9 @@
     <div class="container col-10 mb-3">
         <div class=" d-flex justify-content-between">
             <h3 class="mb-3">Send Money</h3>
-            <a type="submit" class="  btn btn-primary btn-lg col-3" th:href="@{/contact}" href="buddy.html"> Add connection </a>
+            <a type="submit" class="  btn btn-primary btn-lg col-3" th:href="@{/buddy}"> Add connection </a>
         </div>
-        <form th:action="@{/transaction}" method="post" class="bg-light border border-secondary rounded mb-4">
+        <form th:action="@{/transfer}" method="post" class="bg-light border border-secondary rounded mb-4">
             <div class="d-flex ">
                 <div class=" d-flex flex-column mt-4 col-9">
                     <small class="mb-2 form-text text-warning text-center">&#9888;Pay My Buddy <b>take 5%</b>
@@ -137,7 +136,7 @@
         </div>
 
         <!------------------------Select page------------------------------------>
-        <form th:action="@{/transferPage}" method="get">
+        <form th:action="@{/transfer}" method="get">
             <nav sec:if="${numberOfPage}">
                 <ul class="pagination justify-content-center ">
                     <li class="page-item ">

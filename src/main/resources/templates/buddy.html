@@ -25,13 +25,13 @@
                 </button>
                 <div>
                     <ul class="navbar-nav-right">
-                        <li class="navbar-brand "><a class="nav-link active text-primary" href=home.html>Home</a></li>
-                        <li class="navbar-brand"><a class="nav-link text-dark" href=transfert.html>Transfer</a></li>
-                        <li class="navbar-brand"><a class="nav-link text-dark" href=profile.html>Profile</a></li>
-                        <li class="navbar-brand"><a class="nav-link text-dark" href=contact.html>Contact</a></li>
+                        <li class="navbar-brand "><a class="nav-link active text-primary" th:href="@{/home}">Home</a></li>
+                        <li class="navbar-brand"><a class="nav-link text-dark" th:href="@{/transfert}">Transfer</a></li>
+                        <li class="navbar-brand"><a class="nav-link text-dark" th:href="@{/profile}">Profile</a></li>
+                        <li class="navbar-brand"><a class="nav-link text-dark" th:href="@{/contact}">Contact</a></li>
                         <li class="navbar-brand"><a sec:authorize="isAuthenticated()" methods="post"
                                                     type="submit" class="nav-link text-dark"
-                                                    href=login.html>Log Off</a></li>
+                                                    th:href="@{/login}">Log Off</a></li>
                     </ul>
                 </div>
             </nav>
