@@ -24,11 +24,13 @@
                 <div>
                     <ul class="navbar-nav-right">
                         <li class="navbar-brand "><a class="nav-link active text-dark" th:href="@{/home}">Home</a></li>
-                        <li class="navbar-brand"><a class="nav-link text-primary" th:href="@{/transfert}">Transfer</a></li>
+                        <li class="navbar-brand"><a class="nav-link text-primary" th:href="@{/transfert}">Transfer</a>
+                        </li>
                         <li class="navbar-brand"><a class="nav-link text-dark" th:href="@{/profile}">Profile</a></li>
                         <li class="navbar-brand"><a class="nav-link text-dark" th:href="@{/contact}">Contact</a></li>
                         <li class="navbar-brand"><a sec:authorize="isAuthenticated()" th:action="@{/logout}"
-                                                    methods="post" type="submit" class="nav-link text-dark" th:href="@{/login}">Log Off</a></li>
+                                                    methods="post" type="submit" class="nav-link text-dark"
+                                                    th:href="@{/login}">Log Off</a></li>
                     </ul>
                 </div>
             </nav>
@@ -152,7 +154,8 @@
                     <li class="page-item ">
                         <button type="submit"
                                 sec:if="${friendTransactionPage.getNumber} != ${friendTransactionPage.getTotalPages} - 1"
-                                class="page-link" sec:value="${friendTransactionPage.getNumber} +1" name="pageNumber">&raquo;
+                                class="page-link" sec:value="${friendTransactionPage.getNumber} +1" name="pageNumber">
+                            &raquo;
                         </button>
                     </li>
                 </ul>

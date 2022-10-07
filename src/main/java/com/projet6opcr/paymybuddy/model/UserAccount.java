@@ -4,7 +4,6 @@ import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.Hibernate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -53,6 +52,8 @@ public class UserAccount implements UserDetails {
 
     @OneToOne
     @JoinColumn(name = "bank_id")
+    @NotBlank
+    @NotNull
     private BankAccount bank;
 
     /******************Ajout d'un ami***********************************/
@@ -92,18 +93,6 @@ public class UserAccount implements UserDetails {
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "owner")      // Table relation
     private List<Relation> listRelations;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        UserAccount userAccount = (UserAccount) o;
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 
     /**
      * @return

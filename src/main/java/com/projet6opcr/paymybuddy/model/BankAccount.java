@@ -29,9 +29,6 @@ public class BankAccount {
     @NotNull
     private String bic;
 
-    @JoinColumn(name = "user_id")
-    @OneToOne(cascade = CascadeType.ALL)
-    private User user_id;
 
     @Override
     public boolean equals(Object o) {
