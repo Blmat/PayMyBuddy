@@ -47,6 +47,7 @@ class UserAccountServiceImplTest {
         userAccount1.setEmail("jboy@email.com");
         userAccount1.setPassword(new BCryptPasswordEncoder().encode("mdp1"));
         userAccount1.setBalance(10.0);
+        userAccount1.setBank(bankAccount);
 
         buddy1 = new UserAccount();
         buddy1.setId(2);
