@@ -28,12 +28,12 @@ public class MainController {
 
     @GetMapping("/home")
     public String getHome() {
-        return "/home";
+        return "home";
     }
 
     @GetMapping("/profile")
     public String getProfile() {
-        return "/profile";
+        return "profile";
     }
 
     @GetMapping("/transfert")
@@ -56,4 +56,8 @@ public class MainController {
         return "bankTransfer";
     }
 
+    @GetMapping("/disconnect")
+    public String getDisconnected() {
+        return "disconnect";
+    }
 }
