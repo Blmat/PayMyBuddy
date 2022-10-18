@@ -20,29 +20,42 @@
             <div class="modal-body p-12 pt-0 pb-3">
                 <h1>Registration</h1></div>
 
-            <form th:action="@{/registration}" method="post">
+            <form th:action="@{/registration}" th:object="${user}" method="post">
                 <div class="modal-body p-12 pt-0 pb-3">
                     <label class="floatingInput" for="firstname"> First Name </label>
-                    <input title="enter your first name here" id="firstname" class="form-control"
+                    <input title="enter your first name here"
+                           th:field="*{firstName}"
+                           id="firstname"
+                           class="form-control"
                            placeholder="first name" required autofocus="autofocus"/>
+                    <p th:if="${#fields.hasErrors('firstName')}" th:errorclass="error" th:errors="*{firstName}"></p>
                 </div>
 
                 <div class="modal-body p-12 pt-0 pb-3">
                     <label class="floatingInput" for="lastName"> Last Name </label>
-                    <input title="enter your last name here" id="lastName" class="form-control"
+                    <input title="enter your last name here" id="lastName"
+                           th:field="*{lastName}"
+                           class="form-control"
                            placeholder="last name" required autofocus="autofocus"/>
+                    <p th:if="${#fields.hasErrors('lastName')}" th:errorclass="error" th:errors="*{lastName}"></p>
                 </div>
 
                 <div class="modal-body p-12 pt-0 pb-3">
                     <label class="floatingInput" for="email"> Email </label>
-                    <input title="enter your email here" id="email" class="form-control" type="email"
+                    <input title="enter your email here" id="email"
+                           th:field="*{email}"
+                           class="form-control" type="email"
                            placeholder=" &#9993; email" required autofocus="autofocus"/>
+                    <p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}"></p>
                 </div>
 
                 <div class="modal-body p-12 pt-0 pb-3">
                     <label class="floatingInput" for="password"> password </label>
-                    <input title="enter your password here" id="password" class="form-control"
+                    <input title="enter your password here" id="password"
+                           th:field="*{password}"
+                           class="form-control"
                            type="password" placeholder="&#8277;Password" required autofocus="autofocus"/>
+                    <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}"></p>
                 </div>
                 <div class="modal-body p-12 pt-0 pb-3">
                     <button type="submit" class="btn btn-success">Register</button>

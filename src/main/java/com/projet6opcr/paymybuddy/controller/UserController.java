@@ -4,7 +4,11 @@ import com.projet6opcr.paymybuddy.dto.UserDTO;
 import com.projet6opcr.paymybuddy.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 @RequiredArgsConstructor
@@ -18,10 +22,19 @@ public class UserController {
         return new UserDTO();
     }
 
+    @GetMapping()
+    public String registration(UserDTO user) {
+        return "registration";
+    }
+
     @PostMapping
-    public String registerUserAccount(@ModelAttribute("user") UserAccount userAccount) {
-        userService.saveUser(userAccount);
-        return "redirect:/registration?success";
+    public String registerUserAccount(@Valid UserDTO user, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "registration";
+        }
+
+        userService.saveUser(user);
+        return "redirect:/login";
     }
 
     @PostMapping("/addFriend")

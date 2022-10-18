@@ -2,10 +2,8 @@ package com.projet6opcr.paymybuddy.service.implementation;
 
 import com.projet6opcr.paymybuddy.constant.Commission;
 import com.projet6opcr.paymybuddy.dto.TransactionDTO;
-import com.projet6opcr.paymybuddy.exception.InsufficientBalanceException;
 import com.projet6opcr.paymybuddy.exception.UserNotFoundException;
 import com.projet6opcr.paymybuddy.model.Transaction;
-import com.projet6opcr.paymybuddy.model.UserAccount;
 import com.projet6opcr.paymybuddy.repository.TransactionRepository;
 import com.projet6opcr.paymybuddy.repository.UserRepository;
 import com.projet6opcr.paymybuddy.service.PrincipalUser;
@@ -25,7 +23,7 @@ public class TransactionServiceImpl implements TransactionService {
     private final PrincipalUser principalUser;
 
     @Override
-    public void sendMoney(String friendEmail,TransactionDTO transactionDTO) {
+    public void sendMoney(String friendEmail, TransactionDTO transactionDTO) {
 
         var debtor = principalUser.getCurrentUserOrThrowException();
 
@@ -40,5 +38,6 @@ public class TransactionServiceImpl implements TransactionService {
         log.info("successful transfer : " + transaction);
 
         transactionRepository.save(transaction);
+        userRepository.saveAll(List.of(debtor, creditor));
     }
 }

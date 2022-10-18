@@ -1,6 +1,5 @@
 package com.projet6opcr.paymybuddy.model;
 
-import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -18,16 +17,22 @@ public class BankAccount {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     @Column(name = "iban",nullable = false)
     private String iban;
 
     @Column(name = "bank_name")
-    @NotNull
     private String accountName;
 
     @Column(name = "bic")
-    @NotNull
     private String bic;
+
+    public BankAccount(String ibanbankaccount, String namebankaccount, String bicbankaccount) {
+        this.iban=ibanbankaccount;
+        this.accountName = namebankaccount;
+        this.bic = bicbankaccount;
+    }
 
 
     @Override

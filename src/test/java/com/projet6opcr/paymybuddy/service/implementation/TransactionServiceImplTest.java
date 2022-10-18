@@ -45,8 +45,8 @@ class TransactionServiceImplTest {
     void setUp() {
         bankAccount1 = new BankAccount("IBANBANKACCOUNT1", "NAMEBANKACCOUNT1", "BICBANKACCOUNT1");
         bankAccount2 = new BankAccount("IBANBANKACCOUNT2", "NAMEBANKACCOUNT2", "BICBANKACCOUNT2");
-        userCreditor = new UserAccount(1, "Jacob", "Boyd", "jBoy@email.com", "456", 30.0,bankAccount1, null, null);
-        userDebtor = new UserAccount(2, "John", "Boyd", "johnBoy@email.com", "123", 20.0, bankAccount2, null,null);
+        userCreditor = new UserAccount(1, "Jacob", "Boyd", "jBoy@email.com", "456", 30.0,bankAccount1, null);
+        userDebtor = new UserAccount(2, "John", "Boyd", "johnBoy@email.com", "123", 20.0, bankAccount2, null);
         transaction1 = new TransactionDTO(10.0, "achat smartphone");
         transaction2 = new TransactionDTO(19.91, "achat chargeur de smartphone");
 

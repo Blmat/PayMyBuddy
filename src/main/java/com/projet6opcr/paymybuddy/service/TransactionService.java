@@ -8,7 +8,6 @@ import java.util.List;
 
 @Service
 public interface TransactionService {
-//    void sendMoney(TransactionDTO transactionDTO);
     void sendMoney(String friendEmail,TransactionDTO transactionDTO);
 
 }

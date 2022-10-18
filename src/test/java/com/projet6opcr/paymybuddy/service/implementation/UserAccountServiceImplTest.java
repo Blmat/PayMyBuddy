@@ -14,8 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -27,25 +26,29 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class UserAccountServiceImplTest {
 
-    @InjectMocks
     UserServiceImpl userService;
 
     @Mock
     UserRepository userRepositoryMock;
 
+    @Mock
+    PrincipalUser principalUser;
+    @Mock
+    PasswordEncoder passwordEncoder;
+
     static UserAccount userAccount1;
     static UserAccount buddy1;
+    BankAccount bankAccount;
 
-    static UserAccount john;
-
-    @BeforeAll
-    static void setUp() {
+    @BeforeEach
+    void setUp() {
+        bankAccount = new BankAccount("IBANBANKACCOUNT1", "NAMEBANKACCOUNT1", "BICBANKACCOUNT1");
         userAccount1 = new UserAccount();
         userAccount1.setId(1);
         userAccount1.setFirstName("Jacob");
         userAccount1.setLastName("Boyd");
         userAccount1.setEmail("jboy@email.com");
-        userAccount1.setPassword(new BCryptPasswordEncoder().encode("mdp1"));
+        userAccount1.setPassword("123456");
         userAccount1.setBalance(10.0);
         userAccount1.setBank(bankAccount);
 
@@ -54,7 +57,9 @@ class UserAccountServiceImplTest {
         buddy1.setFirstName("Tenley");
         buddy1.setLastName("Boyd");
         buddy1.setEmail("tenley@email.com");
-        buddy1.setPassword(new BCryptPasswordEncoder().encode("mdp2"));
+        buddy1.setPassword("123456");
+        buddy1.setBalance(0.0);
+        userService = new UserServiceImpl(userRepositoryMock, principalUser, passwordEncoder);
     }
 
     /******************************addFriendTest******************************/
@@ -140,13 +145,24 @@ class UserAccountServiceImplTest {
 
     @Test
     void saveUserTest() {
+        //Give
+        var newUser = new UserDTO(userAccount1.getFirstName(), userAccount1.getLastName(), userAccount1.getEmail(), userAccount1.getPassword());
+
         // When
-        when(userRepositoryMock.save(any(UserAccount.class))).thenReturn(userAccount1);
+        when(userRepositoryMock.save(any())).thenAnswer(i -> i.getArguments()[0]);
+
         // Then
-        userService.saveUser(userAccount1);
-        userRepositoryMock.save(userAccount1);
-        verify(userRepositoryMock, times(1)).save(userAccount1);
-        assertThat(userAccount1.getFirstName()).isEqualTo(userAccount1.getFirstName());
+        var response =  userService.saveUser(newUser);
+
+
+        verify(userRepositoryMock, times(1)).save(response);
+
+        assertThat(response.getFirstName()).isEqualTo(userAccount1.getFirstName());
+        assertThat(response.getLastName()).isEqualTo(userAccount1.getLastName());
+        assertThat(response.getEmail()).isEqualTo(userAccount1.getEmail());
+        assertThat(response.getPassword()).isEqualTo(userAccount1.getPassword());
+        assertThat(response.getBalance()).isEqualTo(.0);
+        assertThat(response.getBank()).isNull();
 
     }
 

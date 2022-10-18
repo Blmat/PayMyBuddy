@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+>
 
 <head>
     <meta charset="UTF-8">
@@ -22,17 +24,17 @@
             <div class="form-signing">
                 <form th:action="@{/login}" method="post" class="modal-body p-12 pt-3 pb-5">
                     <div class="form-floating mb-2">
-                        <label for="floatingInput"></label>
+                        <label for="username"></label>
                         <input type="email" name="username" title=" enter your email here!"
                                class="form-control rounded-4 mt-3"
-                               id="floatingInput" placeholder=" &#9993; Email">
+                               id="username" placeholder=" &#9993; Email">
                     </div>
 
                     <div class="form-floating mb-4">
-                        <label for="floatingPassword"></label>
+                        <label for="password"></label>
                         <input type="password" name="password" title=" enter your password here!"
                                class="form-control rounded-4 mt-3"
-                               id="floatingPassword" placeholder="&#8277;Password">
+                               id="password" placeholder="&#8277;Password">
                     </div>
                     <div class="row justify-content-center">
                         <div class="center ">

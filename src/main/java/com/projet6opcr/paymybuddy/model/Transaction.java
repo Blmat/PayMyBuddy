@@ -1,5 +1,6 @@
 package com.projet6opcr.paymybuddy.model;
 
+import com.projet6opcr.paymybuddy.dto.TransactionDTO;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -41,7 +42,18 @@ public class Transaction {
     @Column(name = "commission")
     private Double commission;
 
-    public Transaction(int id, int id1, LocalDate now, double amount, String reason) {
+
+    public Transaction(UserAccount debtor, UserAccount creditor, TransactionDTO transactionDTO, Double commission) {
+        if(transactionDTO.getAmount() <= 0 ){
+            throw new IllegalArgumentException("Transaction amount can not be null ot negative");
+        }
+
+        this.debtor = debtor;
+        this.creditor = creditor;
+        this.amount = transactionDTO.getAmount();
+        this.reason = transactionDTO.getReason();
+        this.date = LocalDate.now();
+        this.commission = commission;
     }
 
     @Override

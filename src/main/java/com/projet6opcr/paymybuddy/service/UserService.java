@@ -11,15 +11,11 @@ import java.util.Optional;
 @Service
 public interface UserService {
 
+    UserAccount getConnectedUser();
+
     Optional<UserAccount> findByEmail(String email);
 
-    void saveUser(UserAccount userAccount);
-
     Optional<UserAccount> findUserById(Integer id);
-
-    void deleteUserById(Integer id);
-
-    boolean existsByEmail(String email);
 
     BankAccount addBankAccount(Integer userInt, BankAccount bankAccount);
 
@@ -32,5 +28,5 @@ public interface UserService {
 
     void deleteUserById(Integer id);
 
-    void saveUser(UserAccount userAccount);
+    UserAccount saveUser(UserDTO user);
 }

@@ -10,6 +10,7 @@ import com.projet6opcr.paymybuddy.service.PrincipalUser;
 import com.projet6opcr.paymybuddy.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
@@ -18,43 +19,39 @@ import java.util.Optional;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final PrincipalUser principalUser;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserAccount addFriend(String friendEmail) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        Optional<UserAccount> currentUser = userRepository.findByEmail(username);
-
-        if (currentUser.isPresent()) {
-            Set<UserAccount> contacts = currentUser.get().getFriends();
-            Optional<UserAccount> friend = userRepository.findByEmail(friendEmail);
-            if (friend.isPresent()) {
-                contacts.add((UserAccount) friend.get().getFriends());
-                currentUser.get().setFriends(contacts);
-            }
-        } else {
-           log.error("User not found");
-        }
-        return userRepository.save(currentUser.get());
+        UserAccount currentUser = principalUser.getCurrentUserOrThrowException();
+        var friend = userRepository.findByEmail(friendEmail)
+                .orElseThrow(() -> new UserNotFoundException("User not found with email = " + friendEmail));
+        currentUser.getFriends().add(friend);
+        return userRepository.save(currentUser);
     }
 
 
     @Override
-    public void saveUser(UserAccount userAccount) {
-        UserAccount user = new UserAccount(userAccount.getFirstName(),
-                userAccount.getLastName(), userAccount.getEmail(),
-                userAccount.getPassword());
+    public UserAccount getConnectedUser() {
+        return principalUser.getCurrentUserOrThrowException();
+    }
+
+    @Override
+    public UserAccount saveUser(UserDTO userDTO) {
+
+        UserAccount user = new UserAccount(userDTO);
+        userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
 
         userRepository.save(user);
         log.info(
                 "[UserAccount service] Created a new userAccount with the following information : Mail={} firstName={} lastName={}",
-                userAccount.getEmail(), userAccount.getFirstName(), userAccount.getLastName());
+                user.getEmail(), user.getFirstName(), user.getLastName());
+
+        return user;
     }
 
 
@@ -82,7 +79,8 @@ public class UserServiceImpl implements UserService {
 
         var user = userRepository.findByEmail(userMail)
                 .orElseThrow(() -> new UserNotFoundException("UserAccount not found with this email = " + userMail));
-        user.setBalance(amount);
+        user.creditBalanceAmount(amount);
+
         user = userRepository.save(user);
         log.info(
                 "[Bank service] Money are added.");
@@ -96,16 +94,13 @@ public class UserServiceImpl implements UserService {
      * @param amount Double : l'argent à mettre sur le compte
      */
     @Override
-    public void transferMoney(String friendEmail, Double amount) throws InsufficientBalanceException{
+    public void transferMoney(String friendEmail, Double amount) throws InsufficientBalanceException {
         UserAccount currentUserAccount = principalUser.getCurrentUserOrThrowException();
-         userRepository.findByEmail(friendEmail)
+        userRepository.findByEmail(friendEmail)
                 .orElseThrow(() -> new UserNotFoundException("User not found with email = " + friendEmail));
 
-        if (currentUserAccount.getBalance() - amount >= 0)
-            currentUserAccount.setBalance(currentUserAccount.getBalance() - amount);
-        else {
-            throw new InsufficientBalanceException("sorry you don't have enough money ");
-        }
+        currentUserAccount.debitBalanceAmount(amount);
+
         userRepository.save(currentUserAccount);
     }
 
