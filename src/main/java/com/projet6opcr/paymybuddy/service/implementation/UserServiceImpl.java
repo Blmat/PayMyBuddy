@@ -43,8 +43,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserAccount saveUser(UserDTO userDTO) {
 
-        UserAccount user = new UserAccount(userDTO);
         userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        UserAccount user = new UserAccount(userDTO);
 
         userRepository.save(user);
         log.info(

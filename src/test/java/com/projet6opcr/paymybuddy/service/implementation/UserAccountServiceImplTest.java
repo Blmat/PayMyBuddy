@@ -42,7 +42,10 @@ class UserAccountServiceImplTest {
 
     @BeforeEach
     void setUp() {
+        userService = new UserServiceImpl(userRepositoryMock, principalUser, passwordEncoder);
+
         bankAccount = new BankAccount("IBANBANKACCOUNT1", "NAMEBANKACCOUNT1", "BICBANKACCOUNT1");
+
         userAccount1 = new UserAccount();
         userAccount1.setId(1);
         userAccount1.setFirstName("Jacob");
@@ -59,7 +62,6 @@ class UserAccountServiceImplTest {
         buddy1.setEmail("tenley@email.com");
         buddy1.setPassword("123456");
         buddy1.setBalance(0.0);
-        userService = new UserServiceImpl(userRepositoryMock, principalUser, passwordEncoder);
     }
 
     /******************************addFriendTest******************************/
@@ -146,7 +148,7 @@ class UserAccountServiceImplTest {
     @Test
     void saveUserTest() {
         //Give
-        var newUser = new UserDTO(userAccount1.getFirstName(), userAccount1.getLastName(), userAccount1.getEmail(), userAccount1.getPassword());
+        var newUser = new UserDTO(userAccount1.getFirstName(), userAccount1.getLastName(), userAccount1.getEmail(),userAccount1.getPassword());
 
         // When
         when(userRepositoryMock.save(any())).thenAnswer(i -> i.getArguments()[0]);
@@ -160,7 +162,7 @@ class UserAccountServiceImplTest {
         assertThat(response.getFirstName()).isEqualTo(userAccount1.getFirstName());
         assertThat(response.getLastName()).isEqualTo(userAccount1.getLastName());
         assertThat(response.getEmail()).isEqualTo(userAccount1.getEmail());
-        assertThat(response.getPassword()).isEqualTo(userAccount1.getPassword());
+        assertThat(response.getPassword()).isEqualTo(passwordEncoder.encode(userAccount1.getPassword()));
         assertThat(response.getBalance()).isEqualTo(.0);
         assertThat(response.getBank()).isNull();
 
