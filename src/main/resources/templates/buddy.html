@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <title> Contacts </title>
+
+</head>
+
+<body>
+<div class="container border border-secondary rounded">
+    <header>
+
+        <!-- Navigation menu -->
+        <div>
+            <nav class="navbar navbar-expand border-bottom border-secondary">
+                <button class="btn btn-success center-block" disabled>Pay
+                    my buddy
+                </button>
+                <div>
+                    <ul class="navbar-nav-right">
+                        <li class="navbar-brand "><a class="nav-link active text-primary" th:href="@{/home}">Home</a>
+                        </li>
+                        <li class="navbar-brand"><a class="nav-link text-dark" th:href="@{/transfert}">Transfer</a></li>
+                        <li class="navbar-brand"><a class="nav-link text-dark" th:href="@{/profile}">Profile</a></li>
+                        <li class="navbar-brand"><a class="nav-link text-dark" th:href="@{/contact}">Contact</a></li>
+                        <li class="navbar-brand"><a sec:authorize="isAuthenticated()" methods="post"
+                                                    type="submit" class="nav-link text-dark"
+                                                    th:href="@{/disconnect}">Log Off</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <!-- End Navigation menu -->
+
+        <nav class="navbar navbar-expand bg-light mb-2 mt-0.5">
+            <ul class="navbar-nav">
+                <li class="navbar-brand ">
+                    <a class="nav-link text-dark " th:href="@{/home}">Home</a>
+                </li>
+                <li class="navbar-brand ">
+                    <a class="nav-link text-dark ">/</a>
+                </li>
+                <li class="navbar-brand">
+                    <a class="nav-link text-primary" th:href="@{/buddy}">My Buddy</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <h2 class="text-center mb-5">Your Contacts</h2>
+
+    <div class="text-center mb-4">
+        <button type="button" style="margin-left: 10px" class="btn btn-primary" data-toggle="modal"
+                data-target="#addFriend">
+            Add Friend
+        </button>
+    </div>
+    <div class="modal-dialog">
+        <!-- Modal -->
+        <div class="modal fade justify-content-center" id="addFriend" tabindex="0" aria-labelledby="addFriendLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addFriendLabel">looking for Buddy</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/addFriend" method="get">
+                            <div class="form-group">
+                                <label>Friend's email <input type="text" name="friendEmail" class="form-control">
+                                </label><br>
+                                <button type="submit" class="btn btn-primary">Add</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+                                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+                                crossorigin="anonymous"></script>
+                        <script
+                                src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+                                integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+                                crossorigin="anonymous"></script>
+                        <script
+                                src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+                                integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+                                crossorigin="anonymous"></script>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table">
+            <tr>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Email</th>
+            </tr>
+            <tbody>
+            <tr sec:each="user : ${users}">
+                <td sec:text="${user.getFirstName()}"></td>
+                <td sec:text="${user.getLastName()}"></td>
+                <td sec:text="${user.getEmail()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

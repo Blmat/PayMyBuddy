@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <title> Contacts </title>
+
+</head>
+
+<body>
+<div class="container border border-secondary rounded">
+    <header>
+
+        <!-- Navigation menu -->
+        <div>
+            <nav class="navbar navbar-expand border-bottom border-secondary">
+                <button class="btn btn-success center-block" disabled>Pay
+                    my buddy
+                </button>
+                <div>
+                    <ul class="navbar-nav-right">
+                        <li class="navbar-brand "><a class="nav-link active text-dark" th:href="@{/home}">Home</a></li>
+                        <li class="navbar-brand"><a class="nav-link text-dark" th:href="@{/transfert}">Transfer</a></li>
+                        <li class="navbar-brand"><a class="nav-link text-dark" th:href="@{/profile}">Profile</a></li>
+                        <li class="navbar-brand"><a class="nav-link text-primary" th:href="@{/contact}">Contact</a></li>
+                        <li class="navbar-brand"><a sec:authorize="isAuthenticated()" methods="post"
+                                                    type="submit" class="nav-link text-dark"
+                                                    th:href="@{/disconnect}">Log Off</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <!-- End Navigation menu -->
+
+        <nav class="navbar navbar-expand bg-light mb-2 mt-0.5">
+            <ul class="navbar-nav">
+                <li class="navbar-brand ">
+                    <a class="nav-link text-dark " th:href="@{/home}">Home</a>
+                </li>
+                <li class="navbar-brand ">
+                    <a class="nav-link text-dark ">/</a>
+                </li>
+                <li class="navbar-brand">
+                    <a class="nav-link text-primary" th:href="@{/contact}">Contact</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <h2 class="text-center mb-5">Contact Us</h2>
+
+    <div class="text-center mb-4">
+    </div>
+    <div class="text-center">
+        <small class="form-text mb-2 text-center ">Company</small>
+        <output class="border border-secondary rounded bg-light text-center col-4 "><h4>Pay my buddy.fr</h4></output>
+    </div>
+    <div class="text-center mt-4">
+        <small class="form-text mb-2 text-center  ">address</small>
+        <output class="border border-secondary rounded bg-light text-center col-4 "><h4>address....</h4></output>
+    </div>
+    <div class="text-center mt-4">
+        <small class="form-text mb-2 text-center  ">Email</small>
+        <output class=" mb-3 border border-secondary rounded bg-light text-center col-4 "><h5>
+            contact@paymybuddy.com</h5></output>
+    </div>
+    <div class="text-center mt-4">
+        <small class="form-text mb-2 text-center  ">Phone</small>
+        <output class=" mb-3 border border-secondary rounded bg-light text-center col-4 "><h5>888-555-666</h5></output>
+    </div>
+
+</div>
+</body>
+</html>

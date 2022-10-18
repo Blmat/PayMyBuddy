@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <title>Registration</title>
+
+</head>
+<body>
+
+<div class="modal modal-signin position-static d-block py-5" tabindex="-1" role="dialog" id="modalSigning">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-5 shadow">
+            <div class="modal-header p-5 pb-0 border-bottom-0">
+                <button class="btn btn-logo btn-success btn-lg mx-auto" disabled title="Welcome!" type="button">
+                    Pay My Buddy
+                </button>
+            </div>
+            <div class="modal-body p-12 pt-0 pb-3">
+                <h1>Registration</h1></div>
+
+            <form th:action="@{/registration}" th:object="${user}" method="post">
+                <div class="modal-body p-12 pt-0 pb-3">
+                    <label class="floatingInput" for="firstname"> First Name </label>
+                    <input title="enter your first name here"
+                           th:field="*{firstName}"
+                           id="firstname"
+                           class="form-control"
+                           placeholder="first name" required autofocus="autofocus"/>
+                    <p th:if="${#fields.hasErrors('firstName')}" th:errorclass="error" th:errors="*{firstName}"></p>
+                </div>
+
+                <div class="modal-body p-12 pt-0 pb-3">
+                    <label class="floatingInput" for="lastName"> Last Name </label>
+                    <input title="enter your last name here" id="lastName"
+                           th:field="*{lastName}"
+                           class="form-control"
+                           placeholder="last name" required autofocus="autofocus"/>
+                    <p th:if="${#fields.hasErrors('lastName')}" th:errorclass="error" th:errors="*{lastName}"></p>
+                </div>
+
+                <div class="modal-body p-12 pt-0 pb-3">
+                    <label class="floatingInput" for="email"> Email </label>
+                    <input title="enter your email here" id="email"
+                           th:field="*{email}"
+                           class="form-control" type="email"
+                           placeholder=" &#9993; email" required autofocus="autofocus"/>
+                    <p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}"></p>
+                </div>
+
+                <div class="modal-body p-12 pt-0 pb-3">
+                    <label class="floatingInput" for="password"> password </label>
+                    <input title="enter your password here" id="password"
+                           th:field="*{password}"
+                           class="form-control"
+                           type="password" placeholder="&#8277;Password" required autofocus="autofocus"/>
+                    <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}"></p>
+                </div>
+                <div class="modal-body p-12 pt-0 pb-3">
+                    <button type="submit" class="btn btn-success">Register</button>
+                    <span>Already registered? <a th:href="@{/login}">Login
+								here</a></span>
+                    <button disabled class="btn btn-block mx-auto px-5">Or connect with...</button>
+                    <div class="container">
+
+                        <tr>
+                            <td><a href="/oauth2/authorization/facebook"
+                                   title="lien vers connexion facebook" alt="logo-facebook">Facebook</a></td>
+                        </tr>
+                        <br>
+                        <a href="/oauth2/authorization/google"
+                           title="lien vers connexion google" alt="logo-google">Google</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+
+<body>
+<div class="container border border-secondary rounded">
+    <header>
+        <!-- Navigation menu -->
+        <div>
+            <nav class="navbar navbar-expand border-bottom border-secondary">
+                <button class="btn btn-success center-block" disabled>Pay
+                    my buddy
+                </button>
+                <div>
+                    <ul class="navbar-nav-right">
+                        <li class="navbar-brand "><a class="nav-link text-primary" th:href="@{/home}">Home</a></li>
+                        <li class="navbar-brand"><a class="nav-link text-dark" th:href="@{/transfert}">Transfer</a></li>
+                        <li class="navbar-brand"><a class="nav-link text-dark" th:href="@{/profile}">Profile</a></li>
+                        <li class="navbar-brand"><a class="nav-link text-dark" th:href="@{/contact}">Contact</a></li>
+                        <li class="navbar-brand"><a sec:authorize="isAuthenticated()" methods="post"
+                                                    type="submit" class="nav-link text-dark"
+                                                    th:href="@{/disconnect}">Log Off</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <!-- End Navigation menu -->
+        <nav class="navbar navbar-expand bg-light mb-3 mt-0.5">
+            <ul class="navbar-nav">
+                <li class="navbar-brand ">
+                    <a class="nav-link text-dark " th:href="@{/home}">Home</a>
+                </li>
+                <li class="navbar-brand ">
+                    <a class="nav-link text-dark ">/</a>
+                </li>
+                <li class="navbar-brand">
+                    <a class="nav-link text-primary" th:href="@{/home}">Home</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <h2 class="mt-2">Welcome <span sec:text="${user.getFirstName()}"></span>,</h2>
+    <h3 class="text-center">Your balance<span></span></h3>
+
+    <div class="d-flex justify-content-center ">
+        <div class="d-flex justify-content-center col-4 border border-secondary rounded bg-light ">
+            <h1 sec:text="${user.getBalance()}" class="text-center "></h1>
+            <h1>€</h1>
+        </div>
+    </div>
+    <div class="d-flex mt-5">
+        <div class=" d-flex flex-column border-right border-secondary mb-1 col-6">
+            <div class="d-flex justify-content-start mb-5">
+                <a class="btn btn-primary btn-lg col-9" th:href="@{/banktransfer}"> Withdraw Money </a>
+            </div>
+            <div class="d-flex justify-content-start mb-5">
+                <a class="btn btn-primary btn-lg col-9" th:href="@{/buddy}">My <br> Buddy </a>
+            </div>
+        </div>
+
+        <div class="d-flex flex-column border-left border-secondary mb-1 col-6 ">
+            <div class="d-flex mb-5 justify-content-end">
+                <a class="btn btn-primary btn-lg col-9 " th:href="@{/transfert}"> Transfer
+                    to Buddy </a>
+            </div>
+            <div class="d-flex mb-5 justify-content-end">
+                <a class="btn btn-primary btn-lg col-9" th:href="@{/buddy}">Add <br> Buddy </a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

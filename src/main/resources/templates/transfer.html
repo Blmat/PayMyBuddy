@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>transfer</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+
+<body>
+<div class="container border border-secondary rounded">
+    <header>
+
+        <!-- Navigation menu -->
+        <div>
+            <nav class="navbar navbar-expand border-bottom border-secondary">
+                <button class="btn btn-success center-block" disabled>Pay
+                    my buddy
+                </button>
+                <div>
+                    <ul class="navbar-nav-right">
+                        <li class="navbar-brand "><a class="nav-link active text-dark" th:href="@{/home}">Home</a></li>
+                        <li class="navbar-brand"><a class="nav-link text-primary" th:href="@{/transfert}">Transfer</a>
+                        </li>
+                        <li class="navbar-brand"><a class="nav-link text-dark" th:href="@{/profile}">Profile</a></li>
+                        <li class="navbar-brand"><a class="nav-link text-dark" th:href="@{/contact}">Contact</a></li>
+                        <li class="navbar-brand"><a sec:authorize="isAuthenticated()" th:action="@{/logout}"
+                                                    methods="post" type="submit" class="nav-link text-dark"
+                                                    th:href="@{/disconnect}">Log Off</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <!-- End Navigation menu -->
+
+        <nav class="navbar navbar-expand bg-light mb-2 mt-0.5">
+            <ul class="navbar-nav">
+                <li class="navbar-brand ">
+                    <a class="nav-link text-dark " th:href="@{/home}">Home</a>
+                </li>
+                <li class="navbar-brand ">
+                    <a class="nav-link text-primary ">/</a>
+                </li>
+                <li class="navbar-brand">
+                    <a class="nav-link text-primary" th:href="@{/transfert}">Transfer</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!------------------Send Money view------------------------>
+    <div class="container col-10 mb-3">
+        <div class=" d-flex justify-content-between">
+            <h3 class="mb-3">Send Money</h3>
+            <a type="submit" class="  btn btn-primary btn-lg col-3" th:href="@{/buddy}"> Add connection </a>
+        </div>
+        <form th:action="@{/transfer}" method="post" class="bg-light border border-secondary rounded mb-4">
+            <div class="d-flex ">
+                <div class=" d-flex flex-column mt-4 col-9">
+                    <small class="mb-2 form-text text-warning text-center">&#9888;Pay My Buddy <b>take 5%</b>
+                        commission on all transactions&#9888;</small>
+                    <div class=" d-flex mb-2  ">
+                        <div class="col-8 align-self-center text-right ">
+
+                            <!-------- Select buddy button---------->
+                            <label>
+                                <select class="btn btn-lg border border-secondary text-center col-12 dropdown-toggle "
+                                        type="text"
+                                        name="friendEmail">
+                                    <option>Select A Connection</option>
+                                    <option sec:each="friend : ${friends}" sec:value="${friend.email}"
+                                            sec:text="${friend.firstName} +' '+ ${friend.lastName}"></option>
+                                </select>
+                            </label>
+                        </div>
+                        <!-------------End button-------------->
+
+                        <!-------- Money to transfert---------->
+                        <div class="d-flex col-4">
+                            <div class=" align-self-center ">
+                                <label>
+                                    <input name="amount" size="8"
+                                           class="btn btn-lg border border-secondary text-center col-12"
+                                           placeholder="0€"
+                                           value="0 &euro;">
+                                </label>
+                            </div>
+                            <h2>€</h2>
+                        </div>
+                    </div>
+                    <!-------------End button-------------->
+
+                    <div class="text-center  mb-5 ">
+                        <label>
+                            <input type="text" name="comment" size="50"
+                                   class="btn btn-lg border border-secondary ml-4 col-10" placeholder="Description ...">
+                        </label>
+                        <small id="emailHelpError" sec:if="${error}" sec:text="${error}"
+                               class="form-text text-danger font-weight-bold text-center"></small>
+                        <small id="emailHelpSuccess" sec:if="${success}" sec:text="${success}"
+                               class="form-text text-success font-weight-bold text-center "></small>
+                    </div>
+
+                </div>
+                <div class="col-4 align-self-center">
+                    <button type="submit" class="  btn btn-success btn-lg col-5 pt-3 pb-3 "> Pay</button>
+                </div>
+            </div>
+        </form>
+
+        <!---------------------My Transaction view------------------------------->
+        <div>
+            <h3 class="mb-3">My Transactions</h3>
+            <table class="table table-striped border border-secondary">
+                <thead class="bg-success text-lg-center text-white">
+                <tr>
+                    <th scope="col"><br><h5>Connection</h5><br></th>
+                    <th scope="col"><br><h5>Description</h5><br></th>
+                    <th scope="col"><br><h5>Amount</h5><br></th>
+                </tr>
+                </thead>
+                <tbody class="text-center ">
+                <tr sec:each="friendTransaction : ${friendTransactionPage}">
+                    <td sec:if="${friendTransaction.userName} == ${user.firstName}"><br><h5>
+                        your buddy</h5><br></td>
+                    <td sec:if="${friendTransaction.userName} == ${user.firstName}"><br><h5
+                            sec:text="${friendTransaction.creditorName}">description</h5><br></td>
+                    <td sec:if="${friendTransaction.userName} != ${user.firstName}"><br><h5>
+                        &euro;</h5>
+                        <br></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!------------------------Select page------------------------------------>
+        <form th:action="@{/transfer}" method="get">
+            <nav sec:if="${numberOfPage}">
+                <ul class="pagination justify-content-center ">
+                    <li class="page-item ">
+                        <button type="submit" sec:if="${friendTransactionPage.getNumber} >= 1" class="page-link"
+                                sec:value="${friendTransactionPage.getNumber} -1" name="pageNumber">&laquo;
+                        </button>
+                    </li>
+                    <li class="page-item" sec:each="number : ${numberOfPage}">
+                        <button type="submit" sec:if="${number} != ${friendTransactionPage.getNumber}" class="page-link"
+                                name="pageNumber" sec:value="${number}" sec:text="${number}"></button>
+                        <button type="submit" sec:if="${number} == ${friendTransactionPage.getNumber}" class="page-link"
+                                name="pageNumber" sec:value="${number}"><b sec:text="${number}"></b></button>
+                    <li class="page-item ">
+                        <button type="submit"
+                                sec:if="${friendTransactionPage.getNumber} != ${friendTransactionPage.getTotalPages} - 1"
+                                class="page-link" sec:value="${friendTransactionPage.getNumber} +1" name="pageNumber">
+                            &raquo;
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </form>
+    </div>
+</div>
+</body>
+</html>
