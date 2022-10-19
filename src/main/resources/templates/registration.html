@@ -28,7 +28,6 @@
                            id="firstname"
                            class="form-control"
                            placeholder="first name" required autofocus="autofocus"/>
-                    <p th:if="${#fields.hasErrors('firstName')}" th:errorclass="error" th:errors="*{firstName}"></p>
                 </div>
 
                 <div class="modal-body p-12 pt-0 pb-3">
@@ -37,7 +36,6 @@
                            th:field="*{lastName}"
                            class="form-control"
                            placeholder="last name" required autofocus="autofocus"/>
-                    <p th:if="${#fields.hasErrors('lastName')}" th:errorclass="error" th:errors="*{lastName}"></p>
                 </div>
 
                 <div class="modal-body p-12 pt-0 pb-3">
@@ -46,7 +44,6 @@
                            th:field="*{email}"
                            class="form-control" type="email"
                            placeholder=" &#9993; email" required autofocus="autofocus"/>
-                    <p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}"></p>
                 </div>
 
                 <div class="modal-body p-12 pt-0 pb-3">
@@ -55,9 +52,7 @@
                            th:field="*{password}"
                            class="form-control"
                            type="password" placeholder="&#8277;Password" required autofocus="autofocus"/>
-                    <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}"></p>
                 </div>
-
                 <!-- Erreur dans le mot de passe-->
                 <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
                     The password must have at least 5 characters.

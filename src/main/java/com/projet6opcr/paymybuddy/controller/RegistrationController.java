@@ -4,7 +4,6 @@ import com.projet6opcr.paymybuddy.dto.UserDTO;
 import com.projet6opcr.paymybuddy.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,7 +26,7 @@ public class RegistrationController {
     }
 
     @GetMapping()
-    public String registration(UserDTO user) {
+    public String registration() {
         return "registration";
     }
 

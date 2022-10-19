@@ -40,9 +40,4 @@ public class MainController {
     public String getBankTransfer() {
         return "bankTransfer";
     }
-
-    @GetMapping("/disconnect")
-    public String getDisconnected() {
-        return "redirect/login?disconnect";
-    }
 }
