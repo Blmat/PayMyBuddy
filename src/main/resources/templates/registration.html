@@ -57,6 +57,14 @@
                            type="password" placeholder="&#8277;Password" required autofocus="autofocus"/>
                     <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}"></p>
                 </div>
+
+                <!-- Erreur dans le mot de passe-->
+                <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    The password must have at least 5 characters.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+
                 <div class="modal-body p-12 pt-0 pb-3">
                     <button type="submit" class="btn btn-success">Register</button>
                     <span>Already registered? <a th:href="@{/login}">Login

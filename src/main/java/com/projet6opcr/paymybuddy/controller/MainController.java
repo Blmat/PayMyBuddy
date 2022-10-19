@@ -43,6 +43,6 @@ public class MainController {
 
     @GetMapping("/disconnect")
     public String getDisconnected() {
-        return "disconnect";
+        return "redirect/login?disconnect";
     }
 }

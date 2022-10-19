@@ -12,7 +12,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/registration")
+@RequestMapping("/profile")
 public class UserController {
 
     private final UserService userService;
@@ -20,21 +20,6 @@ public class UserController {
     @ModelAttribute("user")
     public UserDTO userRegistrationDTO() {
         return new UserDTO();
-    }
-
-    @GetMapping()
-    public String registration(UserDTO user) {
-        return "registration";
-    }
-
-    @PostMapping
-    public String registerUserAccount(@Valid UserDTO user, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "registration";
-        }
-
-        userService.saveUser(user);
-        return "redirect:/login";
     }
 
     @PostMapping("/addFriend")
@@ -46,6 +31,6 @@ public class UserController {
     @GetMapping(value = "/addBalance")
     public String addBalance (@RequestParam("amount") String email,Double amount){
         userService.addMoney(email, amount);
-        return "redirect:/home";
+        return "home";
     }
 }
