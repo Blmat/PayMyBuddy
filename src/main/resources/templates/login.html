@@ -20,20 +20,21 @@
                     Pay My Buddy
                 </button>
             </div>
+
             <!-- Message de déconnexion -->
             <div th:if="${param.disconnect}" class="alert alert-danger alert-dismissible fade show" role="alert">
                 You have been disconnected. See you soon.
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <!-- Erreur mot de passe ou email -->
-            <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
-                Mail or password invalid...
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+
+
 
             <div class="form-signing">
                 <form th:action="@{/login}" method="post" class="modal-body p-12 pt-3 pb-5">
                     <div class="form-floating mb-2">
+                        <!-- Erreur mot de passe ou email -->
+                        <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            Mail or password invalid...
+                        </div>
                         <label for="username"></label>
                         <input type="email" name="username" title=" enter your email here!"
                                class="form-control rounded-4 mt-3"
@@ -59,7 +60,6 @@
                     <!-- succès enregistrement -->
                     <div th:if="${param.success}" class="alert alert-success alert-dismissible footer show" role="alert">
                         Successfully registered, you may now login
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                     <div class="modal-header p-5 pb-4 border-bottom-0">
                         <button class="btn btn-primary btn-lg mx-auto px-5 m-2" type="submit">Login</button>
