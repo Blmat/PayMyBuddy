@@ -1,6 +1,6 @@
 package com.projet6opcr.paymybuddy.service.implementation;
 
-import com.projet6opcr.paymybuddy.dto.TransactionDTO;
+import com.projet6opcr.paymybuddy.model.dto.TransactionDTO;
 import com.projet6opcr.paymybuddy.exception.InsufficientBalanceException;
 import com.projet6opcr.paymybuddy.model.BankAccount;
 import com.projet6opcr.paymybuddy.model.UserAccount;

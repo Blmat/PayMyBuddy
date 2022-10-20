@@ -1,11 +1,12 @@
 package com.projet6opcr.paymybuddy.service;
 
-import com.projet6opcr.paymybuddy.dto.UserDTO;
+import com.projet6opcr.paymybuddy.model.dto.UserDTO;
 import com.projet6opcr.paymybuddy.model.BankAccount;
 import com.projet6opcr.paymybuddy.model.UserAccount;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 import java.util.Optional;
 
 @Service

@@ -1,7 +1,7 @@
 package com.projet6opcr.paymybuddy.service.implementation;
 
 import com.projet6opcr.paymybuddy.constant.Commission;
-import com.projet6opcr.paymybuddy.dto.TransactionDTO;
+import com.projet6opcr.paymybuddy.model.dto.TransactionDTO;
 import com.projet6opcr.paymybuddy.exception.UserNotFoundException;
 import com.projet6opcr.paymybuddy.model.Transaction;
 import com.projet6opcr.paymybuddy.repository.TransactionRepository;

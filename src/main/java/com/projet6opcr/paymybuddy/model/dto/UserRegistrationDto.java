@@ -1,4 +1,4 @@
-package com.projet6opcr.paymybuddy.dto;
+package com.projet6opcr.paymybuddy.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,16 +16,16 @@ public class UserRegistrationDto {
 	@Email
 	private String mail;
 
-	@NotBlank(message = "Password must not be empty")
+	@NotBlank
 	private String password;
 
-	@NotBlank(message = "Password confirmation must not be empty")
+	@NotBlank
 	private String passwordConfirmation;
 
-	@NotEmpty(message = "First name field must not be empty")
+	@NotEmpty
 	private String firstName;
 
-	@NotEmpty(message = "Last name field must not be empty")
+	@NotEmpty
 	private String lastName;
 
 }
