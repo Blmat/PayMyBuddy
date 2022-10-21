@@ -2,8 +2,8 @@ package com.projet6opcr.paymybuddy.service.implementation;
 
 import com.projet6opcr.paymybuddy.exception.InsufficientBalanceException;
 import com.projet6opcr.paymybuddy.exception.UserNotFoundException;
-import com.projet6opcr.paymybuddy.model.BankAccount;
 import com.projet6opcr.paymybuddy.model.UserAccount;
+import com.projet6opcr.paymybuddy.model.dto.BankAccountDTO;
 import com.projet6opcr.paymybuddy.model.dto.UserDTO;
 import com.projet6opcr.paymybuddy.repository.UserRepository;
 import com.projet6opcr.paymybuddy.service.PrincipalUser;
@@ -55,8 +55,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    @Override
-    public BankAccount addBankAccount(Integer userId, @Valid BankAccount bankAccount) {
+    public BankAccountDTO addBankAccount(Integer userId, @Valid BankAccountDTO bankAccount) {
         var user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("UserAccount not found with id = " + userId));
         user.setBank(bankAccount);

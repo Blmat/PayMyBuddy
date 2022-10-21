@@ -1,5 +1,6 @@
 package com.projet6opcr.paymybuddy.service.implementation;
 
+import com.projet6opcr.paymybuddy.model.dto.BankAccountDTO;
 import com.projet6opcr.paymybuddy.model.dto.UserDTO;
 import com.projet6opcr.paymybuddy.exception.InsufficientBalanceException;
 import com.projet6opcr.paymybuddy.exception.UserNotFoundException;
@@ -38,13 +39,13 @@ class UserAccountServiceImplTest {
 
     static UserAccount userAccount1;
     static UserAccount buddy1;
-    BankAccount bankAccount;
+    BankAccountDTO bankAccount;
 
     @BeforeEach
     void setUp() {
         userService = new UserServiceImpl(userRepositoryMock, principalUser, passwordEncoder);
 
-        bankAccount = new BankAccount("IBANBANKACCOUNT1", "NAMEBANKACCOUNT1", "BICBANKACCOUNT1");
+        bankAccount = new BankAccountDTO("IBANBANKACCOUNT1", "NAMEBANKACCOUNT1", "BICBANKACCOUNT1");
 
         userAccount1 = new UserAccount();
         userAccount1.setId(1);

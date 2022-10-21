@@ -2,6 +2,7 @@ package com.projet6opcr.paymybuddy.model;
 
 import com.projet6opcr.paymybuddy.constant.Commission;
 import com.projet6opcr.paymybuddy.exception.InsufficientBalanceException;
+import com.projet6opcr.paymybuddy.model.dto.BankAccountDTO;
 import com.projet6opcr.paymybuddy.model.dto.UserDTO;
 import com.sun.istack.NotNull;
 import lombok.*;
@@ -182,6 +183,9 @@ public class UserAccount implements UserDetails {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    public void setBank(BankAccountDTO bankAccount) {
     }
 }
 

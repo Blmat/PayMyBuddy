@@ -1,9 +1,11 @@
 package com.projet6opcr.paymybuddy.model;
 
+import com.projet6opcr.paymybuddy.model.dto.BankAccountDTO;
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import java.util.Objects;
 
 @Entity
@@ -12,8 +14,8 @@ import java.util.Objects;
 @Setter
 @ToString
 @AllArgsConstructor
-@NoArgsConstructor
-public class BankAccount {
+@RequiredArgsConstructor
+public class BankAccount extends @Valid BankAccountDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,10 +30,14 @@ public class BankAccount {
     @Column(name = "bic")
     private String bic;
 
-    public BankAccount(String ibanbankaccount, String namebankaccount, String bicbankaccount) {
-        this.iban=ibanbankaccount;
-        this.accountName = namebankaccount;
-        this.bic = bicbankaccount;
+
+    public BankAccount(BankAccountDTO bankAccountDTO) {
+        this.iban = bankAccountDTO.getIban();
+        this.accountName = bankAccountDTO.getBankName();
+        this.iban = bankAccountDTO.getIban();
+    }
+
+    public void getBank(BankAccountDTO bankAccountDTO) {
     }
 
 

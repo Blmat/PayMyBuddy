@@ -4,6 +4,7 @@ import com.projet6opcr.paymybuddy.model.dto.UserDTO;
 import com.projet6opcr.paymybuddy.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -19,13 +20,17 @@ public class UserController {
     }
 
     @PostMapping("/addFriend")
-    public String addFriend(@RequestParam("friendEmail") String email){
+    public String addFriend(@RequestParam("friendEmail") String email, BindingResult result) {
+
+        if (result.hasErrors()) {
+            return "redirect:/buddy?error";
+        }
         userService.addFriend(email);
-        return "buddy";
+        return "redirect:/buddy?success";
     }
 
     @GetMapping(value = "/addBalance")
-    public String addBalance (@RequestParam("amount") String email,Double amount){
+    public String addBalance(@RequestParam("amount") String email, Double amount) {
         userService.addMoney(email, amount);
         return "home";
     }
