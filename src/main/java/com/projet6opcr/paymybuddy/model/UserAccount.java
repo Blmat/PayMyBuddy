@@ -1,9 +1,9 @@
 package com.projet6opcr.paymybuddy.model;
 
 import com.projet6opcr.paymybuddy.constant.Commission;
-import com.projet6opcr.paymybuddy.exception.InsufficientBalanceException;
 import com.projet6opcr.paymybuddy.model.dto.BankAccountDTO;
 import com.projet6opcr.paymybuddy.model.dto.UserDTO;
+import com.projet6opcr.paymybuddy.exception.InsufficientBalanceException;
 import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -74,6 +74,7 @@ public class UserAccount implements UserDetails {
         this.lastName = userDTO.getLastName();
         this.email = userDTO.getEmail();
         this.password = userDTO.getPassword();
+        this.balance = .0;
     }
 
     /********************Constructeur pour la connexion********************/
@@ -83,6 +84,11 @@ public class UserAccount implements UserDetails {
     }
 
     /**********************************************************************/
+
+
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
+//    @ToString.Exclude      // Table relation
+//    private List<Relation> listRelations;
 
 
     @Override

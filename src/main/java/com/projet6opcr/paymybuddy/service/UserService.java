@@ -17,7 +17,7 @@ public interface UserService {
 
     Optional<UserAccount> findUserById(Integer id);
 
-    BankAccountDTO addBankAccount(Integer userInt, BankAccountDTO bankAccount);
+    BankAccount addBankAccount(Integer userInt, BankAccountDTO bankAccount);
 
     void transferMoney(String friendEmail, Double amount);
 
