@@ -21,8 +21,8 @@ public class UserController {
     }
 
     @GetMapping(value = "/addBalance")
-    public String getBalance(String email, Double amount) {
-        userService.addMoney(email, amount);
+    public String getBalance(Double amount) {
+        userService.addMoney( amount);
         return "home";
     }
 

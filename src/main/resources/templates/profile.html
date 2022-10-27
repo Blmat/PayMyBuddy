@@ -80,61 +80,82 @@
     </div>
 
 
-    <!--------------------Bouton pour ajouter une banque------------------------------>
+    <!--------------------Bouton pour ajouter une banque---------------------------------->
     <div class="text-center mb-4">
         <button type="button" style="..." class="btn btn-primary" data-toggle="modal"
                 data-target="#addBank">
             Add Bank
         </button>
     </div>
+    <!---------------------------Bouton supprimer----------------------------------------->
+    <div class="text-center mb-4">
+        <button type="button" style="..." class="btn btn-danger" data-toggle="modal"
+                data-target="#deleteBank">
+            Delete Bank
+        </button>
+    </div>
     <div class="modal-dialog">
 
         <!-- Modal -->
-        <div class="modal fade justify-content-center" id="addBank" tabindex="0" aria-labelledby="addBankLabel"
+        <div class="modal fade justify-content-center" id="supBank" tabindex="0" aria-labelledby="supBankLabel"
              aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addBankLabel">Add your bank informations</h5>
+                        <h5 class="modal-title" id="supBankLabel">Delete your bank</h5>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!---------------------------Fin bouton supprimer------------------------------------->
+    <!-- Modal -->
+    <div class="modal fade justify-content-center" id="addBank" tabindex="0" aria-labelledby="addBankLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addBankLabel">Add your bank informations</h5>
+                </div>
+
+                <form th:action="@{/profile}" th:object="${bank}" method="post">
+                    <div class="modal-body p-12 pt-0 pb-3">
+                        <label class="floatingInput" for="Bank Name"> Bank Name </label>
+                        <input title="Enter the name of your bank "
+                               th:field="*{bankName}"
+                               id="Bank Name"
+                               class="form-control"
+                               placeholder="Bank Name" required autofocus="autofocus"/>
                     </div>
 
-                    <form th:action="@{/profile}" th:object="${bank}" method="post">
-                        <div class="modal-body p-12 pt-0 pb-3">
-                            <label class="floatingInput" for="Bank Name"> Bank Name </label>
-                            <input title="Enter the name of your bank "
-                                   th:field="*{bankName}"
-                                   id="Bank Name"
-                                   class="form-control"
-                                   placeholder="Bank Name" required autofocus="autofocus"/>
-                        </div>
+                    <div class="modal-body p-12 pt-0 pb-3">
+                        <label class="floatingInput" for="IBAN"> IBAN </label>
+                        <input title="IBAN" id="IBAN"
+                               th:field="*{iban}"
+                               class="form-control"
+                               placeholder="IBAN" required autofocus="autofocus"/>
+                    </div>
 
-                        <div class="modal-body p-12 pt-0 pb-3">
-                            <label class="floatingInput" for="IBAN"> IBAN </label>
-                            <input title="IBAN" id="IBAN"
-                                   th:field="*{iban}"
-                                   class="form-control"
-                                   placeholder="IBAN" required autofocus="autofocus"/>
-                        </div>
+                    <div class="modal-body p-12 pt-0 pb-3">
+                        <label class="floatingInput" for="bic"> BIC </label>
+                        <input title="BIC" id="BIC"
+                               th:field="*{bic}"
+                               class="form-control"
+                               placeholder=" BIC" required autofocus="autofocus"/>
+                    </div>
+                    <div class="modal-body">
 
-                        <div class="modal-body p-12 pt-0 pb-3">
-                            <label class="floatingInput" for="bic"> BIC </label>
-                            <input title="BIC" id="BIC"
-                                   th:field="*{bic}"
-                                   class="form-control"
-                                   placeholder=" BIC" required autofocus="autofocus"/>
-                        </div>
-                        <div class="modal-body">
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                    <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                        No sign '-' ',' '£' '&' etc... are allowed
+                    </div>
 
-                            <button type="submit" class="btn btn-primary">Add</button>
-                </div>
-                <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
-                    No sign '-' ',' '£' '&' etc... are allowed
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-                    </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -152,7 +173,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="bank : ${bank}">
+    <tr th:each="profile : ${bank}">
         <td th:text="${bank.getBankName()}"></td>
         <td th:text="${bank.getIban()}"></td>
         <td th:text="${bank.getBic()}"></td>

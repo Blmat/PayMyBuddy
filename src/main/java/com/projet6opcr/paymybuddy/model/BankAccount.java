@@ -41,6 +41,13 @@ public class BankAccount extends @Valid BankAccountDTO {
         this.iban = bankAccountDTO.getIban();
     }
 
+    public BankAccount(UserAccount user, String bankName, String iban, String bic) {
+        this.userId = user;
+        this.accountName = bankName;
+        this.iban = iban;
+        this.bic = bic;
+    }
+
     public void getBank(BankAccountDTO bankAccountDTO) {
     }
 

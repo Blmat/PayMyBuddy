@@ -17,15 +17,17 @@ public interface UserService {
 
     Optional<UserAccount> findUserById(Integer id);
 
-    BankAccount addBankAccount(Integer userInt, BankAccountDTO bankAccount);
+    BankAccount addBankAccount(BankAccountDTO bankAccount);
 
     void transferMoney(String friendEmail, Double amount);
 
     UserAccount addFriend(String friendEmail);
 
-    Double addMoney(String userMail, Double amount);
+    Double addMoney(Double amount);
 
     void deleteUserById(Integer id);
 
     UserAccount saveUser(UserDTO user);
+
+    void deleteBank(BankAccount bankAccount);
 }

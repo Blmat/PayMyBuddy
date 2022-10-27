@@ -56,13 +56,15 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public BankAccount addBankAccount(Integer userId, BankAccountDTO bankAccount) {
-        var user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("UserAccount not found with id = " + userId));
-        user.setBank(bankAccount);
-        user = userRepository.save(user);
+    public BankAccount addBankAccount( BankAccountDTO bankAccount) {
+
+        var user = principalUser.getCurrentUserOrThrowException();
+        BankAccount bank = new BankAccount(user, bankAccount.getBankName(), bankAccount.getIban(), bankAccount.getBic());
+        user.setBank(bank);
+        userRepository.save(user);
         log.info(
-                "[Bank service] Created a new bank account");
+                "[Bank service] Created a new bank account with the following information : Bank name={} IBAN={} BIC={}",
+                bankAccount.getBankName(), bankAccount.getIban(), bankAccount.getBic());
 
         return user.getBank();
     }
@@ -70,15 +72,12 @@ public class UserServiceImpl implements UserService {
     /**
      * Cette méthode sert à ajouter de l'argent sur le compte d'un utilisateur
      *
-     * @param userMail String : le mail de la personne qui se connecte
      * @param amount   Double : l'argent à mettre sur le compte
      * @return la somme qu'il y a sur le compte de l'utilisateur.
      */
     @Override
-    public @NotBlank Double addMoney(String userMail, Double amount) {
-
-        var user = userRepository.findByEmail(userMail)
-                .orElseThrow(() -> new UserNotFoundException("UserAccount not found with this email = " + userMail));
+    public Double addMoney( Double amount) {
+        var user = principalUser.getCurrentUserOrThrowException();
         user.creditBalanceAmount(amount);
 
         user = userRepository.save(user);
@@ -117,6 +116,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUserById(Integer id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteBank(BankAccount bankAccount){
+        Optional<UserAccount> removeBank = userRepository.findById(bankAccount.getId());
+        if (removeBank.isPresent())
+            userRepository.deleteById(bankAccount.getId());
     }
 
 }

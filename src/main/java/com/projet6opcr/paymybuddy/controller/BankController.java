@@ -32,15 +32,20 @@ public class BankController {
     }
 
     @PostMapping("/profile")
-    public String addBankAccount(UserAccount userAccount, @Valid BankAccountDTO bankAccountDTO, Errors errors) {
+    public String addBankAccount(@ModelAttribute("bank") BankAccountDTO bankAccountDTO, Errors errors) {
         log.debug("Add bank account");
 
         if (errors.hasErrors()) {
             log.error(errors.toString());
             return "redirect:/profile?error";
         }
-        userService.addBankAccount(userAccount.getUserId(),bankAccountDTO);
+        userService.addBankAccount(bankAccountDTO);
         log.debug("the bank is now attached to the account : " + bankAccountDTO.toString());
         return "redirect:/profile?success";
     }
+    @GetMapping("/bank")
+    public String getBankTransfer() {
+        return "bankTransfer";
+    }
+
 }
