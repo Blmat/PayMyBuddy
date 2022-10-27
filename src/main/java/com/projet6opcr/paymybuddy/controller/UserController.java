@@ -4,34 +4,40 @@ import com.projet6opcr.paymybuddy.model.dto.UserDTO;
 import com.projet6opcr.paymybuddy.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/profile")
 public class UserController {
 
     private final UserService userService;
 
-    @ModelAttribute("user")
-    public UserDTO userRegistrationDTO() {
+    @ModelAttribute("friend")
+    public UserDTO friendRegistration() {
         return new UserDTO();
     }
 
-    @PostMapping("/addFriend")
-    public String addFriend(@RequestParam("friendEmail") String email, BindingResult result) {
+    @GetMapping(value = "/addBalance")
+    public String getBalance(String email, Double amount) {
+        userService.addMoney(email, amount);
+        return "home";
+    }
+
+    @GetMapping("/buddy")
+    public String getBuddy() {
+        return "buddy";
+    }
+
+    @PostMapping("/add_buddy")
+    public String addFriend(String email, Errors result) {
 
         if (result.hasErrors()) {
             return "redirect:/buddy?error";
         }
         userService.addFriend(email);
         return "redirect:/buddy?success";
-    }
-
-    @GetMapping(value = "/addBalance")
-    public String addBalance(@RequestParam("amount") String email, Double amount) {
-        userService.addMoney(email, amount);
-        return "home";
     }
 }

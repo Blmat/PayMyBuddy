@@ -21,6 +21,10 @@ public class BankAccount extends @Valid BankAccountDTO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "userId")
+    private UserAccount userId;
+
     @Column(name = "iban",nullable = false)
     private String iban;
 

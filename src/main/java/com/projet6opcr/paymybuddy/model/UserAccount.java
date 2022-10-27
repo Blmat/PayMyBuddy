@@ -28,7 +28,7 @@ public class UserAccount implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Integer userId;
 
     @Column(name = "firstname")
     @NotNull
@@ -54,7 +54,7 @@ public class UserAccount implements UserDetails {
     @Column(name = "balance", nullable = false)
     private Double balance = .0;
 
-    @OneToOne
+    @OneToOne(mappedBy = "userId", fetch = FetchType.EAGER)
     @JoinColumn(name = "bank_id")
     private BankAccount bank;
 
@@ -85,10 +85,6 @@ public class UserAccount implements UserDetails {
 
     /**********************************************************************/
 
-
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
-//    @ToString.Exclude      // Table relation
-//    private List<Relation> listRelations;
 
 
     @Override
@@ -183,7 +179,7 @@ public class UserAccount implements UserDetails {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         UserAccount that = (UserAccount) o;
-        return id != null && Objects.equals(id, that.id);
+        return userId != null && Objects.equals(userId, that.userId);
     }
 
     @Override

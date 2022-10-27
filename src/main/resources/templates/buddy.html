@@ -9,14 +9,13 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
 
-    <title> Contacts </title>
+    <title> Buddy </title>
 
 </head>
 
 <body>
 <div class="container border border-secondary rounded">
     <header>
-
         <!-- Navigation menu -->
         <div>
             <nav class="navbar navbar-expand border-bottom border-secondary">
@@ -71,16 +70,31 @@
                         <h5 class="modal-title" id="addFriendLabel">looking for Buddy</h5>
                     </div>
                     <div class="modal-body">
-                        <form action="/addFriend" method="get">
-                            <div class="form-group">
-                                <label>Friend's email <input type="text" name="friendEmail" class="form-control">
-                                </label><br>
+                        <form th:action="@{/buddy}" th:object="${friend}" method="post">
+                            <div class="modal-body p-12 pt-0 pb-3">
+                                <label class="floatingInput" for="FriendEmail"> Friend email </label>
+                                <input title="Enter your friend's email address"
+                                       th:field="*{email}"
+                                       id="FriendEmail"
+                                       class="form-control"
+                                       placeholder="Friend'email" required autofocus="autofocus"/>
+                                <br>
                                 <button type="submit" class="btn btn-primary">Add</button>
+
                             </div>
+
+
+
+<!--                            <div class="form-group">-->
+<!--                                <form th:action="@{/buddy}" th:object="${friend}" method="post">-->
+<!--                                <label>Friend's email <input type="text" name="friendEmail" class="form-control">-->
+<!--                                </label><br>-->
+<!--                                <button type="submit" class="btn btn-primary">Add</button>-->
+<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
                         </form>
                     </div>
                     <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
-                        You already know this buddy or any user with this email, or you can't add yourself in friends...
+                        You already know this buddy, or you can't add yourself in friends...
                     </div>
 
                     <div class="modal-footer">
@@ -103,10 +117,10 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="user : ${users}">
-            <td th:text="${user.getFirstName()}"></td>
-            <td th:text="${user.getLastName()}"></td>
-            <td th:text="${user.getEmail()}"></td>
+        <tr th:each="buddy : ${friend}">
+            <td th:text="${friend.getFirstName()}"></td>
+            <td th:text="${friend.getLastName()}"></td>
+            <td th:text="${friend.getEmail()}"></td>
         </tr>
         </tbody>
     </table>
@@ -122,6 +136,7 @@
             src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
             integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
             crossorigin="anonymous"></script>
+</div>
 </div>
 </body>
 </html>

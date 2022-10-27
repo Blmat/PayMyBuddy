@@ -1,11 +1,10 @@
 package com.projet6opcr.paymybuddy.service.implementation;
 
-import com.projet6opcr.paymybuddy.model.dto.BankAccountDTO;
-import com.projet6opcr.paymybuddy.model.dto.UserDTO;
 import com.projet6opcr.paymybuddy.exception.InsufficientBalanceException;
 import com.projet6opcr.paymybuddy.exception.UserNotFoundException;
-import com.projet6opcr.paymybuddy.model.BankAccount;
 import com.projet6opcr.paymybuddy.model.UserAccount;
+import com.projet6opcr.paymybuddy.model.dto.BankAccountDTO;
+import com.projet6opcr.paymybuddy.model.dto.UserDTO;
 import com.projet6opcr.paymybuddy.repository.UserRepository;
 import com.projet6opcr.paymybuddy.service.PrincipalUser;
 import org.assertj.core.api.Assertions;
@@ -28,10 +27,8 @@ import static org.mockito.Mockito.*;
 class UserAccountServiceImplTest {
 
     UserServiceImpl userService;
-
     @Mock
     UserRepository userRepositoryMock;
-
     @Mock
     PrincipalUser principalUser;
     @Mock
@@ -48,7 +45,7 @@ class UserAccountServiceImplTest {
         bankAccount = new BankAccountDTO("IBANBANKACCOUNT1", "NAMEBANKACCOUNT1", "BICBANKACCOUNT1");
 
         userAccount1 = new UserAccount();
-        userAccount1.setId(1);
+        userAccount1.setUserId(1);
         userAccount1.setFirstName("Jacob");
         userAccount1.setLastName("Boyd");
         userAccount1.setEmail("jboy@email.com");
@@ -57,7 +54,7 @@ class UserAccountServiceImplTest {
         userAccount1.setBank(bankAccount);
 
         buddy1 = new UserAccount();
-        buddy1.setId(2);
+        buddy1.setUserId(2);
         buddy1.setFirstName("Tenley");
         buddy1.setLastName("Boyd");
         buddy1.setEmail("tenley@email.com");
@@ -80,7 +77,7 @@ class UserAccountServiceImplTest {
         // Then
         Assertions.assertThat(response)
                 .satisfies(u -> {
-                    Assertions.assertThat(u.getId()).isEqualTo(userAccount1.getId());
+                    Assertions.assertThat(u.getUserId()).isEqualTo(userAccount1.getUserId());
                     Assertions.assertThat(u.getFriends()).contains(buddy1);
                 });
     }
@@ -140,7 +137,7 @@ class UserAccountServiceImplTest {
         assertThat(response)
                 .satisfies(u -> {
                     assertThat(u).isPresent();
-                    assertThat(u.get().getId()).isEqualTo(1);
+                    assertThat(u.get().getUserId()).isEqualTo(1);
                     assertThat(u.get().getEmail()).isEqualTo("jboy@email.com");
                     assertThat(u.get().getFirstName()).isEqualTo("Jacob");
                 });
@@ -149,13 +146,13 @@ class UserAccountServiceImplTest {
     @Test
     void saveUserTest() {
         //Give
-        var newUser = new UserDTO(userAccount1.getFirstName(), userAccount1.getLastName(), userAccount1.getEmail(),userAccount1.getPassword());
+        var newUser = new UserDTO(userAccount1.getFirstName(), userAccount1.getLastName(), userAccount1.getEmail(), userAccount1.getPassword());
 
         // When
         when(userRepositoryMock.save(any())).thenAnswer(i -> i.getArguments()[0]);
 
         // Then
-        var response =  userService.saveUser(newUser);
+        var response = userService.saveUser(newUser);
 
 
         verify(userRepositoryMock, times(1)).save(response);
@@ -179,7 +176,7 @@ class UserAccountServiceImplTest {
 
         assertThat(response).isPresent();
         assertThat(response.get().getEmail()).isEqualTo("jboy@email.com");
-        assertThat(response.get().getId()).isEqualTo(1);
+        assertThat(response.get().getUserId()).isEqualTo(1);
         assertThat(response.get().getLastName()).isEqualTo("Boyd");
     }
 
@@ -195,9 +192,9 @@ class UserAccountServiceImplTest {
     @Test
     void deleteUserByIdTest() {
         // Then
-        userService.deleteUserById(userAccount1.getId());
+        userService.deleteUserById(userAccount1.getUserId());
 
-        verify(userRepositoryMock, times(1)).deleteById(userAccount1.getId());
+        verify(userRepositoryMock, times(1)).deleteById(userAccount1.getUserId());
     }
 
     /***************************************addBankAccountTest**************************************************************/
@@ -205,7 +202,7 @@ class UserAccountServiceImplTest {
     @DisplayName("ajout d'un compte bancaire d'une personne existante dans la BDD")
     void addBankAccountTest() {
         //WHEN
-        lenient().when(userRepositoryMock.findById(userAccount1.getId())).thenReturn(Optional.of(userAccount1));
+        lenient().when(userRepositoryMock.findById(userAccount1.getUserId())).thenReturn(Optional.of(userAccount1));
         when(userRepositoryMock.save(any())).thenAnswer(i -> i.getArguments()[0]);
 
         var response = userService.addBankAccount(1, userAccount1.getBank());
@@ -213,7 +210,7 @@ class UserAccountServiceImplTest {
         //Then
         Assertions.assertThat(response)
                 .satisfies(u -> {
-                    Assertions.assertThat(userAccount1.getId()).isEqualTo(1);
+                    Assertions.assertThat(userAccount1.getUserId()).isEqualTo(1);
                     Assertions.assertThat(userAccount1.getBalance()).isEqualTo(10.0);
                 });
     }
@@ -221,7 +218,7 @@ class UserAccountServiceImplTest {
     @Test
     @DisplayName("Personne non présente dans la BDD")
     void addBankAccountErrorTest() {
-        var response = assertThrows(UserNotFoundException.class, () -> userService.addBankAccount(userAccount1.getId(), userAccount1.getBank()));
+        var response = assertThrows(UserNotFoundException.class, () -> userService.addBankAccount(userAccount1.getUserId(), userAccount1.getBank()));
 
         assertThat(response).hasMessage("UserAccount not found with id = 1");
     }
