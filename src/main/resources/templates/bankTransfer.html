@@ -83,11 +83,12 @@
                             <select class=" btn btn-lg border border-secondary dropdown-toggle  col-12"
                                     type="text" name="accountType">
                                 <option>Select Bank Account</option>
-                                <option th:each="bankAccount : ${bankAccounts}" sec:value="${bankAccount.accountType}"
-                                        th:text="${bankAccount.accountType}"></option>
+                                <option sec:each="bankAccount : ${bankAccounts}" sec:value="${bankAccount.accountType}"
+                                        sec:text="${bankAccount.accountType}"></option>
                             </select>
                         </label>
-                        <small th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">Error selection</small>
+                        <small sec:if="${bankError}" sec:text="${bankError}"
+                               class="form-text text-danger font-weight-bold text-center"></small>
                     </div>
                     <div class="text-center align-self-center col-3">
                         <label>
@@ -98,7 +99,7 @@
                         </label>
                     </div>
                     <div class="col-3 border border-secondary rounded bg-white">
-                        <h1 th:text="${user.getBalance()}" size="8" class="text-center bg-white"></h1>
+                        <h1 sec:text="${user.getBalance()}" size="8" class="text-center bg-white"></h1>
                     </div>
                 </div>
                 <br>

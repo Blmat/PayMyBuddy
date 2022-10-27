@@ -69,7 +69,7 @@ class UserAccountServiceImplTest {
         //GIVEN
         //WHEN
         when(principalUser.getCurrentUserOrThrowException()).thenReturn(userAccount1);
-        lenient().when(userRepositoryMock.findByEmail(userAccount1.getEmail())).thenReturn(Optional.of(buddy1));
+        when(userRepositoryMock.findByEmail(userAccount1.getEmail())).thenReturn(Optional.of(buddy1));
         when(userRepositoryMock.save(any())).thenAnswer(i -> i.getArguments()[0]);
 
         var response = userService.addFriend(userAccount1.getEmail());
@@ -88,7 +88,7 @@ class UserAccountServiceImplTest {
         //GIVEN
         //WHEN
         when(principalUser.getCurrentUserOrThrowException()).thenReturn(userAccount1);
-        lenient().when(userRepositoryMock.findByEmail(userAccount1.getEmail())).thenReturn(Optional.of(buddy1));
+        when(userRepositoryMock.findByEmail(userAccount1.getEmail())).thenReturn(Optional.of(buddy1));
 
         var response = userService.addFriend(userAccount1.getEmail());
 
@@ -201,11 +201,14 @@ class UserAccountServiceImplTest {
     @Test
     @DisplayName("ajout d'un compte bancaire d'une personne existante dans la BDD")
     void addBankAccountTest() {
+        //Given
+        when(principalUser.getCurrentUserOrThrowException()).thenReturn(userAccount1);
+        final var bankAccountDto = new BankAccountDTO("IBANBANKACCOUNT1", "NAMEBANKACCOUNT1", "BICBANKACCOUNT1");
+
         //WHEN
-        lenient().when(userRepositoryMock.findById(userAccount1.getUserId())).thenReturn(Optional.of(userAccount1));
         when(userRepositoryMock.save(any())).thenAnswer(i -> i.getArguments()[0]);
 
-        var response = userService.addBankAccount(1, userAccount1.getBank());
+        var response = userService.addBankAccount(bankAccountDto);
 
         //Then
         Assertions.assertThat(response)
@@ -218,7 +221,11 @@ class UserAccountServiceImplTest {
     @Test
     @DisplayName("Personne non présente dans la BDD")
     void addBankAccountErrorTest() {
-        var response = assertThrows(UserNotFoundException.class, () -> userService.addBankAccount(userAccount1.getUserId(), userAccount1.getBank()));
+        when(principalUser.getCurrentUserOrThrowException()).thenThrow(new UserNotFoundException("UserAccount not found with id = 1"));
+
+        final var bankAccountDto = new BankAccountDTO("IBANBANKACCOUNT1", "NAMEBANKACCOUNT1", "BICBANKACCOUNT1");
+
+        var response = assertThrows(UserNotFoundException.class, () -> userService.addBankAccount( bankAccountDto));
 
         assertThat(response).hasMessage("UserAccount not found with id = 1");
     }
@@ -228,13 +235,14 @@ class UserAccountServiceImplTest {
     @DisplayName("ajout de money sur un compte existant")
     void addMoneyTest() {
         //GIVEN
-        lenient().when(userRepositoryMock.findByEmail(userAccount1.getEmail())).thenReturn(Optional.of(userAccount1));
+        when(principalUser.getCurrentUserOrThrowException()).thenReturn(userAccount1);
         when(userRepositoryMock.save(any())).thenAnswer(i -> i.getArguments()[0]);
         //WHEN
-        var response = userService.addMoney(userAccount1.getEmail(), userAccount1.getBalance());
+        var response = userService.addMoney( userAccount1.getBalance());
 
         //THEN
         Assertions.assertThat(response)
+                .isNotNull()
                 .satisfies(u -> {
                     Assertions.assertThat(userAccount1.getEmail()).isEqualTo(userAccount1.getEmail());
                     Assertions.assertThat(userAccount1.getBalance()).isEqualTo(userAccount1.getBalance());
@@ -244,7 +252,10 @@ class UserAccountServiceImplTest {
     @Test
     @DisplayName("ajout de money sur un compte non existant")
     void addMoneyErrorTest() {
-        var response = assertThrows(UserNotFoundException.class, () -> userService.addMoney(userAccount1.getEmail(), userAccount1.getBalance()));
+        //WHEN
+        when(principalUser.getCurrentUserOrThrowException()).thenThrow(new UserNotFoundException("KO"));
+
+        var response = assertThrows(UserNotFoundException.class, () -> userService.addMoney( userAccount1.getBalance()));
 
         assertThat(response).hasMessage("UserAccount not found with this email = " + userAccount1.getEmail());
     }
@@ -255,7 +266,7 @@ class UserAccountServiceImplTest {
     void transfertMoneyTest() {
         //WHEN
         when(principalUser.getCurrentUserOrThrowException()).thenReturn(userAccount1);
-        lenient().when(userRepositoryMock.findByEmail(buddy1.getEmail())).thenReturn(Optional.of(buddy1));
+        when(userRepositoryMock.findByEmail(buddy1.getEmail())).thenReturn(Optional.of(buddy1));
 
         when(userRepositoryMock.save(userAccount1)).thenAnswer(i -> i.getArguments()[0]);
 
@@ -269,7 +280,7 @@ class UserAccountServiceImplTest {
     @DisplayName("transfert d'argent avec fond insuffisant")
     void transfertMoneyErrorTest() {
         when(principalUser.getCurrentUserOrThrowException()).thenReturn(userAccount1);
-        lenient().when(userRepositoryMock.findByEmail(buddy1.getEmail())).thenReturn(Optional.of(buddy1));
+        when(userRepositoryMock.findByEmail(buddy1.getEmail())).thenReturn(Optional.of(buddy1));
 
         var response = assertThrows(InsufficientBalanceException.class, () -> userService.transferMoney(buddy1.getEmail(), 20.0));
         assertThat(response).hasMessage("sorry you don't have enough money ");

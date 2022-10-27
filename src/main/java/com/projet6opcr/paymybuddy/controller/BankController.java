@@ -43,9 +43,6 @@ public class BankController {
         log.debug("the bank is now attached to the account : " + bankAccountDTO.toString());
         return "redirect:/profile?success";
     }
-    @GetMapping("/bank")
-    public String getBankTransfer() {
-        return "bankTransfer";
-    }
+
 
 }
