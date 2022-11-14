@@ -1,0 +1,30 @@
+[
+  {
+    "_class": "com.projet6opcr.paymybuddy.model.UserAccount",
+    "id": 1,
+    "email": "user@email.com",
+    "firstName": "user",
+    "lastName": "superUser",
+    "password": "$2y$10$J7t5BLikbkAh5Kx4xVEUWOMd2vALi/Pz5AhXQl8Mmuwi/Ab7vmWFm",
+    "balance": 10.0,
+    "bank": {
+      "iban": "bbb-bbb-bbb-bbb",
+      "bic": "azertuyi",
+      "accountName": "qsdgfhj"
+    }
+  },
+  {
+    "_class": "com.projet6opcr.paymybuddy.model.UserAccount",
+    "id": 2,
+    "email": "admin@admin.com",
+    "firstName": "admin",
+    "lastName": "admin",
+    "password": "$2y$10$KFMVMg13DOY/6MNwES05wOqG/YvPLktZ41K.cpqlPsOd0sRm./Moe",
+    "balance": 100.0,
+    "bank": {
+      "iban": "bbb-bbb-bbb-bbb",
+      "bic": "azertuyi",
+      "accountName": "qsdgfhj"
+    }
+  }
+]

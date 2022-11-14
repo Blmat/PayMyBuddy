@@ -45,7 +45,7 @@ class UserAccountServiceImplTest {
         bankAccount = new BankAccountDTO("IBANBANKACCOUNT1", "NAMEBANKACCOUNT1", "BICBANKACCOUNT1");
 
         userAccount1 = new UserAccount();
-        userAccount1.setUserId(1);
+        userAccount1.setId(1);
         userAccount1.setFirstName("Jacob");
         userAccount1.setLastName("Boyd");
         userAccount1.setEmail("jboy@email.com");
@@ -54,7 +54,7 @@ class UserAccountServiceImplTest {
         userAccount1.setBank(bankAccount);
 
         buddy1 = new UserAccount();
-        buddy1.setUserId(2);
+        buddy1.setId(2);
         buddy1.setFirstName("Tenley");
         buddy1.setLastName("Boyd");
         buddy1.setEmail("tenley@email.com");
@@ -77,7 +77,7 @@ class UserAccountServiceImplTest {
         // Then
         Assertions.assertThat(response)
                 .satisfies(u -> {
-                    Assertions.assertThat(u.getUserId()).isEqualTo(userAccount1.getUserId());
+                    Assertions.assertThat(u.getId()).isEqualTo(userAccount1.getId());
                     Assertions.assertThat(u.getFriends()).contains(buddy1);
                 });
     }
@@ -119,8 +119,6 @@ class UserAccountServiceImplTest {
                     assertThat(r).isNotNull();
                     assertThat(r).isEqualTo(userAccount1);
                 });
-
-
     }
 
 
@@ -137,7 +135,7 @@ class UserAccountServiceImplTest {
         assertThat(response)
                 .satisfies(u -> {
                     assertThat(u).isPresent();
-                    assertThat(u.get().getUserId()).isEqualTo(1);
+                    assertThat(u.get().getId()).isEqualTo(1);
                     assertThat(u.get().getEmail()).isEqualTo("jboy@email.com");
                     assertThat(u.get().getFirstName()).isEqualTo("Jacob");
                 });
@@ -176,7 +174,7 @@ class UserAccountServiceImplTest {
 
         assertThat(response).isPresent();
         assertThat(response.get().getEmail()).isEqualTo("jboy@email.com");
-        assertThat(response.get().getUserId()).isEqualTo(1);
+        assertThat(response.get().getId()).isEqualTo(1);
         assertThat(response.get().getLastName()).isEqualTo("Boyd");
     }
 
@@ -192,9 +190,9 @@ class UserAccountServiceImplTest {
     @Test
     void deleteUserByIdTest() {
         // Then
-        userService.deleteUserById(userAccount1.getUserId());
+        userService.deleteUserById(userAccount1.getId());
 
-        verify(userRepositoryMock, times(1)).deleteById(userAccount1.getUserId());
+        verify(userRepositoryMock, times(1)).deleteById(userAccount1.getId());
     }
 
     /***************************************addBankAccountTest**************************************************************/
@@ -213,7 +211,7 @@ class UserAccountServiceImplTest {
         //Then
         Assertions.assertThat(response)
                 .satisfies(u -> {
-                    Assertions.assertThat(userAccount1.getUserId()).isEqualTo(1);
+                    Assertions.assertThat(userAccount1.getId()).isEqualTo(1);
                     Assertions.assertThat(userAccount1.getBalance()).isEqualTo(10.0);
                 });
     }
@@ -225,7 +223,7 @@ class UserAccountServiceImplTest {
 
         final var bankAccountDto = new BankAccountDTO("IBANBANKACCOUNT1", "NAMEBANKACCOUNT1", "BICBANKACCOUNT1");
 
-        var response = assertThrows(UserNotFoundException.class, () -> userService.addBankAccount( bankAccountDto));
+        var response = assertThrows(UserNotFoundException.class, () -> userService.addBankAccount(bankAccountDto));
 
         assertThat(response).hasMessage("UserAccount not found with id = 1");
     }
@@ -238,7 +236,7 @@ class UserAccountServiceImplTest {
         when(principalUser.getCurrentUserOrThrowException()).thenReturn(userAccount1);
         when(userRepositoryMock.save(any())).thenAnswer(i -> i.getArguments()[0]);
         //WHEN
-        var response = userService.addMoney( userAccount1.getBalance());
+        var response = userService.addMoney(userAccount1.getBalance());
 
         //THEN
         Assertions.assertThat(response)
@@ -255,7 +253,7 @@ class UserAccountServiceImplTest {
         //WHEN
         when(principalUser.getCurrentUserOrThrowException()).thenThrow(new UserNotFoundException("KO"));
 
-        var response = assertThrows(UserNotFoundException.class, () -> userService.addMoney( userAccount1.getBalance()));
+        var response = assertThrows(UserNotFoundException.class, () -> userService.addMoney(userAccount1.getBalance()));
 
         assertThat(response).hasMessage("UserAccount not found with this email = " + userAccount1.getEmail());
     }

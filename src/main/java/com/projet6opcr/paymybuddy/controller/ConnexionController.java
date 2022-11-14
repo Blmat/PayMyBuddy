@@ -30,7 +30,7 @@ public class ConnexionController {
 
     @GetMapping("/logoff")
     public String getDisconnected() {
-        return "redirect:/?disconnect";
+        return "redirect:/login?disconnect";
     }
 
 

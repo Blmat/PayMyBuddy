@@ -1,11 +1,14 @@
 package com.projet6opcr.paymybuddy.integration;
 
-import lombok.With;
+import com.projet6opcr.paymybuddy.repository.UserRepository;
+import com.projet6opcr.paymybuddy.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
@@ -16,10 +19,10 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringBootTest
 @Transactional
 public class UserControllerIT {
 
@@ -39,7 +42,7 @@ public class UserControllerIT {
 
 
     @Test
-    @WithUserDetails("user@email.com")
+    @WithMockUser(username="admin@admin.com", password = "admin")
     @DisplayName("Should be added a friend when user add a new friend")
     public void should_beAddedAFriend_when_userAddANewFriend()  throws Exception {
         //Given
@@ -47,8 +50,8 @@ public class UserControllerIT {
         final var friendEmail = "friend@email.com";
 
         mockMvc.perform(post(url)
-                .with(csrf())
-                .flashAttr("email", friendEmail))
+                        .with(csrf())
+                        .flashAttr("email", friendEmail))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(redirectedUrl("/buddy?success"));
 

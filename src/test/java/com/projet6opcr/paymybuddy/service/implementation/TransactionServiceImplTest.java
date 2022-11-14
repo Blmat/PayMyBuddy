@@ -1,14 +1,13 @@
 package com.projet6opcr.paymybuddy.service.implementation;
 
-import com.projet6opcr.paymybuddy.model.dto.TransactionDTO;
 import com.projet6opcr.paymybuddy.exception.InsufficientBalanceException;
 import com.projet6opcr.paymybuddy.model.BankAccount;
 import com.projet6opcr.paymybuddy.model.UserAccount;
+import com.projet6opcr.paymybuddy.model.dto.TransactionDTO;
 import com.projet6opcr.paymybuddy.repository.TransactionRepository;
 import com.projet6opcr.paymybuddy.repository.UserRepository;
 import com.projet6opcr.paymybuddy.service.PrincipalUser;
 import com.projet6opcr.paymybuddy.service.TransactionService;
-import net.datafaker.Faker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +15,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;

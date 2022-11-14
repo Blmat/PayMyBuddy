@@ -18,9 +18,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeRequests()
-                .antMatchers("/", "/login", "/registration/**").permitAll()
-                .antMatchers("/user/**").hasRole("USER")
-                .anyRequest().authenticated()
+                .antMatchers("/","/registration/**", "/h2-console/**").permitAll()
+                .anyRequest().fullyAuthenticated()
                 .and()
                 .formLogin()
                 .loginProcessingUrl("/login")
@@ -48,8 +47,7 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return web-> web.ignoring()
-                .antMatchers("/js/**", "/css/**", "/img/**");
+        return (web) -> web.ignoring().antMatchers("/css/**", "/js/**");
     }
 
     @Bean

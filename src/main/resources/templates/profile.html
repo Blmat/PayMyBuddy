@@ -87,43 +87,43 @@
             Add Bank
         </button>
     </div>
-<!--    &lt;!&ndash;-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;Bouton supprimer-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
-<!--    <div class="text-center mb-4">-->
-<!--        <button type="button" style="..." class="btn btn-danger" data-toggle="modal"-->
-<!--                data-target="#deleteBank">-->
-<!--            Delete Bank-->
-<!--        </button>-->
-<!--    </div>-->
-<!--    <div class="modal-dialog">-->
+    <!--    &lt;!&ndash;-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;Bouton supprimer-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
+    <!--    <div class="text-center mb-4">-->
+    <!--        <button type="button" style="..." class="btn btn-danger" data-toggle="modal"-->
+    <!--                data-target="#deleteBank">-->
+    <!--            Delete Bank-->
+    <!--        </button>-->
+    <!--    </div>-->
+    <!--    <div class="modal-dialog">-->
 
-<!--        &lt;!&ndash; Modal &ndash;&gt;-->
-<!--        <div class="modal fade justify-content-center" id="supBank" tabindex="0" aria-labelledby="supBankLabel"-->
-<!--             aria-hidden="true">-->
-<!--            <div class="modal-dialog modal-dialog-centered">-->
-<!--                <div class="modal-content">-->
-<!--                    <div class="modal-header">-->
-<!--                        <h5 class="modal-title" id="supBankLabel">Delete your bank</h5>-->
-<!--                    </div>-->
-<!--                    <div class="modal-body">-->
-<!--                        <form th:action="@{/profile}" th:object="${bank}" method="post">-->
-<!--                            <div class="modal-body p-12 pt-0 pb-3">-->
-<!--                                <label class="floatingInput" for="bankId"> Friend email </label>-->
-<!--                                <input title="Select your bank"-->
-<!--                                       th:field="*{bankName}"-->
-<!--                                       id="bankId"-->
-<!--                                       class="form-control"-->
-<!--                                       placeholder="BankName" required autofocus="autofocus"/>-->
-<!--                                <br>-->
-<!--                                <button type="submit" class="btn btn-primary">Add</button>-->
-<!--                            </div>-->
-<!--                        </form>-->
-<!--                    </div>-->
+    <!--        &lt;!&ndash; Modal &ndash;&gt;-->
+    <!--        <div class="modal fade justify-content-center" id="supBank" tabindex="0" aria-labelledby="supBankLabel"-->
+    <!--             aria-hidden="true">-->
+    <!--            <div class="modal-dialog modal-dialog-centered">-->
+    <!--                <div class="modal-content">-->
+    <!--                    <div class="modal-header">-->
+    <!--                        <h5 class="modal-title" id="supBankLabel">Delete your bank</h5>-->
+    <!--                    </div>-->
+    <!--                    <div class="modal-body">-->
+    <!--                        <form th:action="@{/profile}" th:object="${bank}" method="post">-->
+    <!--                            <div class="modal-body p-12 pt-0 pb-3">-->
+    <!--                                <label class="floatingInput" for="bankId"> Friend email </label>-->
+    <!--                                <input title="Select your bank"-->
+    <!--                                       th:field="*{bankName}"-->
+    <!--                                       id="bankId"-->
+    <!--                                       class="form-control"-->
+    <!--                                       placeholder="BankName" required autofocus="autofocus"/>-->
+    <!--                                <br>-->
+    <!--                                <button type="submit" class="btn btn-primary">Add</button>-->
+    <!--                            </div>-->
+    <!--                        </form>-->
+    <!--                    </div>-->
 
-<!--        </div>-->
-<!--    </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
 
 
-<!--    &lt;!&ndash;-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;Fin bouton supprimer-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
+    <!--    &lt;!&ndash;-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;Fin bouton supprimer-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
     <!-- Modal -->
     <div class="modal fade justify-content-center" id="addBank" tabindex="0" aria-labelledby="addBankLabel"
          aria-hidden="true">
@@ -170,57 +170,43 @@
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>
-</div>
-<!-- succès ajout de la banque -->
-<div th:if="${param.success}" class="alert alert-success alert-dismissible footer show" role="alert">
-    bank successfully saved
-</div>
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">Bank name</th>
-        <th scope="col">IBAN</th>
-        <th scope="col">BIC</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="profile : ${bank}">
-        <td th:text="${bank.getBankName()}"></td>
-        <td th:text="${bank.getIban()}"></td>
-        <td th:text="${bank.getBic()}"></td>
-    </tr>
-    </tbody>
-</table>
-
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script
-        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-        crossorigin="anonymous"></script>
-<script
-        src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
-        crossorigin="anonymous"></script>
-<!-----------------------------------Fin bouton-------------------------------------------------->
-
-
-<div class=" d-flex justify-content-around text-center bg-light ">
-    <div class=" col-6">
-        <a class="  btn btn-primary btn-lg btn-block" th:href="@{/home}" href="home.html"> Back home </a>
+    <!-- succès ajout de la banque -->
+    <div th:if="${param.success}" class="alert alert-success alert-dismissible footer show" role="alert">
+        bank successfully saved
     </div>
-    <div class=" col-6">
-        <a class=" btn btn-primary btn-lg btn-block" th:href="@{/transfert}" href="transfer.html"> Pay a buddy </a>
-    </div>
-    <br>
-    <br>
-    <br>
-</div>
-</div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Bank name</th>
+            <th scope="col">IBAN</th>
+            <th scope="col">BIC</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="profile : ${bank}">
+            <td th:text="${bank.getBankName()}"></td>
+            <td th:text="${bank.getIban()}"></td>
+            <td th:text="${bank.getBic()}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+            integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+            crossorigin="anonymous"></script>
+    <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous"></script>
+    <!-----------------------------------Fin bouton-------------------------------------------------->
 </div>
 </body>
 </html>

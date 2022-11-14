@@ -1,7 +1,6 @@
 package com.projet6opcr.paymybuddy.model;
 
-import com.projet6opcr.paymybuddy.constant.Commission;
-import com.projet6opcr.paymybuddy.model.dto.BankAccountDTO;
+import com.projet6opcr.paymybuddy.configuration.constant.Commission;
 import com.projet6opcr.paymybuddy.model.dto.UserDTO;
 import com.projet6opcr.paymybuddy.exception.InsufficientBalanceException;
 import com.sun.istack.NotNull;
@@ -81,6 +80,15 @@ public class UserAccount implements UserDetails {
     public UserAccount(UserAccount userAccount) {
         this.email = userAccount.getEmail();
         this.password = userAccount.getPassword();
+    }
+
+    public UserAccount(@NotNull String lastname, @javax.validation.constraints.NotNull String firstname, @Email @NotNull String email,@NotNull String password, @NotNull double balance) {
+        super();
+        this.lastName = lastname;
+        this.firstName = firstname;
+        this.email = email;
+        this.password = password;
+        this.balance = balance;
     }
 
     /**********************************************************************/
@@ -179,7 +187,7 @@ public class UserAccount implements UserDetails {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         UserAccount that = (UserAccount) o;
-        return userId != null && Objects.equals(userId, that.userId);
+        return id != null && Objects.equals(id, that.id);
     }
 
     @Override

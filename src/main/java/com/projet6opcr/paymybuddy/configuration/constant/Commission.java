@@ -1,4 +1,4 @@
-package com.projet6opcr.paymybuddy.constant;
+package com.projet6opcr.paymybuddy.configuration.constant;
 
 public class Commission {
     /**
