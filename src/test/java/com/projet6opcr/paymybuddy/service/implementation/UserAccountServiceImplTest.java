@@ -1,5 +1,6 @@
 package com.projet6opcr.paymybuddy.service.implementation;
 
+import com.projet6opcr.paymybuddy.exception.GenericNotFoundException;
 import com.projet6opcr.paymybuddy.exception.InsufficientBalanceException;
 import com.projet6opcr.paymybuddy.exception.UserNotFoundException;
 import com.projet6opcr.paymybuddy.model.UserAccount;
@@ -36,13 +37,11 @@ class UserAccountServiceImplTest {
 
     static UserAccount userAccount1;
     static UserAccount buddy1;
-    BankAccountDTO bankAccount;
 
     @BeforeEach
     void setUp() {
         userService = new UserServiceImpl(userRepositoryMock, principalUser, passwordEncoder);
 
-        bankAccount = new BankAccountDTO("IBANBANKACCOUNT1", "NAMEBANKACCOUNT1", "BICBANKACCOUNT1");
 
         userAccount1 = new UserAccount();
         userAccount1.setId(1);
@@ -51,7 +50,7 @@ class UserAccountServiceImplTest {
         userAccount1.setEmail("jboy@email.com");
         userAccount1.setPassword("123456");
         userAccount1.setBalance(10.0);
-        userAccount1.setBank(bankAccount);
+
 
         buddy1 = new UserAccount();
         buddy1.setId(2);
@@ -69,10 +68,10 @@ class UserAccountServiceImplTest {
         //GIVEN
         //WHEN
         when(principalUser.getCurrentUserOrThrowException()).thenReturn(userAccount1);
-        when(userRepositoryMock.findByEmail(userAccount1.getEmail())).thenReturn(Optional.of(buddy1));
+        when(userRepositoryMock.findByEmail(buddy1.getEmail())).thenReturn(Optional.of(buddy1));
         when(userRepositoryMock.save(any())).thenAnswer(i -> i.getArguments()[0]);
 
-        var response = userService.addFriend(userAccount1.getEmail());
+        var response = userService.addFriend(buddy1.getEmail());
 
         // Then
         Assertions.assertThat(response)
@@ -90,10 +89,8 @@ class UserAccountServiceImplTest {
         when(principalUser.getCurrentUserOrThrowException()).thenReturn(userAccount1);
         when(userRepositoryMock.findByEmail(userAccount1.getEmail())).thenReturn(Optional.of(buddy1));
 
-        var response = userService.addFriend(userAccount1.getEmail());
+        assertThrows(GenericNotFoundException.class, () -> userService.addFriend(userAccount1.getEmail()));
 
-        // Then
-        assertThat(response).isNull();
     }
 
     @Test
@@ -255,7 +252,7 @@ class UserAccountServiceImplTest {
 
         var response = assertThrows(UserNotFoundException.class, () -> userService.addMoney(userAccount1.getBalance()));
 
-        assertThat(response).hasMessage("UserAccount not found with this email = " + userAccount1.getEmail());
+        assertThat(response).hasMessage("KO");
     }
 
     /**************************************transfert Money Test********************************************************/
