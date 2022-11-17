@@ -1,4 +1,4 @@
-package com.projet6opcr.paymybuddy.integration;
+package com.projet6opcr.paymybuddy.integration.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +21,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @Transactional
-//@AutoConfigureMockMvc
 @SpringBootTest
 public class UserControllerIT {
 
@@ -38,22 +37,6 @@ public class UserControllerIT {
                 .build();
     }
 
-
-    @Test
-    @WithMockUser(username="admin@admin.com", password = "admin")
-    @DisplayName("Should be added a friend when user add a new friend")
-    public void should_beAddedAFriend_when_userAddANewFriend()  throws Exception {
-        //Given
-        final var url = "/buddy";
-        final var friendEmail = "user@email.com";
-
-        mockMvc.perform(post(url)
-                        .with(csrf())
-                        .flashAttr("email", friendEmail))
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(redirectedUrl("/buddy?success"));
-    }
-
     @Test
     @WithMockUser(username = "admin@admin.com")
     public void getFriend() throws Exception {
@@ -66,23 +49,21 @@ public class UserControllerIT {
                 .andExpect(status().isOk());
     }
 
-//    @Test
-//    @WithMockUser(username="admin@admin.com", password = "admin")
-//    @DisplayName("bank adding test")
-//    public void bankAddingTest()  throws Exception {
-//        //Given
-//        final var url = "/profile";
-//        final var bankName = "qsdgfhj";
-//        final var iban = "bbbbbbbbbbbb";
-//        final var bic = "azertuyi";
-//
-//        mockMvc.perform(post(url)
-//                        .with(csrf())
-//                        .flashAttr("bankName", bankName)
-//                        .flashAttr("iban", iban)
-//                        .flashAttr("azertuyi", bic))
-//                .andDo(MockMvcResultHandlers.print())
-//                .andExpect(redirectedUrl("/buddy?success"));
-//    }
+    @Test
+    @WithMockUser(username = "admin@admin.com", password = "admin")
+    @DisplayName("Should be added a friend when user add a new friend")
+    public void should_beAddedAFriend_when_userAddANewFriend() throws Exception {
+        //Given
+        final var url = "/buddy";
+        final var friendEmail = "user@email.com";
+
+        mockMvc.perform(post(url)
+                        .with(csrf())
+                        .flashAttr("FriendEmail", friendEmail))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(redirectedUrl("/buddy?error"));
+    }
+
+
 
 }

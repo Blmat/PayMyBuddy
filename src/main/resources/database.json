@@ -22,7 +22,7 @@
     "password": "$2y$10$KFMVMg13DOY/6MNwES05wOqG/YvPLktZ41K.cpqlPsOd0sRm./Moe",
     "balance": 100.0,
     "bank": {
-      "iban": "bbb-bbb-bbb-bbb",
+      "iban": "bbbbbbbbbbbb",
       "bic": "azertuyi",
       "accountName": "qsdgfhj"
     }

@@ -40,15 +40,15 @@ public class ConnexionController {
     }
 
     @PostMapping("/registration")
-    public String registerUserAccount(UserDTO user, Errors result) {
+    public String registerUserAccount(UserDTO user) {
         log.debug("Add a new user account");
-
-        if (result.hasErrors()) {
-            log.error(result.toString());
+        try {
+            userService.saveUser(user);
+            log.debug("A new user Account has been created : " + user.toString());
+            return "redirect:/login?success";
+        } catch (Exception e) {
+            log.error(e.toString(), e.getCause());
             return "redirect:/registration?error";
         }
-        userService.saveUser(user);
-        log.debug("A new user Account has been created : " + user.toString());
-        return "redirect:/login?success";
     }
 }
