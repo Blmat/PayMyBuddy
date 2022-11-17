@@ -1,5 +1,6 @@
 package com.projet6opcr.paymybuddy.service.implementation;
 
+import com.projet6opcr.paymybuddy.exception.GenericNotFoundException;
 import com.projet6opcr.paymybuddy.exception.InsufficientBalanceException;
 import com.projet6opcr.paymybuddy.exception.UserNotFoundException;
 import com.projet6opcr.paymybuddy.model.BankAccount;
@@ -14,8 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -31,6 +31,9 @@ public class UserServiceImpl implements UserService {
         UserAccount currentUser = principalUser.getCurrentUserOrThrowException();
         var friend = userRepository.findByEmail(friendEmail)
                 .orElseThrow(() -> new UserNotFoundException("User not found with email = " + friendEmail));
+        if (Objects.equals(friendEmail, currentUser.getEmail())) {
+            throw new GenericNotFoundException("You can't add yourself ");
+        }
         currentUser.getFriends().add(friend);
         return userRepository.save(currentUser);
     }

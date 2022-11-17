@@ -20,10 +20,15 @@ public class UserController {
         return new UserDTO();
     }
 
-    @GetMapping(value = "/addBalance")
+    @PostMapping(value = "/addBalance")
     public String getBalance(Double amount) {
-        userService.addMoney( amount);
-        return "home";
+        try {
+            userService.addMoney( amount);
+            return "home";
+        } catch (Exception e) {
+            log.error(e.getMessage(), e.getCause());
+            return "redirect:/home?error";
+    }
     }
 
     @GetMapping("/buddy")
