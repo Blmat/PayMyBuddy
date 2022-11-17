@@ -25,6 +25,9 @@
                 You have been disconnected. See you soon.
             </div>
 
+            <div th:if="${message}" th:text="${message}" class="alert alert-danger alert-dismissible fade show"
+                 role="alert">
+            </div>
 
 
             <div class="form-signing">
