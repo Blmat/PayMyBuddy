@@ -23,12 +23,12 @@ public class ConnexionController {
     }
 
 
-    @GetMapping("/")
+    @GetMapping("/login")
     public String getLog() {
         return "login";
     }
 
-    @GetMapping("/logoff")
+    @GetMapping("/disconnect")
     public String getDisconnected() {
         return "redirect:/login?disconnect";
     }
@@ -49,6 +49,6 @@ public class ConnexionController {
         }
         userService.saveUser(user);
         log.debug("A new user Account has been created : " + user.toString());
-        return "redirect:/?success";
+        return "redirect:/login?success";
     }
 }

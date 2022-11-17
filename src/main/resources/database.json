@@ -8,7 +8,7 @@
     "password": "$2y$10$J7t5BLikbkAh5Kx4xVEUWOMd2vALi/Pz5AhXQl8Mmuwi/Ab7vmWFm",
     "balance": 10.0,
     "bank": {
-      "iban": "bbb-bbb-bbb-bbb",
+      "iban": "bbbbbbbbbbbb",
       "bic": "azertuyi",
       "accountName": "qsdgfhj"
     }
