@@ -1,42 +1,29 @@
 package com.projet6opcr.paymybuddy.integration.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.IntNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.fasterxml.jackson.databind.node.TextNode;
-import com.projet6opcr.paymybuddy.model.UserAccount;
-import com.projet6opcr.paymybuddy.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
-
-import java.math.BigDecimal;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Transactional
 @SpringBootTest
-class BankControllerTest {
-
+class ConnexionControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
@@ -52,9 +39,9 @@ class BankControllerTest {
 
     @Test
     @WithMockUser(username = "admin@admin.com")
-    void getProfile() throws Exception {
+    void getRegistration() throws Exception {
         //Given
-        final var url = "/profile";
+        final var url = "/registration";
 
         mockMvc.perform(get(url)
                         .with(csrf()))
@@ -64,21 +51,24 @@ class BankControllerTest {
 
 
     @Test
-    @WithMockUser(username = "admin@admin.com", password = "admin")
-    @DisplayName("bank adding test")
-    public void bankAddingTest() throws Exception {
+//    @WithMockUser(username = "admin@admin.com", password = "admin")
+    @DisplayName("Registration test")
+    public void registrationTest() throws Exception {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         //Given
-        final var url = "/profile";
-        final var bankName = "qsdgfhj";
-        final var iban = "bbbbbbbbbbbb";
-        final var bic = "azertuyi";
+        final var url = "/registration";
+        final var firstname = "admin";
+        final var lastName = "admin";
+        final var email = "admin@admin.com";
+        final var password = passwordEncoder.encode("petitponey");
 
         mockMvc.perform(post(url)
                         .with(csrf())
-                        .flashAttr("Bank Name", bankName)
-                        .flashAttr("IBAN", iban)
-                        .flashAttr("BIC", bic))
+                        .flashAttr("firstname", firstname)
+                        .flashAttr("lastName", lastName)
+                        .flashAttr("email", email)
+                        .flashAttr("password", password))
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(redirectedUrl("/profile?success"));
+                .andExpect(redirectedUrl("/login?success"));
     }
 }
