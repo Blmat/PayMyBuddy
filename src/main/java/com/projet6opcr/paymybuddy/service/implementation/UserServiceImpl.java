@@ -59,15 +59,14 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public BankAccount addBankAccount( BankAccountDTO bankAccount) {
+    public BankAccount addBankAccount(BankAccountDTO bankAccountDto) {
 
         var user = principalUser.getCurrentUserOrThrowException();
-        BankAccount bank = new BankAccount(user, bankAccount.getBankName(), bankAccount.getIban(), bankAccount.getBic());
-        user.setBank(bank);
+        user.setBank(new BankAccount(bankAccountDto));
         userRepository.save(user);
         log.info(
                 "[Bank service] Created a new bank account with the following information : Bank name={} IBAN={} BIC={}",
-                bankAccount.getBankName(), bankAccount.getIban(), bankAccount.getBic());
+                bankAccountDto.getBankName(), bankAccountDto.getIban(), bankAccountDto.getBic());
 
         return user.getBank();
     }
@@ -84,8 +83,7 @@ public class UserServiceImpl implements UserService {
         user.creditBalanceAmount(amount);
 
         user = userRepository.save(user);
-        log.info(
-                "[Bank service] Money are added.");
+        log.info("[Bank service] Money are added.");
 
         return user.getBalance();
     }

@@ -5,50 +5,34 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import java.util.Objects;
 
 @Entity
-@Table(name = "bank_account")
+@Table
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @RequiredArgsConstructor
-public class BankAccount extends @Valid BankAccountDTO {
+public class BankAccount {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "userId")
-    private UserAccount userId;
-
-    @Column(name = "iban",nullable = false)
+    @Column(nullable = false)
     private String iban;
 
-    @Column(name = "bank_name")
+    @Column
     private String accountName;
 
-    @Column(name = "bic")
+    @Column
     private String bic;
 
-
-    public BankAccount(BankAccountDTO bankAccountDTO) {
-        this.iban = bankAccountDTO.getIban();
-        this.accountName = bankAccountDTO.getBankName();
-        this.iban = bankAccountDTO.getIban();
-    }
-
-    public BankAccount(UserAccount user, String bankName, String iban, String bic) {
-        this.userId = user;
-        this.accountName = bankName;
-        this.iban = iban;
-        this.bic = bic;
-    }
-
-    public void getBank(BankAccountDTO bankAccountDTO) {
+    public BankAccount(BankAccountDTO bankAccountDto) {
+        this.iban = bankAccountDto.getIban();
+        this.accountName = bankAccountDto.getBankName();
+        this.bic = bankAccountDto.getBic();
     }
 
 

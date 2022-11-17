@@ -1,7 +1,5 @@
 package com.projet6opcr.paymybuddy.integration;
 
-import com.projet6opcr.paymybuddy.repository.UserRepository;
-import com.projet6opcr.paymybuddy.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,7 +8,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -24,13 +21,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @Transactional
+//@AutoConfigureMockMvc
+@SpringBootTest
 public class UserControllerIT {
 
     private MockMvc mockMvc;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
-
 
     @BeforeEach
     public void init() {
@@ -46,16 +44,26 @@ public class UserControllerIT {
     @DisplayName("Should be added a friend when user add a new friend")
     public void should_beAddedAFriend_when_userAddANewFriend()  throws Exception {
         //Given
-        final var url = "/add_buddy";
-        final var friendEmail = "friend@email.com";
+        final var url = "/buddy";
+        final var friendEmail = "user@email.com";
 
         mockMvc.perform(post(url)
                         .with(csrf())
                         .flashAttr("email", friendEmail))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(redirectedUrl("/buddy?success"));
+    }
 
+    @Test
+    @WithMockUser(username = "admin@admin.com")
+    public void getFriend() throws Exception {
+        //Given
+        final var url = "/buddy";
 
+        mockMvc.perform(get(url)
+                        .with(csrf()))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk());
     }
 
 //    @Test

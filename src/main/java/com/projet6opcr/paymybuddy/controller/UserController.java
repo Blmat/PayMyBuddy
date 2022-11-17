@@ -3,12 +3,14 @@ package com.projet6opcr.paymybuddy.controller;
 import com.projet6opcr.paymybuddy.model.dto.UserDTO;
 import com.projet6opcr.paymybuddy.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class UserController {
@@ -20,15 +22,10 @@ public class UserController {
         return new UserDTO();
     }
 
-    @PostMapping(value = "/addBalance")
+    @GetMapping(value = "/addBalance")
     public String getBalance(Double amount) {
-        try {
-            userService.addMoney( amount);
-            return "home";
-        } catch (Exception e) {
-            log.error(e.getMessage(), e.getCause());
-            return "redirect:/home?error";
-    }
+        userService.addMoney(amount);
+        return "home";
     }
 
     @GetMapping("/buddy")
@@ -36,13 +33,15 @@ public class UserController {
         return "buddy";
     }
 
-    @PostMapping("/add_buddy")
-    public String addFriend(String email, Errors result) {
+    @PostMapping("/buddy")
+    public String addFriend(String email) {
 
-        if (result.hasErrors()) {
+        try {
+            userService.addFriend(email);
+            return "redirect:/buddy?success";
+        } catch (Exception e) {
+            log.error(e.getMessage(), e.getCause());
             return "redirect:/buddy?error";
         }
-        userService.addFriend(email);
-        return "redirect:/buddy?success";
     }
 }

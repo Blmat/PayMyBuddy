@@ -18,6 +18,6 @@ public class MainController {
 
     @GetMapping("/banktransfer")
     public String getBankTransfer() {
-        return "bankTransfer";
+        return "bank_transfer";
     }
 }

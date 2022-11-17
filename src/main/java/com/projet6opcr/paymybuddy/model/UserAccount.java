@@ -21,50 +21,47 @@ import java.util.*;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users")
+@Table
 public class UserAccount implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Integer userId;
 
-    @Column(name = "firstname")
+    @Column(nullable = false)
     @NotNull
     @NotBlank
     private String firstName;
 
-    @Column(name = "lastname")
+    @Column(nullable = false)
     @NotNull
     @NotBlank
     private String lastName;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     @NotNull
     @Email
     @NotBlank
     private String email;
 
-    @Column(name = "password", nullable = false)
+    @Column(nullable = false)
     @NotNull
     @NotBlank
     private String password;
 
-    @Column(name = "balance", nullable = false)
+    @Column(nullable = false)
     private Double balance = .0;
 
-    @OneToOne(mappedBy = "userId", fetch = FetchType.EAGER)
-    @JoinColumn(name = "bank_id")
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private BankAccount bank;
 
     /******************Ajout d'un ami***********************************/
-    @ManyToMany
-    @JoinTable(
-            name = "relation",
-            joinColumns = @JoinColumn(name = "owner"),
-            inverseJoinColumns = @JoinColumn(name = "buddy"))
+    @ManyToMany(cascade = CascadeType.PERSIST)
+//    @JoinTable(
+//            name = "relation",
+//            joinColumns = @JoinColumn(name = "owner"),
+//            inverseJoinColumns = @JoinColumn(name = "buddy"))
     @ToString.Exclude
-
     private Set<UserAccount> friends = new HashSet<>();
 
     /********* Ce constructeur est utilisé pour enregistrer un utilisateur****/
@@ -187,7 +184,7 @@ public class UserAccount implements UserDetails {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         UserAccount that = (UserAccount) o;
-        return id != null && Objects.equals(id, that.id);
+        return userId != null && Objects.equals(userId, that.userId);
     }
 
     @Override
@@ -195,7 +192,5 @@ public class UserAccount implements UserDetails {
         return getClass().hashCode();
     }
 
-    public void setBank(BankAccountDTO bankAccount) {
-    }
 }
 

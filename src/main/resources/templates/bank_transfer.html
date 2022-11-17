@@ -124,10 +124,15 @@
                         <button type="submit" class=" btn btn-success btn-lg col-6  "> Transfer</button>
                     </div>
                 </div>
+                <!----------------------------Erreur lors du transfert------------------------------------------------>
+                <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    error
+                </div>
                 <br>
                 <br>
                 <br>
                 <br>
+
                 <div class=" d-flex justify-content-around text-center bg-light ">
                     <div class=" col-6">
                         <a class="  btn btn-primary btn-lg btn-block" th:href="@{/home}"> Back

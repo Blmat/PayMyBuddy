@@ -44,7 +44,7 @@ class UserAccountServiceImplTest {
 
 
         userAccount1 = new UserAccount();
-        userAccount1.setId(1);
+        userAccount1.setUserId(1);
         userAccount1.setFirstName("Jacob");
         userAccount1.setLastName("Boyd");
         userAccount1.setEmail("jboy@email.com");
@@ -53,7 +53,7 @@ class UserAccountServiceImplTest {
 
 
         buddy1 = new UserAccount();
-        buddy1.setId(2);
+        buddy1.setUserId(2);
         buddy1.setFirstName("Tenley");
         buddy1.setLastName("Boyd");
         buddy1.setEmail("tenley@email.com");
@@ -74,10 +74,10 @@ class UserAccountServiceImplTest {
         var response = userService.addFriend(buddy1.getEmail());
 
         // Then
-        Assertions.assertThat(response)
+        assertThat(response)
                 .satisfies(u -> {
-                    Assertions.assertThat(u.getId()).isEqualTo(userAccount1.getId());
-                    Assertions.assertThat(u.getFriends()).contains(buddy1);
+                    assertThat(u.getUserId()).isEqualTo(userAccount1.getUserId());
+                    assertThat(u.getFriends()).contains(buddy1);
                 });
     }
 
@@ -132,7 +132,7 @@ class UserAccountServiceImplTest {
         assertThat(response)
                 .satisfies(u -> {
                     assertThat(u).isPresent();
-                    assertThat(u.get().getId()).isEqualTo(1);
+                    assertThat(u.get().getUserId()).isEqualTo(1);
                     assertThat(u.get().getEmail()).isEqualTo("jboy@email.com");
                     assertThat(u.get().getFirstName()).isEqualTo("Jacob");
                 });
@@ -171,7 +171,7 @@ class UserAccountServiceImplTest {
 
         assertThat(response).isPresent();
         assertThat(response.get().getEmail()).isEqualTo("jboy@email.com");
-        assertThat(response.get().getId()).isEqualTo(1);
+        assertThat(response.get().getUserId()).isEqualTo(1);
         assertThat(response.get().getLastName()).isEqualTo("Boyd");
     }
 
@@ -187,9 +187,9 @@ class UserAccountServiceImplTest {
     @Test
     void deleteUserByIdTest() {
         // Then
-        userService.deleteUserById(userAccount1.getId());
+        userService.deleteUserById(userAccount1.getUserId());
 
-        verify(userRepositoryMock, times(1)).deleteById(userAccount1.getId());
+        verify(userRepositoryMock, times(1)).deleteById(userAccount1.getUserId());
     }
 
     /***************************************addBankAccountTest**************************************************************/
@@ -208,7 +208,7 @@ class UserAccountServiceImplTest {
         //Then
         Assertions.assertThat(response)
                 .satisfies(u -> {
-                    Assertions.assertThat(userAccount1.getId()).isEqualTo(1);
+                    Assertions.assertThat(userAccount1.getUserId()).isEqualTo(1);
                     Assertions.assertThat(userAccount1.getBalance()).isEqualTo(10.0);
                 });
     }
