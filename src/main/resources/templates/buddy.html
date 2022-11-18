@@ -91,13 +91,19 @@
         </div>
     </div>
     <!-- succès ajout d'ami -->
-    <div th:if="${param.success}" class="alert alert-success alert-dismissible footer show" role="alert">
-        New registered buddy!
+    <div class="alert alert-success alert-dismissible fade show" th:if="${message}" th:text="${message}"
+         role="alert">
     </div>
-    <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
-        You already know this buddy,
-        We don't know this email, or you can't add yourself in friends...
+    <!-- erreur ajout d'ami -->
+    <div class="alert alert-danger alert-dismissible fade show" th:if="${addError}"
+         th:text="${addError}">
     </div>
+
+
+    <!--    <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">-->
+    <!--        You already know this buddy,-->
+    <!--        We don't know this email, or you can't add yourself in friends...-->
+    <!--    </div>-->
     <table class="table">
         <thead>
         <tr>

@@ -24,8 +24,8 @@
             <div th:if="${param.disconnect}" class="alert alert-danger alert-dismissible fade show" role="alert">
                 You have been disconnected. See you soon.
             </div>
-
-            <div th:if="${message}" th:text="${message}" class="alert alert-danger alert-dismissible fade show"
+            <!-- Message succès enregistrement -->
+            <div class="alert alert-success alert-dismissible fade show" th:if="${message}" th:text="${message}"
                  role="alert">
             </div>
 
@@ -58,10 +58,6 @@
                                 <label for="Remember me">Remember me</label>
                             </div>
                         </div>
-                    </div>
-                    <!-- succès enregistrement -->
-                    <div th:if="${param.success}" class="alert alert-success alert-dismissible footer show" role="alert">
-                        Successfully registered, you may now login
                     </div>
                     <div class="modal-header p-5 pb-4 border-bottom-0">
                         <button class="btn btn-primary btn-lg mx-auto px-5 m-2" type="submit">Login</button>

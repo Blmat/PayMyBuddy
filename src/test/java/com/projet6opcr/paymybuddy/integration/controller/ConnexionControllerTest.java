@@ -49,7 +49,7 @@ class ConnexionControllerTest {
 
 
     @Test
-    @DisplayName("Registration test")
+    @DisplayName("Registration OK test")
     public void registrationTest() throws Exception {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         //Given

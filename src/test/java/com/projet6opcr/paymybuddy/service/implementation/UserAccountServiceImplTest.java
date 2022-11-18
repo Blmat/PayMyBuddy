@@ -3,6 +3,7 @@ package com.projet6opcr.paymybuddy.service.implementation;
 import com.projet6opcr.paymybuddy.exception.GenericNotFoundException;
 import com.projet6opcr.paymybuddy.exception.InsufficientBalanceException;
 import com.projet6opcr.paymybuddy.exception.UserNotFoundException;
+import com.projet6opcr.paymybuddy.model.BankAccount;
 import com.projet6opcr.paymybuddy.model.UserAccount;
 import com.projet6opcr.paymybuddy.model.dto.BankAccountDTO;
 import com.projet6opcr.paymybuddy.model.dto.UserDTO;
@@ -41,7 +42,7 @@ class UserAccountServiceImplTest {
     @BeforeEach
     void setUp() {
         userService = new UserServiceImpl(userRepositoryMock, principalUser, passwordEncoder);
-
+        BankAccount bankAccount = new BankAccount(1, "IBANBANKACCOUNT1", "NAMEBANKACCOUNT1", "BICBANKACCOUNT1");
 
         userAccount1 = new UserAccount();
         userAccount1.setUserId(1);
@@ -50,6 +51,7 @@ class UserAccountServiceImplTest {
         userAccount1.setEmail("jboy@email.com");
         userAccount1.setPassword("123456");
         userAccount1.setBalance(10.0);
+        userAccount1.setBank(bankAccount);
 
 
         buddy1 = new UserAccount();
@@ -79,6 +81,18 @@ class UserAccountServiceImplTest {
                     assertThat(u.getUserId()).isEqualTo(userAccount1.getUserId());
                     assertThat(u.getFriends()).contains(buddy1);
                 });
+    }
+
+    @Test
+    @DisplayName("Test retourne une erreur car le personne essaye de s'ajouter en temps qu'ami")
+    void identicalEmailTest_throwException() {
+        //GIVEN
+        //WHEN
+        when(principalUser.getCurrentUserOrThrowException()).thenReturn(userAccount1);
+        when(userRepositoryMock.findByEmail(userAccount1.getEmail())).thenReturn(Optional.of(userAccount1));
+
+        var response = assertThrows(GenericNotFoundException.class, () -> userService.addFriend(userAccount1.getEmail()));
+        assertThat(response).hasMessage("You can't add yourself ");
     }
 
     @Test

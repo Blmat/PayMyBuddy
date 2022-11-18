@@ -29,5 +29,4 @@ public interface UserService {
 
     UserAccount saveUser(UserDTO user);
 
-    void deleteBank(BankAccount bankAccount);
 }

@@ -74,11 +74,11 @@ public class UserServiceImpl implements UserService {
     /**
      * Cette méthode sert à ajouter de l'argent sur le compte d'un utilisateur
      *
-     * @param amount   Double : l'argent à mettre sur le compte
+     * @param amount Double : l'argent à mettre sur le compte
      * @return la somme qu'il y a sur le compte de l'utilisateur.
      */
     @Override
-    public Double addMoney( Double amount) {
+    public Double addMoney(Double amount) {
         var user = principalUser.getCurrentUserOrThrowException();
         user.creditBalanceAmount(amount);
 
@@ -117,13 +117,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUserById(Integer id) {
         userRepository.deleteById(id);
-    }
-
-    @Override
-    public void deleteBank(BankAccount bankAccount){
-        Optional<UserAccount> removeBank = userRepository.findById(bankAccount.getId());
-        if (removeBank.isPresent())
-            userRepository.deleteById(bankAccount.getId());
     }
 
 }

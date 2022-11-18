@@ -67,10 +67,6 @@
                            class="form-control"
                            type="password" placeholder="&#8277;Password" required autofocus="autofocus"/>
                 </div>
-                <!-- Erreur dans le mot de passe-->
-                <div th:if="${param.error}" class="alert alert-danger alert-dismissible fade show" role="alert">
-                    The password must have at least 5 characters.
-                </div>
                 <ul>
                     <li th:each="err : ${#fields.errors('password')}" th:text="${err}"
                         class="alert alert-danger alert-dismissible fade show" role="alert"/>
