@@ -65,6 +65,7 @@ public class UserControllerIT {
     }
 
     @Test
+    @DisplayName("Add buddy KO test")
     @WithMockUser(username = "admin@admin.com", password = "admin")
     public void addBuddyTestKO() throws Exception {
         //Given
@@ -77,7 +78,4 @@ public class UserControllerIT {
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk());
     }
-
-
-
 }

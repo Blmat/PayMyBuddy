@@ -16,21 +16,18 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
+        return http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/registration/**", "/h2-console/**").permitAll()
                 .anyRequest().fullyAuthenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .defaultSuccessUrl("/home", true)
+                .loginPage("/login").permitAll().defaultSuccessUrl("/home", true)
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .and()
                 .oauth2Login()
-                .loginPage("/registration")
-                .defaultSuccessUrl("/home", true)
+                .loginPage("/registration").defaultSuccessUrl("/home", true)
                 .and()
                 .logout()
                 .invalidateHttpSession(true)
