@@ -1,11 +1,12 @@
 package com.projet6opcr.paymybuddy.integration.controller;
 
+import com.projet6opcr.paymybuddy.model.dto.UserDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -21,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Transactional
 @SpringBootTest
-class ConnexionControllerTest {
+class LoginControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
@@ -51,7 +52,6 @@ class ConnexionControllerTest {
     @Test
     @DisplayName("Registration OK test")
     public void registrationTest() throws Exception {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         //Given
         final var url = "/registration";
         final var firstname = "Jonh";
@@ -62,11 +62,28 @@ class ConnexionControllerTest {
 
         mockMvc.perform(post(url)
                         .with(csrf())
-                        .flashAttr("firstname", firstname)
-                        .flashAttr("lastName", lastName)
-                        .flashAttr("email", email)
-                        .flashAttr("password", password))
+                        .flashAttr("user", user))
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(redirectedUrl("/login?success"));
+                .andExpect(status().isFound())
+                .andExpect(redirectedUrl("/login"));
+    }
+
+    @Test
+    @DisplayName("Registration KO test")
+    public void registrationKOTest() throws Exception {
+        //Given
+        final var url = "/registration";
+        final var firstname = "John";
+        final var lastName = "wick";
+        final var email = "Babayagad@mail.com";
+        final var password = "";
+        final var user = new UserDTO(firstname, lastName, email, password);
+
+        mockMvc.perform(post(url)
+                        .with(csrf())
+                        .flashAttr("user", user))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk());
+
     }
 }

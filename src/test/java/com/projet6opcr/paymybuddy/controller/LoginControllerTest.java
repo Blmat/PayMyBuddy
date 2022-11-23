@@ -53,6 +53,14 @@ class LoginControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "admin@admin.com", password = "admin")
+    void getHome() throws Exception {
+        mvc.perform(get("/home"))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
     void getLogin() throws Exception {
         mvc.perform(get("/login"))
                 .andDo(print())

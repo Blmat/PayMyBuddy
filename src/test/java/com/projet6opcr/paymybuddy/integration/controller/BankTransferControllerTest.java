@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.node.IntNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import com.projet6opcr.paymybuddy.model.UserAccount;
+import com.projet6opcr.paymybuddy.model.dto.BankAccountDTO;
 import com.projet6opcr.paymybuddy.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Transactional
 @SpringBootTest
-class BankControllerTest {
+class BankTransferControllerTest {
 
     private MockMvc mockMvc;
 
@@ -72,13 +73,30 @@ class BankControllerTest {
         final var bankName = "qsdgfhj";
         final var iban = "bbbbbbbbbbbb";
         final var bic = "azertuyi";
+        BankAccountDTO bank = new BankAccountDTO(bankName, iban, bic);
 
         mockMvc.perform(post(url)
                         .with(csrf())
-                        .flashAttr("Bank Name", bankName)
-                        .flashAttr("IBAN", iban)
-                        .flashAttr("BIC", bic))
+                        .flashAttr("bank", bank))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(redirectedUrl("/profile?success"));
+    }
+
+    @Test
+    @WithMockUser(username = "admin@admin.com", password = "admin")
+    @DisplayName("bank adding test error")
+    public void bankAddingTestKO() throws Exception {
+        //Given
+        final var url = "/profile";
+        final var bankName = "qsdgfhj";
+        final var iban = "";
+        final var bic = "azergdh";
+        BankAccountDTO bank = new BankAccountDTO(bankName, iban, bic);
+
+        mockMvc.perform(post(url)
+                        .with(csrf())
+                        .flashAttr("bank", bank))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(redirectedUrl("/profile?error"));
     }
 }

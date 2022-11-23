@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @PostMapping("/buddy")
-    public String addFriend(@Valid @ModelAttribute("friendEmail") String email, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+    public String addFriend(@ModelAttribute("friendEmail") String email, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         log.debug("Add a new buddy");
 
         if (!result.hasErrors()) {
