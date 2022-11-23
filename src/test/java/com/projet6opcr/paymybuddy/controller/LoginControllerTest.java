@@ -1,6 +1,5 @@
 package com.projet6opcr.paymybuddy.controller;
 
-import com.projet6opcr.paymybuddy.model.UserAccount;
 import com.projet6opcr.paymybuddy.model.dto.UserDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,27 +8,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-class ConnexionControllerTest {
+class LoginControllerTest {
 
     @Autowired
     private MockMvc mvc;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     private WebApplicationContext context;
@@ -40,6 +43,13 @@ class ConnexionControllerTest {
                 .webAppContextSetup(context)
                 .apply(springSecurity())
                 .build();
+    }
+
+    @Test
+    void returnLoginPage() throws Exception {
+        mvc.perform(get("/"))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -64,10 +74,19 @@ class ConnexionControllerTest {
     }
 
     @Test
-    void userAuthenticatedTest() throws Exception {
+    void userLoginFailed() throws Exception {
         mvc.perform(formLogin("/login")
-                        .user("mat@email.com").password("motdepasse"))
+                        .user("mat@mail.fr").password("motdepasse"))
                 .andExpect(unauthenticated());
+    }
+
+    @Test
+    @WithMockUser(username = "admin@admin.com", password = "admin")
+    void userLoginPassed() throws Exception {
+        mvc.perform(formLogin("/login")
+                        .user("admin@admin.com")
+                        .password("admin"))
+                .andExpect(authenticated());
     }
 
     @Test
@@ -78,14 +97,28 @@ class ConnexionControllerTest {
         newUser.setEmail("test@mail.fr");
         newUser.setPassword("sQn2?7.kTrgkQZF");
 
-        mvc.perform(post("/registration").flashAttr("newUser", newUser))
-//                        .user("firstname", newUser.getFirstName())
-//                        .user("lastName", newUser.getLastName())
-//                        .user("email", newUser.getEmail())
-//                        .user("password", newUser.getPassword()))
+        mvc.perform(formLogin("/registration")
+                        .user(newUser.getFirstName())
+                        .user(newUser.getLastName())
+                        .user(newUser.getEmail())
+                        .password(newUser.getPassword()))
                 .andDo(print())
-                .andExpect(status().isCreated())
-                .andExpect(redirectedUrl("/login"));
+                .andExpect(status().isOk());
     }
 
+    @Test
+    void newUserAddTest() throws Exception {
+        UserDTO newUser = new UserDTO();
+        newUser.setFirstName("john");
+        newUser.setLastName("wick");
+        newUser.setEmail("test@mail.fr");
+        newUser.setPassword("sQn2?7.kTrgkQZF");
+
+        mvc.perform(post("/registration").flashAttr("user", newUser))
+                .andDo(print())
+                .andExpect(status().isFound())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/login"));
+
+    }
 }
