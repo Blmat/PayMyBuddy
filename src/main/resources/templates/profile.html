@@ -23,7 +23,7 @@
                 <div>
                     <ul class="navbar-nav-right">
                         <li class="navbar-brand "><a class="nav-link active text-dark" th:href="@{/home}">Home</a></li>
-                        <li class="navbar-brand"><a class="nav-link text-dark" th:href="@{/transfert}">Transfer</a></li>
+                        <li class="navbar-brand"><a class="nav-link text-dark" th:href="@{/transfer}">Transfer</a></li>
                         <li class="navbar-brand"><a class="nav-link text-primary" th:href="@{/profile}">Profile</a></li>
                         <li class="navbar-brand"><a class="nav-link text-dark" th:href="@{/contact}">Contact</a></li>
                         <li class="navbar-brand"><a sec:authorize="isAuthenticated()" methods="post"
@@ -87,44 +87,6 @@
             Add Bank
         </button>
     </div>
-    <!--    &lt;!&ndash;-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;Bouton supprimer-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
-    <!--    <div class="text-center mb-4">-->
-    <!--        <button type="button" style="..." class="btn btn-danger" data-toggle="modal"-->
-    <!--                data-target="#deleteBank">-->
-    <!--            Delete Bank-->
-    <!--        </button>-->
-    <!--    </div>-->
-    <!--    <div class="modal-dialog">-->
-
-    <!--        &lt;!&ndash; Modal &ndash;&gt;-->
-    <!--        <div class="modal fade justify-content-center" id="supBank" tabindex="0" aria-labelledby="supBankLabel"-->
-    <!--             aria-hidden="true">-->
-    <!--            <div class="modal-dialog modal-dialog-centered">-->
-    <!--                <div class="modal-content">-->
-    <!--                    <div class="modal-header">-->
-    <!--                        <h5 class="modal-title" id="supBankLabel">Delete your bank</h5>-->
-    <!--                    </div>-->
-    <!--                    <div class="modal-body">-->
-    <!--                        <form th:action="@{/profile}" th:object="${bank}" method="post">-->
-    <!--                            <div class="modal-body p-12 pt-0 pb-3">-->
-    <!--                                <label class="floatingInput" for="bankId"> Friend email </label>-->
-    <!--                                <input title="Select your bank"-->
-    <!--                                       th:field="*{bankName}"-->
-    <!--                                       id="bankId"-->
-    <!--                                       class="form-control"-->
-    <!--                                       placeholder="BankName" required autofocus="autofocus"/>-->
-    <!--                                <br>-->
-    <!--                                <button type="submit" class="btn btn-primary">Add</button>-->
-    <!--                            </div>-->
-    <!--                        </form>-->
-    <!--                    </div>-->
-
-    <!--        </div>-->
-    <!--    </div>-->
-
-
-    <!--    &lt;!&ndash;-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;Fin bouton supprimer-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
-    <!-- Modal -->
     <div class="modal fade justify-content-center" id="addBank" tabindex="0" aria-labelledby="addBankLabel"
          aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -174,9 +136,9 @@
             </div>
         </div>
     </div>
-    <!-- succès ajout de la banque -->
-    <div th:if="${param.success}" class="alert alert-success alert-dismissible footer show" role="alert">
-        bank successfully saved
+    <!-- succès ajout de banque -->
+    <div class="alert alert-success alert-dismissible fade show" th:if="${message}" th:text="${message}"
+         role="alert">
     </div>
     <table class="table">
         <thead>

@@ -57,10 +57,10 @@ public class UserAccount implements UserDetails {
 
     /******************Ajout d'un ami***********************************/
     @ManyToMany(cascade = CascadeType.PERSIST)
-//    @JoinTable(
-//            name = "relation",
-//            joinColumns = @JoinColumn(name = "owner"),
-//            inverseJoinColumns = @JoinColumn(name = "buddy"))
+    @JoinTable(
+            name = "relation",
+            joinColumns = @JoinColumn(name = "owner"),
+            inverseJoinColumns = @JoinColumn(name = "buddy"))
     @ToString.Exclude
     private Set<UserAccount> friends = new HashSet<>();
 
