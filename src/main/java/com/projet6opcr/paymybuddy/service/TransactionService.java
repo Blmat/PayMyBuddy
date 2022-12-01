@@ -5,6 +5,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface TransactionService {
-    void sendMoney(String friendEmail, TransactionDTO transactionDTO);
+    TransactionDTO sendMoney(String friendEmail, TransactionDTO transactionDTO);
 
 }

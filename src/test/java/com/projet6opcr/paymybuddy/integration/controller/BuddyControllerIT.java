@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Transactional
 @SpringBootTest
-public class UserControllerIT {
+public class BuddyControllerIT {
 
     private MockMvc mockMvc;
 
@@ -62,20 +62,20 @@ public class UserControllerIT {
                         .with(csrf())
                         .flashAttr("FriendEmail", email))
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(redirectedUrl("/buddy"));
+                .andExpect(status().isOk());
     }
 
-//    @Test
-//    @DisplayName("Add buddy KO test")
-//    @WithMockUser(username = "admin@admin.com", password = "admin")
-//    public void addBuddyTestKO() throws Exception {
-//        //Given
-//        final var url = "/buddy";
-//        final var friendEmail = "unknow@email";
-//
-//        mockMvc.perform(formLogin(url)
-//                        .user("FriendEmail", friendEmail))
-//                .andDo(MockMvcResultHandlers.print())
-//                .andExpect(redirectedUrl("/buddy"));
-//    }
+    @Test
+    @DisplayName("Add buddy KO test")
+    @WithMockUser(username = "admin@admin.com", password = "admin")
+    public void addBuddyTestKO() throws Exception {
+        //Given
+        final var url = "/buddy";
+        final var friendEmail = "";
+
+        mockMvc.perform(formLogin(url)
+                        .user("FriendEmail", friendEmail))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk());
+    }
 }

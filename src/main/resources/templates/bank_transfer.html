@@ -83,8 +83,9 @@
                             <select class=" btn btn-lg border border-secondary dropdown-toggle  col-12"
                                     type="text" name="accountType">
                                 <option>Select Bank Account</option>
-                                <option sec:each="bankAccount : ${bankAccounts}" sec:value="${bankAccount.accountType}"
-                                        sec:text="${bankAccount.accountType}"></option>
+                                <option th:each="bank : ${bankAttributes}" th:value="${bankAccount.accountType}"
+                                        th:text="${bankAccount.accountType}">
+                                </option>
                             </select>
                         </label>
                         <small sec:if="${bankError}" sec:text="${bankError}"

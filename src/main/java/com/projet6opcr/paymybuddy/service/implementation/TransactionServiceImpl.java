@@ -23,14 +23,14 @@ public class TransactionServiceImpl implements TransactionService {
     private final PrincipalUser principalUser;
 
     @Override
-    public void sendMoney(String friendEmail, TransactionDTO transactionDTO) {
+    public TransactionDTO sendMoney(String friendEmail, TransactionDTO transactionDTO) {
 
         var debtor = principalUser.getCurrentUserOrThrowException();
 
         var creditor = userRepository.findByEmail(friendEmail)
                 .orElseThrow(() -> new UserNotFoundException("User not found with email = " + friendEmail));
 
-        var transaction = new Transaction(debtor, creditor, transactionDTO,  Commission.TRANSACTION_COMMISSION);
+        var transaction = new Transaction(debtor, creditor, transactionDTO, Commission.TRANSACTION_COMMISSION);
 
         debtor.debitBalanceAmount(transaction);
         creditor.creditBalanceAmount(transaction);
@@ -39,5 +39,6 @@ public class TransactionServiceImpl implements TransactionService {
 
         transactionRepository.save(transaction);
         userRepository.saveAll(List.of(debtor, creditor));
+        return transactionDTO;
     }
 }

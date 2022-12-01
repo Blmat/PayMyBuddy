@@ -1,5 +1,6 @@
 package com.projet6opcr.paymybuddy.service.implementation;
 
+import com.projet6opcr.paymybuddy.exception.EmailAlreadyExistingException;
 import com.projet6opcr.paymybuddy.exception.GenericNotFoundException;
 import com.projet6opcr.paymybuddy.exception.InsufficientBalanceException;
 import com.projet6opcr.paymybuddy.exception.UserNotFoundException;

@@ -140,6 +140,9 @@
     <div class="alert alert-success alert-dismissible fade show" th:if="${message}" th:text="${message}"
          role="alert">
     </div>
+    <!----Erreur ajout banque------------>
+    <div class="alert alert-danger alert-dismissible fade show" th:if="${bankError}"
+         th:text="${bankError}"></div>
     <table class="table">
         <thead>
         <tr>
@@ -149,7 +152,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="profile : ${bank}">
+        <tr th:each="bank : ${bankAttributes}">
             <td th:text="${bank.getBankName()}"></td>
             <td th:text="${bank.getIban()}"></td>
             <td th:text="${bank.getBic()}"></td>

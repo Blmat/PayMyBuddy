@@ -27,7 +27,7 @@ public class LoginController {
     }
 
     @GetMapping("/")
-    public String rootPage(Model model) {
+    public String rootPage() {
         log.debug("Access home page");
         return "login";
     }

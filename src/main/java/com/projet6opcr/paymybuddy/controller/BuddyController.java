@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.validation.Valid;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-public class UserController {
+public class BuddyController {
 
     private final UserService userService;
 
@@ -33,7 +33,13 @@ public class UserController {
     }
 
     @GetMapping("/buddy")
-    public String getBuddy() {
+    public String getBuddy(Model model) {
+        final var buddies = userService.getConnectedUser()
+                .getFriends()
+                .stream()
+                .map(BuddyDTO::new)
+                .collect(Collectors.toSet());
+        model.addAttribute("buddies", buddies);
         return "buddy";
     }
 
@@ -52,6 +58,6 @@ public class UserController {
                 model.addAttribute("addError", e.getMessage());
             }
         }
-        return "redirect:/buddy";
+        return "/buddy";
     }
 }

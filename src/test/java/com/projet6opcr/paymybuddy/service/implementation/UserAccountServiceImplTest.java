@@ -1,5 +1,6 @@
 package com.projet6opcr.paymybuddy.service.implementation;
 
+import com.projet6opcr.paymybuddy.exception.EmailAlreadyExistingException;
 import com.projet6opcr.paymybuddy.exception.GenericNotFoundException;
 import com.projet6opcr.paymybuddy.exception.InsufficientBalanceException;
 import com.projet6opcr.paymybuddy.exception.UserNotFoundException;
@@ -38,6 +39,7 @@ class UserAccountServiceImplTest {
 
     static UserAccount userAccount1;
     static UserAccount buddy1;
+    static UserAccount copy;
 
     @BeforeEach
     void setUp() {
@@ -61,6 +63,14 @@ class UserAccountServiceImplTest {
         buddy1.setEmail("tenley@email.com");
         buddy1.setPassword("123456");
         buddy1.setBalance(0.0);
+
+        copy = new UserAccount();
+        copy.setUserId(3);
+        copy.setFirstName("John");
+        copy.setLastName("Wick");
+        copy.setEmail("jboy@email.com");
+        copy.setPassword("123456");
+        copy.setBalance(0.0);
     }
 
     /******************************addFriendTest******************************/
@@ -89,22 +99,9 @@ class UserAccountServiceImplTest {
         //GIVEN
         //WHEN
         when(principalUser.getCurrentUserOrThrowException()).thenReturn(userAccount1);
-        when(userRepositoryMock.findByEmail(userAccount1.getEmail())).thenReturn(Optional.of(userAccount1));
 
         var response = assertThrows(GenericNotFoundException.class, () -> userService.addFriend(userAccount1.getEmail()));
         assertThat(response).hasMessage("You can't add yourself ");
-    }
-
-    @Test
-    @DisplayName("ce test doit retourner null car personne n'est trouvé")
-    void addFriendNullTest() {
-        //GIVEN
-        //WHEN
-        when(principalUser.getCurrentUserOrThrowException()).thenReturn(userAccount1);
-        when(userRepositoryMock.findByEmail(userAccount1.getEmail())).thenReturn(Optional.of(buddy1));
-
-        assertThrows(GenericNotFoundException.class, () -> userService.addFriend(userAccount1.getEmail()));
-
     }
 
     @Test
@@ -114,7 +111,7 @@ class UserAccountServiceImplTest {
         //WHEN
         when(principalUser.getCurrentUserOrThrowException()).thenReturn(userAccount1);
 
-        assertThrows(UserNotFoundException.class, () -> userService.addFriend(userAccount1.getEmail()));
+        assertThrows(UserNotFoundException.class, () -> userService.addFriend("emailNonTrouvé@email.fr"));
     }
 
     /***********************************************************************************************************/
@@ -173,6 +170,21 @@ class UserAccountServiceImplTest {
         assertThat(response.getBalance()).isEqualTo(.0);
         assertThat(response.getBank()).isNull();
 
+    }
+
+    @Test
+    @DisplayName("retourne une erreur car la personne utilise une adresse mail déjà enregistré dans la BDD")
+    void error_sameEmail_Test() {
+        //Give
+        var newUser = new UserDTO(userAccount1.getFirstName(), userAccount1.getLastName(), userAccount1.getEmail(), userAccount1.getPassword());
+        var newUser2 = new UserDTO(copy.getFirstName(), copy.getLastName(), copy.getEmail(), copy.getPassword());
+
+        // When
+        when(userRepositoryMock.save(any())).thenAnswer(i -> i.getArguments()[0]);
+
+        // Then
+        userService.saveUser(newUser);
+        var response = assertThrows(EmailAlreadyExistingException.class, () -> userRepositoryMock.existsByEmail(newUser2.getEmail()));
     }
 
     @Test

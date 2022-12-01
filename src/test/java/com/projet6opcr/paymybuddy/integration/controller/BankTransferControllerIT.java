@@ -65,7 +65,7 @@ class BankTransferControllerIT {
                         .with(csrf())
                         .flashAttr("bank", bank))
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(redirectedUrl("/profile?success"));
+                .andExpect(redirectedUrl("/profile"));
     }
 
     @Test
@@ -84,6 +84,6 @@ class BankTransferControllerIT {
                         .flashAttr("bank", bank))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(model().hasErrors())
-                .andExpect(redirectedUrl("/profile?error"));
+                .andExpect(status().isOk());
     }
 }
