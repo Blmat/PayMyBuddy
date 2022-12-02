@@ -58,6 +58,6 @@ public class BuddyController {
                 model.addAttribute("addError", e.getMessage());
             }
         }
-        return "/buddy";
+        return "buddy";
     }
 }

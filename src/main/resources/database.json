@@ -8,9 +8,9 @@
     "password": "$2y$10$J7t5BLikbkAh5Kx4xVEUWOMd2vALi/Pz5AhXQl8Mmuwi/Ab7vmWFm",
     "balance": 10.0,
     "bank": {
-      "iban": "bbbbbbbbbbbb",
-      "bic": "azertuyi",
-      "accountName": "qsdgfhj"
+      "iban": "IBANDEBANQUE",
+      "bic": "BICDEBANQUE",
+      "accountName": "NOMDEBANQUE"
     }
   },
   {
@@ -22,9 +22,9 @@
     "password": "$2y$10$KFMVMg13DOY/6MNwES05wOqG/YvPLktZ41K.cpqlPsOd0sRm./Moe",
     "balance": 100.0,
     "bank": {
-      "iban": "bbbbbbbbbbbb",
-      "bic": "azertuyi",
-      "accountName": "qsdgfhj"
+      "iban": "IBANDEBANQUE2",
+      "bic": "BICDEBANQUE2",
+      "accountName": "NOMDEBANQUE2"
     }
   }
 ]

@@ -21,8 +21,8 @@ public class PrincipalUserImpl implements PrincipalUser {
     @Override
     public Optional<UserAccount> getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        return userRepository.findByEmail(username);
+        String email = authentication.getName();
+        return userRepository.findByEmail(email);
     }
 
     @Override

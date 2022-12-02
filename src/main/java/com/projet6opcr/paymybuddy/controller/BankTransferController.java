@@ -47,7 +47,7 @@ public class BankTransferController {
             try {
                 userService.addBankAccount(bankAccountDTO);
                 log.debug("the bank is now attached to the account : " + bankAccountDTO.toString());
-                redirectAttributes.addFlashAttribute("message", "bank added successfully");
+                redirectAttributes.addFlashAttribute("message", "bank added successfully { " + bankAccountDTO.getBankName() + " }");
                 return "redirect:/profile";
             } catch (Exception e) {
                 log.error(e.getMessage(), e.getCause());

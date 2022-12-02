@@ -1,7 +1,6 @@
 package com.projet6opcr.paymybuddy.controller;
 
-import com.projet6opcr.paymybuddy.model.UserAccount;
-import com.projet6opcr.paymybuddy.model.dto.BuddyDTO;
+import com.projet6opcr.paymybuddy.model.dto.BankAccountDTO;
 import com.projet6opcr.paymybuddy.model.dto.UserDTO;
 import com.projet6opcr.paymybuddy.service.implementation.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,14 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.Set;
-
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -28,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-class UserControllerTest {
+class BankTransferControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -47,42 +46,40 @@ class UserControllerTest {
                 .build();
     }
 
+//    @Test
+//    @WithMockUser(username = "admin@admin.com", password = "admin")
+//    void getProfile() throws Exception {
+//        mockMvc.perform(get("/profile"))
+//                .andDo(print())
+//                .andExpect((status().isOk()));
+//    }
 
     @Test
     @WithMockUser(username = "admin@admin.com", password = "admin")
-    void getBuddyTest() throws Exception {
-
-        UserAccount newUser = new UserAccount();
-        newUser.setFirstName("Bob");
-        newUser.setLastName("obo");
-        newUser.setEmail("test@mail.fr");
-        newUser.setBalance(10.1);
-        BuddyDTO buddy = new BuddyDTO(newUser);
-
-        mockMvc.perform(get("/buddy").flashAttr("buddies", buddy))
-                .andDo(print())
-                .andExpect((status().isOk()));
-    }
-
-    @Test
-    @WithMockUser(username = "admin@admin.com", password = "admin")
-    void getBalanceTest() throws Exception {
-        mockMvc.perform(get("/add_balance"))
-                .andDo(print())
-                .andExpect((status().isOk()));
-    }
-
-    @Test
-    @WithMockUser(username = "admin@admin.com", password = "admin")
-    public void addBuddyController_OKTest() throws Exception {
-        UserDTO newUser = new UserDTO();
-        newUser.setEmail("test@mail.fr");
+    void addBankAccount_OK_Test() throws Exception {
+        BankAccountDTO newBank = new BankAccountDTO();
+        newBank.setBankName("bankName");
+        newBank.setIban("IbanTest");
+        newBank.setBic("BicTest");
         // THEN
-        mockMvc.perform(post("/buddy").flashAttr("email", newUser.getEmail()))
+        mockMvc.perform(post("/profile").flashAttr("bank", newBank))
                 .andDo(print())
-                .andExpect(status().isFound())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
-                .andExpect(redirectedUrl("/buddy"));
+                .andExpect(redirectedUrl("/profile"));
+    }
+
+    @Test
+    @WithMockUser(username = "admin@admin.com", password = "admin")
+    void addBankAccount_KO_Test() throws Exception {
+        BankAccountDTO newBank = new BankAccountDTO();
+        newBank.setBankName("bankName");
+        newBank.setIban(null);
+        newBank.setBic("BicTest");
+        // THEN
+        mockMvc.perform(post("/profile").flashAttr("bank", newBank))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(model().hasErrors());
     }
 }
