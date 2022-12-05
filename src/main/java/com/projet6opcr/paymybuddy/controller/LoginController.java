@@ -26,14 +26,9 @@ public class LoginController {
         return new UserDTO();
     }
 
-    @GetMapping("/")
-    public String rootPage() {
-        log.debug("Access home page");
-        return "login";
-    }
-
-    @GetMapping("/login")
+    @GetMapping({"/", "/login"})
     public String getLog() {
+        log.debug("Access to login page");
         return "login";
     }
 
@@ -41,7 +36,6 @@ public class LoginController {
     public String getDisconnected() {
         return "redirect:/login?disconnect";
     }
-
 
     @GetMapping("/registration")
     public String getRegistration() {

@@ -78,4 +78,5 @@ public class BuddyControllerIT {
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(status().isOk());
     }
+
 }

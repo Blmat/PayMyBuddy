@@ -49,12 +49,12 @@
         </nav>
     </header>
 
-    <h2 class="mt-2">Welcome <span sec:text="${user.getFirstName()}"></span>,</h2>
+    <h2 class="mt-2">Welcome <span th:text="${user.getFirstName()}"></span>,</h2>
     <h3 class="text-center">Your balance<span></span></h3>
 
     <div class="d-flex justify-content-center ">
         <div class="d-flex justify-content-center col-4 border border-secondary rounded bg-light ">
-            <h1 sec:text="${user.getBalance()}" class="text-center "></h1>
+            <h1 th:text="${user.getBalance()}" class="text-center "></h1>
             <h1>€</h1>
         </div>
     </div>
