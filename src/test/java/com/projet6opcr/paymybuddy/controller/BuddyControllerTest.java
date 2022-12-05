@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -66,6 +67,7 @@ class UserControllerTest {
 
     @Test
     @WithMockUser(username = "admin@admin.com", password = "admin")
+    @WithUserDetails
     void getBalanceTest() throws Exception {
         mockMvc.perform(get("/add_balance"))
                 .andDo(print())

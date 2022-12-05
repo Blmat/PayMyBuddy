@@ -1,7 +1,6 @@
 package com.projet6opcr.paymybuddy.controller;
 
 import com.projet6opcr.paymybuddy.model.dto.BankAccountDTO;
-import com.projet6opcr.paymybuddy.model.dto.BuddyDTO;
 import com.projet6opcr.paymybuddy.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +14,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Controller
 @Slf4j

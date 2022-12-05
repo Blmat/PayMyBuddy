@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * Cette méthode sert à transférer de l'argent sur le compte d'un utilisateur
+     * Cette méthode sert à transférer de l'argent sur le compte d'un ami
      *
      * @param amount Double : l'argent à mettre sur le compte
      */

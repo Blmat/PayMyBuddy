@@ -100,9 +100,9 @@
                             <input type="text" name="comment" size="50"
                                    class="btn btn-lg border border-secondary ml-4 col-10" placeholder="Description ...">
                         </label>
-                        <small id="emailHelpError" sec:if="${error}" sec:text="${error}"
+                        <small id="emailHelpError" th:if="${transferError}" th:text="${transferError}"
                                class="form-text text-danger font-weight-bold text-center"></small>
-                        <small id="emailHelpSuccess" sec:if="${success}" sec:text="${success}"
+                        <small id="emailHelpSuccess" th:if="${message}" th:text="${message}"
                                class="form-text text-success font-weight-bold text-center "></small>
                     </div>
 
