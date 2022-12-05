@@ -1,6 +1,8 @@
 package com.projet6opcr.paymybuddy.controller;
 
+import com.projet6opcr.paymybuddy.model.BankAccount;
 import com.projet6opcr.paymybuddy.model.UserAccount;
+import com.projet6opcr.paymybuddy.model.dto.BankAccountDTO;
 import com.projet6opcr.paymybuddy.model.dto.BuddyDTO;
 import com.projet6opcr.paymybuddy.model.dto.TransactionDTO;
 import com.projet6opcr.paymybuddy.model.dto.UserDTO;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 @Slf4j
@@ -30,7 +33,7 @@ public class MainController {
     private final TransactionService transactionService;
 
 
-    @GetMapping("/transfer")
+    @GetMapping("transfer")
     public String getTransfert(Model model) {
 
         UserAccount friends = userService.getConnectedUser();
@@ -43,17 +46,15 @@ public class MainController {
         return "contact";
     }
 
-    @GetMapping("/banktransfer")//todo donner le nom de lma bank avec les infos
+    @GetMapping("banktransfer")
     public String getBankTransfer(Model model) {
 
-//        UserAccount friends = userService.getConnectedUser();
-//        model.addAttribute("bankAttributes", friends);
+        UserAccount user = userService.getConnectedUser();
+        BankAccount bankAccount = userService.getConnectedUser().getBank();
+        model.addAttribute("bankAttributes", bankAccount);
+        model.addAttribute("userBalance", user);
 
         return "bank_transfer";
     }
-
-
-
-
 
 }

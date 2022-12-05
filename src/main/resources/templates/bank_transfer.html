@@ -83,8 +83,9 @@
                             <select class=" btn btn-lg border border-secondary dropdown-toggle  col-12"
                                     type="text" name="accountType">
                                 <option>Select Bank Account</option>
-                                <option th:each="bankAccount : ${bankAttributes}" th:value="${bankAccount.accountType}"
-                                        th:text="${bankAccount.accountType}">
+                                <option th:each="bankAccount : ${bankAttributes}"
+                                        th:value="${bankAccount.accountName}"
+                                        th:text="${bankAccount.accountName}">
                                 </option>
                             </select>
                         </label>
@@ -100,7 +101,8 @@
                         </label>
                     </div>
                     <div class="col-3 border border-secondary rounded bg-white">
-                        <h1 sec:text="${user.getBalance()}" size="8" class="text-center bg-white"></h1>
+                        <h1 th:each="user : ${userBalance}"
+                            th:text="${user.getBalance()}" size="8" class="text-center bg-white"></h1>
                     </div>
                 </div>
                 <br>
