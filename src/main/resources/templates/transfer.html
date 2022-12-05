@@ -72,8 +72,9 @@
                                         type="text"
                                         name="friendEmail">
                                     <option>Select A Connection</option>
-                                    <option sec:each="friend : ${friends}" sec:value="${friend.email}"
-                                            sec:text="${friend.firstName} +' '+ ${friend.lastName}"></option>
+                                    <option th:each="friend : ${friends}"
+                                            th:value="${friend.email}"
+                                            th:text="${friend.firstName} +' '+ ${friend.lastName}"></option>
                                 </select>
                             </label>
                         </div>
@@ -124,12 +125,12 @@
                 </tr>
                 </thead>
                 <tbody class="text-center ">
-                <tr sec:each="friendTransaction : ${friendTransactionPage}">
-                    <td sec:if="${friendTransaction.userName} == ${user.firstName}"><br><h5>
+                <tr th:each="friendTransaction : ${friendTransactionPage}">
+                    <td th:if="${friendTransaction.userName} == ${user.firstName}"><br><h5>
                         your buddy</h5><br></td>
-                    <td sec:if="${friendTransaction.userName} == ${user.firstName}"><br><h5
-                            sec:text="${friendTransaction.creditorName}">description</h5><br></td>
-                    <td sec:if="${friendTransaction.userName} != ${user.firstName}"><br><h5>
+                    <td th:if="${friendTransaction.userName} == ${user.firstName}"><br><h5
+                            th:text="${friendTransaction.creditorName}">description</h5><br></td>
+                    <td th:if="${friendTransaction.userName} != ${user.firstName}"><br><h5>
                         &euro;</h5>
                         <br></td>
                 </tr>
@@ -139,22 +140,22 @@
 
         <!------------------------Select page------------------------------------>
         <form th:action="@{/transfer}" method="get">
-            <nav sec:if="${numberOfPage}">
+            <nav th:if="${numberOfPage}">
                 <ul class="pagination justify-content-center ">
                     <li class="page-item ">
-                        <button type="submit" sec:if="${friendTransactionPage.getNumber} >= 1" class="page-link"
-                                sec:value="${friendTransactionPage.getNumber} -1" name="pageNumber">&laquo;
+                        <button type="submit" th:if="${friendTransactionPage.getNumber} >= 1" class="page-link"
+                                th:value="${friendTransactionPage.getNumber} -1" name="pageNumber">&laquo;
                         </button>
                     </li>
-                    <li class="page-item" sec:each="number : ${numberOfPage}">
-                        <button type="submit" sec:if="${number} != ${friendTransactionPage.getNumber}" class="page-link"
-                                name="pageNumber" sec:value="${number}" sec:text="${number}"></button>
-                        <button type="submit" sec:if="${number} == ${friendTransactionPage.getNumber}" class="page-link"
-                                name="pageNumber" sec:value="${number}"><b sec:text="${number}"></b></button>
+                    <li class="page-item" th:each="number : ${numberOfPage}">
+                        <button type="submit" th:if="${number} != ${friendTransactionPage.getNumber}" class="page-link"
+                                name="pageNumber" th:value="${number}" th:text="${number}"></button>
+                        <button type="submit" th:if="${number} == ${friendTransactionPage.getNumber}" class="page-link"
+                                name="pageNumber" th:value="${number}"><b th:text="${number}"></b></button>
                     <li class="page-item ">
                         <button type="submit"
-                                sec:if="${friendTransactionPage.getNumber} != ${friendTransactionPage.getTotalPages} - 1"
-                                class="page-link" sec:value="${friendTransactionPage.getNumber} +1" name="pageNumber">
+                                th:if="${friendTransactionPage.getNumber} != ${friendTransactionPage.getTotalPages} - 1"
+                                class="page-link" th:value="${friendTransactionPage.getNumber} +1" name="pageNumber">
                             &raquo;
                         </button>
                     </li>

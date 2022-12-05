@@ -1,12 +1,24 @@
 package com.projet6opcr.paymybuddy.controller;
 
+import com.projet6opcr.paymybuddy.model.UserAccount;
+import com.projet6opcr.paymybuddy.model.dto.BuddyDTO;
+import com.projet6opcr.paymybuddy.model.dto.TransactionDTO;
+import com.projet6opcr.paymybuddy.model.dto.UserDTO;
 import com.projet6opcr.paymybuddy.service.TransactionService;
 import com.projet6opcr.paymybuddy.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
+import java.util.Set;
 
 @Controller
 @Slf4j
@@ -18,9 +30,11 @@ public class MainController {
     private final TransactionService transactionService;
 
 
-    @GetMapping("/transfer")//todo faire le get pour afficher les infos
-    public String getTransfert() {
+    @GetMapping("/transfer")
+    public String getTransfert(Model model) {
 
+        UserAccount friends = userService.getConnectedUser();
+        model.addAttribute("friends", friends);
         return "transfer";
     }
 
@@ -31,11 +45,15 @@ public class MainController {
 
     @GetMapping("/banktransfer")//todo donner le nom de lma bank avec les infos
     public String getBankTransfer(Model model) {
-//        var bankAccount = Optional.ofNullable(userService.getConnectedUser().getBank())
-//                .map(BankAccountDTO::new)
-//                .orElse(new BankAccountDTO());
-//        model.addAttribute("bank", bankAccount);
+
+//        UserAccount friends = userService.getConnectedUser();
+//        model.addAttribute("bankAttributes", friends);
 
         return "bank_transfer";
     }
+
+
+
+
+
 }

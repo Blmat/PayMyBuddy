@@ -21,10 +21,10 @@ public class BuddyController {
 
     private final UserService userService;
 
-    @ModelAttribute("friend")
-    public UserDTO friendRegistration() {
-        return new UserDTO();
-    }
+//    @ModelAttribute("friend")
+//    public UserDTO friendRegistration() {
+//        return new UserDTO();
+//    }
 
     @GetMapping(value = "/add_balance")
     public String getBalance(Double amount) {

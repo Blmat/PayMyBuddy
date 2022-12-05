@@ -83,7 +83,7 @@
                             <select class=" btn btn-lg border border-secondary dropdown-toggle  col-12"
                                     type="text" name="accountType">
                                 <option>Select Bank Account</option>
-                                <option th:each="bank : ${bankAttributes}" th:value="${bankAccount.accountType}"
+                                <option th:each="bankAccount : ${bankAttributes}" th:value="${bankAccount.accountType}"
                                         th:text="${bankAccount.accountType}">
                                 </option>
                             </select>

@@ -1,6 +1,7 @@
 package com.projet6opcr.paymybuddy.model;
 
 import com.projet6opcr.paymybuddy.configuration.constant.Commission;
+import com.projet6opcr.paymybuddy.model.dto.BuddyDTO;
 import com.projet6opcr.paymybuddy.model.dto.UserDTO;
 import com.projet6opcr.paymybuddy.exception.InsufficientBalanceException;
 import com.sun.istack.NotNull;

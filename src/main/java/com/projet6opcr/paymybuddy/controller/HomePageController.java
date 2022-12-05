@@ -18,8 +18,8 @@ public class HomePageController {
 
     private final UserService userService;
 
-    @GetMapping("/home")//todo donner les sious
-    public ModelAndView getHome(Model model) {
+    @GetMapping("/home")
+    public ModelAndView getHome() {
         log.info("New request: show the homepage template in the view ");
         UserAccount user = userService.getConnectedUser();
         ModelAndView mav = new ModelAndView("home");
