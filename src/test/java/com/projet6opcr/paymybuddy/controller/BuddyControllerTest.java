@@ -51,6 +51,7 @@ class UserControllerTest {
 
     @Test
     @WithMockUser(username = "admin@admin.com", password = "admin")
+//todo getConnectedUser is null
     void getBuddyTest() throws Exception {
 
         UserAccount newUser = new UserAccount();
@@ -66,7 +67,7 @@ class UserControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "admin@admin.com", password = "admin")
+    @WithMockUser(username = "admin@admin.com", password = "admin")//todo getConnectedUser is null
     @WithUserDetails
     void getBalanceTest() throws Exception {
         mockMvc.perform(get("/add_balance"))

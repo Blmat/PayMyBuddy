@@ -87,7 +87,7 @@
                                     <input name="amount" size="8"
                                            class="btn btn-lg border border-secondary text-center col-12"
                                            placeholder="0€"
-                                           value="0 &euro;">
+                                           value="0">
                                 </label>
                             </div>
                             <h2>€</h2>
@@ -126,13 +126,9 @@
                 </thead>
                 <tbody class="text-center ">
                 <tr th:each="friendTransaction : ${friendTransactionPage}">
-                    <td th:if="${friendTransaction.userName} == ${user.firstName}"><br><h5>
-                        your buddy</h5><br></td>
-                    <td th:if="${friendTransaction.userName} == ${user.firstName}"><br><h5
-                            th:text="${friendTransaction.creditorName}">description</h5><br></td>
-                    <td th:if="${friendTransaction.userName} != ${user.firstName}"><br><h5>
-                        &euro;</h5>
-                        <br></td>
+                    <td><span th:text="${friendTransaction.creditor}"></span></td>
+                    <td><span th:text="${friendTransaction.reason}"></span></td>
+                    <td><span th:text="${friendTransaction.amount}"></span> €</td>
                 </tr>
                 </tbody>
             </table>

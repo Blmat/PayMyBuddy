@@ -56,9 +56,8 @@ class MainControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk());
     }
-
-    @Test
     @WithMockUser(username = "admin@admin.com", password = "admin")
+    @Test
     void getBankTransfer() throws Exception {
         mvc.perform(get("/banktransfer"))
                 .andDo(print())

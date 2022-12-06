@@ -172,7 +172,7 @@ class UserAccountServiceImplTest {
 
     }
 
-    @Test
+    @Test //todo erreur non attrapée
     @DisplayName("retourne une erreur car la personne utilise une adresse mail déjà enregistré dans la BDD")
     void error_sameEmail_Test() {
         //Give

@@ -130,8 +130,6 @@ public class UserAccount implements UserDetails {
         return false;
     }
 
-
-
     public Double debitBalanceAmount(Double amount) {
 
         if (amount <= 0) {

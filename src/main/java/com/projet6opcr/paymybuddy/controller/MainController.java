@@ -15,15 +15,21 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -71,41 +77,49 @@ public class MainController {
         return "bank_transfer";
     }
 
-//    @PostMapping("/bankTransfer")
-//    public String bankTransfer(@ModelAttribute("user")double money ,BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-//        log.debug("internal transfer ");
-//
-//        if (!result.hasErrors()) {
-//            try {
-//                userService.addMoney(money);
-//                log.debug("You have transferred   : " + money);
-//                redirectAttributes.addFlashAttribute("message", "You have transferred   : " + money);
-//                return "redirect:/bankTransfer";
-//            } catch (Exception e) {
-//                log.error(e.getMessage(), e.getCause());
-//                model.addAttribute("addError", e.getMessage());
-//            }
-//        }
-//        return "bankTransfer";
-//
-//    }
+    @PostMapping("/bankTransfer")//todo ne fonctionne pas
+    public String bankTransfer(@NotNull @ModelAttribute("transferType") String transferType, @NotNull @ModelAttribute("amount") Double amount, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+        log.debug("internal transfer ");
+
+        if (!result.hasErrors()) {
+            try {
+
+                if (transferType.equals("bank")) {
+                    userService.debitMoney(amount);
+                } else {
+                    userService.addMoney(amount);
+                }
+
+                log.debug("You have transferred   : " + amount);
+                redirectAttributes.addFlashAttribute("message", "You have transferred   : " + amount);
+                return "redirect:/banktransfer";
+            } catch (Exception e) {
+                log.error(e.getMessage(), e.getCause());
+                model.addAttribute("addError", e.getMessage());
+            }
+        }
+        log.error(result.getAllErrors().toString());
+        return "bank_transfer";
+
+    }
 
 
-    @PostMapping("transfer")
-    public String transferToSomeone(@Valid @ModelAttribute("transfer") String friendEmail, TransactionDTO transactionDTO, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-        log.debug("Transfer to buddy or current user");
+    @PostMapping("transfer") //todo ne fonctionne pas
+    public String transferToSomeone(@Valid @ModelAttribute("transation") TransactionDTO transactionDTO, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+
+        log.debug("Transfer to buddy " + transactionDTO.getCreditorEmail());
 
         if (!result.hasErrors()) {
             try {
                 transactionService.sendMoney(friendEmail, transactionDTO);
                 redirectAttributes.addFlashAttribute("message", "the transfer was made successfully!");
-                return "redirect:/profile";
+                return "redirect:/transfer";
             } catch (Exception e) {
                 log.error(e.getMessage(), e.getCause());
                 model.addAttribute("transferError", e.getMessage());
             }
         }
-        return "/profile";
+        return "transfer";
     }
 
 }
