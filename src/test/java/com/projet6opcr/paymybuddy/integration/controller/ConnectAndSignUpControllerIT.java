@@ -1,6 +1,6 @@
 package com.projet6opcr.paymybuddy.integration.controller;
 
-import com.projet6opcr.paymybuddy.model.dto.BankAccountDTO;
+import com.projet6opcr.paymybuddy.model.dto.UserDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,13 +17,11 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @Transactional
 @SpringBootTest
-class BankTransferControllerIT {
-
+class ConnectAndSignUpControllerIT {
     private MockMvc mockMvc;
 
     @Autowired
@@ -39,9 +37,9 @@ class BankTransferControllerIT {
 
     @Test
     @WithMockUser(username = "admin@admin.com")
-    void getProfile() throws Exception {
+    void getRegistration() throws Exception {
         //Given
-        final var url = "/profile";
+        final var url = "/registration";
 
         mockMvc.perform(get(url)
                         .with(csrf()))
@@ -51,39 +49,41 @@ class BankTransferControllerIT {
 
 
     @Test
-    @WithMockUser(username = "admin@admin.com", password = "admin")
-    @DisplayName("bank adding test")
-    public void bankAddingTest() throws Exception {
+    @DisplayName("Registration OK test")
+    public void registrationTest() throws Exception {
         //Given
-        final var url = "/profile";
-        final var bankName = "qsdgfhj";
-        final var iban = "bbbbbbbbbbbb";
-        final var bic = "azertuyi";
-        BankAccountDTO bank = new BankAccountDTO(bankName, iban, bic);
+        final var url = "/registration";
+        final var firstname = "Jonh";
+        final var lastName = "boyd";
+        final var email = "JBoyd@mail.com";
+        final var password = "jboyd";
+        final var user = new UserDTO(firstname, lastName, email, password);
 
         mockMvc.perform(post(url)
                         .with(csrf())
-                        .flashAttr("bank", bank))
+                        .flashAttr("user", user))
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(redirectedUrl("/profile"));
+                .andExpect(status().isFound())
+                .andExpect(redirectedUrl("/login"));
     }
 
     @Test
-    @WithMockUser(username = "admin@admin.com", password = "admin")
-    @DisplayName("bank adding test error")
-    public void bankAddingTestKO() throws Exception {
+    @DisplayName("Registration KO test")
+    public void registrationKOTest() throws Exception {
         //Given
-        final var url = "/profile";
-        final var bankName = "qsdgfhj";
-        final var iban = "";
-        final var bic = "azergdh";
-        BankAccountDTO bank = new BankAccountDTO(bankName, iban, bic);
+        final var url = "/registration";
+        final var firstname = "John";
+        final var lastName = "wick";
+        final var email = "Babayagad@mail.com";
+        final var password = "";
+        final var user = new UserDTO(firstname, lastName, email, password);
 
         mockMvc.perform(post(url)
                         .with(csrf())
-                        .flashAttr("bank", bank))
+                        .flashAttr("user", user))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(model().hasErrors())
                 .andExpect(status().isOk());
+
     }
 }

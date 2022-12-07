@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-class LoginControllerTest {
+class ConnectAndSignUpControllerTest {
 
     @Autowired
     private MockMvc mvc;

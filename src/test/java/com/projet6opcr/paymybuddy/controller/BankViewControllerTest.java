@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-class BankTransferControllerTest {
+class BankViewControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

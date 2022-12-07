@@ -125,7 +125,7 @@
                 </tr>
                 </thead>
                 <tbody class="text-center ">
-                <tr th:each="friendTransaction : ${friendTransactionPage}">
+                <tr th:each="friendTransaction : ${friendTransactionInfo}">
                     <td><span th:text="${friendTransaction.creditor}"></span></td>
                     <td><span th:text="${friendTransaction.reason}"></span></td>
                     <td><span th:text="${friendTransaction.amount}"></span> €</td>
@@ -139,19 +139,19 @@
             <nav th:if="${numberOfPage}">
                 <ul class="pagination justify-content-center ">
                     <li class="page-item ">
-                        <button type="submit" th:if="${friendTransactionPage.getNumber} >= 1" class="page-link"
-                                th:value="${friendTransactionPage.getNumber} -1" name="pageNumber">&laquo;
+                        <button type="submit" th:if="${friendTransactionInfo.getNumber} >= 1" class="page-link"
+                                th:value="${friendTransactionInfo.getNumber} -1" name="pageNumber">&laquo;
                         </button>
                     </li>
                     <li class="page-item" th:each="number : ${numberOfPage}">
-                        <button type="submit" th:if="${number} != ${friendTransactionPage.getNumber}" class="page-link"
+                        <button type="submit" th:if="${number} != ${friendTransactionInfo.getNumber}" class="page-link"
                                 name="pageNumber" th:value="${number}" th:text="${number}"></button>
-                        <button type="submit" th:if="${number} == ${friendTransactionPage.getNumber}" class="page-link"
+                        <button type="submit" th:if="${number} == ${friendTransactionInfo.getNumber}" class="page-link"
                                 name="pageNumber" th:value="${number}"><b th:text="${number}"></b></button>
                     <li class="page-item ">
                         <button type="submit"
-                                th:if="${friendTransactionPage.getNumber} != ${friendTransactionPage.getTotalPages} - 1"
-                                class="page-link" th:value="${friendTransactionPage.getNumber} +1" name="pageNumber">
+                                th:if="${friendTransactionInfo.getNumber} != ${friendTransactionInfo.getTotalPages} - 1"
+                                class="page-link" th:value="${friendTransactionInfo.getNumber} +1" name="pageNumber">
                             &raquo;
                         </button>
                     </li>

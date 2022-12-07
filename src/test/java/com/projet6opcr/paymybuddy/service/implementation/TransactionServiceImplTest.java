@@ -48,7 +48,7 @@ class TransactionServiceImplTest {
         userCreditor = new UserAccount(1, "Jacob", "Boyd", "jBoy@email.com", "456", 30.0, bankAccount1, null);
         userDebtor = new UserAccount(2, "John", "Boyd", "johnBoy@email.com", "123", 20.0, bankAccount2, null);
         transaction1 = new TransactionDTO(userCreditor.getEmail(), 10.0, "achat smartphone");
-        transaction2 = new TransactionDTO(userCreditor.getEmail(), .91, "achat chargeur de smartphone");
+        transaction2 = new TransactionDTO(userCreditor.getEmail(), 19.95, "achat chargeur de smartphone");
 
         transactionService = new TransactionServiceImpl(transactionRepository, userRepository, principalUser);
     }
