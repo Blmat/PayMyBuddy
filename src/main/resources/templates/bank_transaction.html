@@ -111,12 +111,11 @@
                     <div class="d-flex justify-content-end col-6">
                         <div class="text-right">
                             <label>
-                                <input name="amount" class="btn btn-lg border border-secondary  col-6" placeholder="0€"
-                                       value="0">
+                                <input name="amount" class="btn btn-lg border border-secondary  col-6" placeholder="0€">
                             </label>
-                            <small sec:if="${error}" sec:text="${error}"
+                            <small th:if="${error}" th:text="${error}"
                                    class="form-text text-danger font-weight-bold "></small>
-                            <small sec:if="${success}" sec:text="${success}"
+                            <small th:if="${success}" th:text="${success}"
                                    class="form-text text-success font-weight-bold"></small>
                         </div>
                         <div>

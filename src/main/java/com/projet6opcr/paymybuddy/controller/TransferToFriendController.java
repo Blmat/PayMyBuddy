@@ -43,9 +43,9 @@ public class TransferToFriendController {
         model.addAttribute("friends", buddies);
 
         final var transactions = transactionService.findAllTransactions();
-        model.addAttribute("friendTransactionInfo", transactions);
+        model.addAttribute("TransactionInfo", transactions);
 
-        return "transfer";
+        return "friend_transfer";
     }
 
     @PostMapping("transfer")
@@ -63,6 +63,6 @@ public class TransferToFriendController {
                 model.addAttribute("transferError", e.getMessage());
             }
         }
-        return "transfer";
+        return "friend_transfer";
     }
 }

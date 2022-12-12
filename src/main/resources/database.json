@@ -4,9 +4,9 @@
     "id": 1,
     "email": "user@email.com",
     "firstName": "user",
-    "lastName": "superUser",
+    "lastName": "userLastName",
     "password": "$2y$10$J7t5BLikbkAh5Kx4xVEUWOMd2vALi/Pz5AhXQl8Mmuwi/Ab7vmWFm",
-    "balance": 10.0,
+    "balance": 120.53,
     "bank": {
       "iban": "IBANDEBANQUE",
       "bic": "BICDEBANQUE",
@@ -18,7 +18,7 @@
     "id": 2,
     "email": "admin@admin.com",
     "firstName": "admin",
-    "lastName": "admin",
+    "lastName": "adminLastName",
     "password": "$2y$10$KFMVMg13DOY/6MNwES05wOqG/YvPLktZ41K.cpqlPsOd0sRm./Moe",
     "balance": 100.0,
     "bank": {

@@ -183,7 +183,6 @@ class UserAccountServiceImplTest {
         when(userRepositoryMock.save(any())).thenAnswer(i -> i.getArguments()[0]);
 
         // Then
-        userService.saveUser(newUser);
         var response = assertThrows(EmailAlreadyExistingException.class, () -> userService.saveUser(newUser2));
     }
 

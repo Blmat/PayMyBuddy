@@ -58,7 +58,8 @@
             <h3 class="mb-3">Send Money</h3>
             <a type="submit" class="  btn btn-primary btn-lg col-3" th:href="@{/buddy}"> Add connection </a>
         </div>
-        <form th:action="@{/transfer}" method="post" class="bg-light border border-secondary rounded mb-4">
+        <form th:action="@{/transfer}" th:object="${transation}" method="post"
+              class="bg-light border border-secondary rounded mb-4">
             <div class="d-flex ">
                 <div class=" d-flex flex-column mt-4 col-9">
                     <small class="mb-2 form-text text-warning text-center">&#9888;Pay My Buddy <b>take 5%</b>
@@ -70,7 +71,7 @@
                             <label>
                                 <select class="btn btn-lg border border-secondary text-center col-12 dropdown-toggle "
                                         type="text"
-                                        name="friendEmail">
+                                        name="creditorEmail">
                                     <option>Select A Connection</option>
                                     <option th:each="friend : ${friends}"
                                             th:value="${friend.email}"
@@ -86,20 +87,21 @@
                                 <label>
                                     <input name="amount" size="8"
                                            class="btn btn-lg border border-secondary text-center col-12"
-                                           placeholder="0€"
-                                           value="0">
+                                           placeholder="0€">
                                 </label>
                             </div>
                             <h2>€</h2>
                         </div>
                     </div>
                     <!-------------End button-------------->
-
+                    <!-------------Descrisption button----->
                     <div class="text-center  mb-5 ">
                         <label>
-                            <input type="text" name="comment" size="50"
+                            <input type="text" name="reason" size="50"
                                    class="btn btn-lg border border-secondary ml-4 col-10" placeholder="Description ...">
                         </label>
+                        <!-------------End button---------->
+
                         <small id="emailHelpError" th:if="${transferError}" th:text="${transferError}"
                                class="form-text text-danger font-weight-bold text-center"></small>
                         <small id="emailHelpSuccess" th:if="${message}" th:text="${message}"
@@ -122,13 +124,15 @@
                     <th scope="col"><br><h5>Connection</h5><br></th>
                     <th scope="col"><br><h5>Description</h5><br></th>
                     <th scope="col"><br><h5>Amount</h5><br></th>
+                    <th scope="col"><br><h5>Date</h5><br></th>
                 </tr>
                 </thead>
                 <tbody class="text-center ">
-                <tr th:each="friendTransaction : ${friendTransactionInfo}">
-                    <td><span th:text="${friendTransaction.creditor}"></span></td>
-                    <td><span th:text="${friendTransaction.reason}"></span></td>
-                    <td><span th:text="${friendTransaction.amount}"></span> €</td>
+                <tr th:each="infoTransaction : ${TransactionInfo}">
+                    <td><span th:text="${infoTransaction.creditor}"></span></td>
+                    <td><span th:text="${infoTransaction.reason}"></span></td>
+                    <td><span th:text="${infoTransaction.amount}"></span> €</td>
+                    <td><span th:text="${infoTransaction.date}"></span></td>
                 </tr>
                 </tbody>
             </table>
@@ -139,19 +143,19 @@
             <nav th:if="${numberOfPage}">
                 <ul class="pagination justify-content-center ">
                     <li class="page-item ">
-                        <button type="submit" th:if="${friendTransactionInfo.getNumber} >= 1" class="page-link"
-                                th:value="${friendTransactionInfo.getNumber} -1" name="pageNumber">&laquo;
+                        <button type="submit" th:if="${TransactionInfo.getNumber} >= 1" class="page-link"
+                                th:value="${TransactionInfo.getNumber} -1" name="pageNumber">&laquo;
                         </button>
                     </li>
                     <li class="page-item" th:each="number : ${numberOfPage}">
-                        <button type="submit" th:if="${number} != ${friendTransactionInfo.getNumber}" class="page-link"
+                        <button type="submit" th:if="${number} != ${TransactionInfo.getNumber}" class="page-link"
                                 name="pageNumber" th:value="${number}" th:text="${number}"></button>
-                        <button type="submit" th:if="${number} == ${friendTransactionInfo.getNumber}" class="page-link"
+                        <button type="submit" th:if="${number} == ${TransactionInfo.getNumber}" class="page-link"
                                 name="pageNumber" th:value="${number}"><b th:text="${number}"></b></button>
                     <li class="page-item ">
                         <button type="submit"
-                                th:if="${friendTransactionInfo.getNumber} != ${friendTransactionInfo.getTotalPages} - 1"
-                                class="page-link" th:value="${friendTransactionInfo.getNumber} +1" name="pageNumber">
+                                th:if="${TransactionInfo.getNumber} != ${TransactionInfo.getTotalPages} - 1"
+                                class="page-link" th:value="${TransactionInfo.getNumber} +1" name="pageNumber">
                             &raquo;
                         </button>
                     </li>

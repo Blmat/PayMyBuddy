@@ -1,6 +1,5 @@
 package com.projet6opcr.paymybuddy.model.dto;
 
-import com.projet6opcr.paymybuddy.model.UserAccount;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TransactionDTO {
 
-    private double amount;
+    private String creditorEmail;
+    private Double amount;
     private String reason;
 
 }

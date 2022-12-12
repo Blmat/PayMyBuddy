@@ -1,6 +1,5 @@
 package com.projet6opcr.paymybuddy.controller;
 
-import com.projet6opcr.paymybuddy.service.TransactionService;
 import com.projet6opcr.paymybuddy.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,8 +20,6 @@ public class BankTransactionController {
 
     private final UserService userService;
 
-    private final TransactionService transactionService;
-
     @GetMapping("contact")
     public String getContact() {
         return "contact";
@@ -37,7 +34,7 @@ public class BankTransactionController {
         model.addAttribute("bankAttributes", bankAccount);
         model.addAttribute("userBalance", user);
 
-        return "bank_transfer";
+        return "bank_transaction";
     }
 
     @PostMapping("/bankTransfer")
@@ -62,7 +59,7 @@ public class BankTransactionController {
             }
         }
         log.error(result.getAllErrors().toString());
-        return "bank_transfer";
+        return "bank_transaction";
 
     }
 }

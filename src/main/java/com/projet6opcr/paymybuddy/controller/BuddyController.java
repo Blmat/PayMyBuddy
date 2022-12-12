@@ -1,6 +1,6 @@
 package com.projet6opcr.paymybuddy.controller;
 
-import com.projet6opcr.paymybuddy.model.dto.UserDTO;
+import com.projet6opcr.paymybuddy.model.dto.BuddyDTO;
 import com.projet6opcr.paymybuddy.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ public class BuddyController {
     @GetMapping(value = "/add_balance")
     public String getBalance(Double amount) {
         userService.addMoney(amount);
-        return "home";
+        return "home_page";
     }
 
     @GetMapping("/buddy")
@@ -40,7 +40,7 @@ public class BuddyController {
                 .map(BuddyDTO::new)
                 .collect(Collectors.toSet());
         model.addAttribute("buddies", buddies);
-        return "buddy";
+        return "add_buddy";
     }
 
     @PostMapping("/buddy")
@@ -58,6 +58,6 @@ public class BuddyController {
                 model.addAttribute("addError", e.getMessage());
             }
         }
-        return "buddy";
+        return "add_buddy";
     }
 }

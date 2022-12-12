@@ -42,7 +42,6 @@ public class Transaction {
     @Column(name = "commission")
     private Double commission;
 
-
     public Transaction(UserAccount debtor, UserAccount creditor, TransactionDTO transactionDTO, Double commission) {
         if(transactionDTO.getAmount() <= 0 ){
             throw new IllegalArgumentException("Transaction amount can not be null ot negative");

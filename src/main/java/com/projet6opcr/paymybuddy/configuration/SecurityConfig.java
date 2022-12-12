@@ -26,7 +26,7 @@ public class SecurityConfig {
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .and()
-                .oauth2Login()
+                .oauth2Login() //todo ne fonctionne pas, renvoie sur "/login"
                 .loginPage("/registration").defaultSuccessUrl("/home", true)
                 .and()
                 .logout()

@@ -1,9 +1,8 @@
 package com.projet6opcr.paymybuddy.model;
 
 import com.projet6opcr.paymybuddy.configuration.constant.Commission;
-import com.projet6opcr.paymybuddy.model.dto.BuddyDTO;
-import com.projet6opcr.paymybuddy.model.dto.UserDTO;
 import com.projet6opcr.paymybuddy.exception.InsufficientBalanceException;
+import com.projet6opcr.paymybuddy.model.dto.UserDTO;
 import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -13,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 
 @Entity
@@ -23,6 +24,7 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table
+
 public class UserAccount implements UserDetails {
 
     @Id
@@ -80,7 +82,7 @@ public class UserAccount implements UserDetails {
         this.password = userAccount.getPassword();
     }
 
-    public UserAccount(@NotNull String lastname, @javax.validation.constraints.NotNull String firstname, @Email @NotNull String email,@NotNull String password, @NotNull double balance) {
+    public UserAccount(@NotNull String lastname, @javax.validation.constraints.NotNull String firstname, @Email @NotNull String email, @NotNull String password, @NotNull double balance) {
         super();
         this.lastName = lastname;
         this.firstName = firstname;
@@ -189,6 +191,11 @@ public class UserAccount implements UserDetails {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    public double roundingAfterTheDecimalPoint(double value) {
+        BigDecimal bd = BigDecimal.valueOf(value).setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 
 }

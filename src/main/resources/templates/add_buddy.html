@@ -70,12 +70,12 @@
                         <h5 class="modal-title" id="addFriendLabel">looking for Buddy</h5>
                     </div>
                     <div class="modal-body">
-                        <form th:action="@{/buddy}" th:object="${friend}" method="post">
+                        <form th:action="@{/buddy}" method="post">
                             <div class="modal-body p-12 pt-0 pb-3">
-                                <label class="floatingInput" for="FriendEmail"> Friend email </label>
+                                <label class="floatingInput" for="email"> Friend email </label>
                                 <input title="Enter your friend's email address"
-                                       th:field="*{email}"
-                                       id="FriendEmail"
+                                       name="email"
+                                       id="email"
                                        class="form-control"
                                        placeholder="Friend'email" required autofocus="autofocus"/>
                                 <br>
@@ -108,10 +108,10 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="buddy : ${friend}">
-            <td th:text="${friend.getFirstName()}"></td>
-            <td th:text="${friend.getLastName()}"></td>
-            <td th:text="${friend.getEmail()}"></td>
+        <tr th:each="friend : ${buddies}">
+            <td th:text="${friend.firstName}"></td>
+            <td th:text="${friend.lastName}"></td>
+            <td th:text="${friend.email}"></td>
         </tr>
         </tbody>
     </table>
