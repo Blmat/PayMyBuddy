@@ -1,7 +1,7 @@
 package com.projet6opcr.paymybuddy.service;
 
-import com.projet6opcr.paymybuddy.model.dto.BankAccountDTO;
-import com.projet6opcr.paymybuddy.model.dto.UserDTO;
+import com.projet6opcr.paymybuddy.model.dto.BankAccountDto;
+import com.projet6opcr.paymybuddy.model.dto.UserDto;
 import com.projet6opcr.paymybuddy.model.BankAccount;
 import com.projet6opcr.paymybuddy.model.UserAccount;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public interface UserService {
 
     Optional<UserAccount> findUserById(Integer id);
 
-    BankAccount addBankAccount(BankAccountDTO bankAccount);
+    BankAccount addBankAccount(BankAccountDto bankAccount);
 
     void transferMoney(String friendEmail, Double amount);
 
@@ -27,6 +27,6 @@ public interface UserService {
 
     void deleteUserById(Integer id);
 
-    UserAccount saveUser(UserDTO user);
+    UserAccount saveUser(UserDto user);
 
 }

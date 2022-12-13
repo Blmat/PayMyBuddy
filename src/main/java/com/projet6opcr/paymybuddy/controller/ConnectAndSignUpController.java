@@ -1,6 +1,6 @@
 package com.projet6opcr.paymybuddy.controller;
 
-import com.projet6opcr.paymybuddy.model.dto.UserDTO;
+import com.projet6opcr.paymybuddy.model.dto.UserDto;
 import com.projet6opcr.paymybuddy.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,8 +22,8 @@ public class ConnectAndSignUpController {
     private final UserService userService;
 
     @ModelAttribute("user")
-    public UserDTO userRegistrationDTO() {
-        return new UserDTO();
+    public UserDto userRegistrationDTO() {
+        return new UserDto();
     }
 
     @GetMapping({"/", "/login"})
@@ -43,7 +43,7 @@ public class ConnectAndSignUpController {
     }
 
     @PostMapping("/registration")
-    public String registerUserAccount(@Valid @ModelAttribute("user") UserDTO user, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+    public String registerUserAccount(@Valid @ModelAttribute("user") UserDto user, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         log.debug("Add a new user account");
 
         if (!result.hasErrors()) {

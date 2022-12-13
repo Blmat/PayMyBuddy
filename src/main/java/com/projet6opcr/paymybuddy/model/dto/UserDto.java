@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
+public class UserDto {
 
     @NotNull(message = "FirstName cannot be null.")
     @NotEmpty(message = "FirstName cannot be empty.")

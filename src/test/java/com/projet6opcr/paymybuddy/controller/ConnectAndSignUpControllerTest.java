@@ -1,6 +1,6 @@
 package com.projet6opcr.paymybuddy.controller;
 
-import com.projet6opcr.paymybuddy.model.dto.UserDTO;
+import com.projet6opcr.paymybuddy.model.dto.UserDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -99,7 +99,7 @@ class ConnectAndSignUpControllerTest {
 
     @Test
     void newUserTest() throws Exception {
-        UserDTO newUser = new UserDTO();
+        UserDto newUser = new UserDto();
         newUser.setFirstName("john");
         newUser.setLastName("wick");
         newUser.setEmail("test@mail.fr");
@@ -116,7 +116,7 @@ class ConnectAndSignUpControllerTest {
 
     @Test
     void newUserAddTest() throws Exception {
-        UserDTO newUser = new UserDTO();
+        UserDto newUser = new UserDto();
         newUser.setFirstName("john");
         newUser.setLastName("wick");
         newUser.setEmail("test@mail.fr");

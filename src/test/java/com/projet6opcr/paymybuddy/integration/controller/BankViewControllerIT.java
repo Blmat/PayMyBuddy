@@ -1,6 +1,6 @@
 package com.projet6opcr.paymybuddy.integration.controller;
 
-import com.projet6opcr.paymybuddy.model.dto.BankAccountDTO;
+import com.projet6opcr.paymybuddy.model.dto.BankAccountDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -59,7 +59,7 @@ class BankViewControllerIT {
         final var bankName = "qsdgfhj";
         final var iban = "bbbbbbbbbbbb";
         final var bic = "azertuyi";
-        BankAccountDTO bank = new BankAccountDTO(bankName, iban, bic);
+        BankAccountDto bank = new BankAccountDto(bankName, iban, bic);
 
         mockMvc.perform(post(url)
                         .with(csrf())
@@ -77,7 +77,7 @@ class BankViewControllerIT {
         final var bankName = "qsdgfhj";
         final var iban = "";
         final var bic = "azergdh";
-        BankAccountDTO bank = new BankAccountDTO(bankName, iban, bic);
+        BankAccountDto bank = new BankAccountDto(bankName, iban, bic);
 
         mockMvc.perform(post(url)
                         .with(csrf())

@@ -2,7 +2,7 @@ package com.projet6opcr.paymybuddy.model;
 
 import com.projet6opcr.paymybuddy.configuration.constant.Commission;
 import com.projet6opcr.paymybuddy.exception.InsufficientBalanceException;
-import com.projet6opcr.paymybuddy.model.dto.UserDTO;
+import com.projet6opcr.paymybuddy.model.dto.UserDto;
 import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -68,7 +68,7 @@ public class UserAccount implements UserDetails {
     private Set<UserAccount> friends = new HashSet<>();
 
     /********* Ce constructeur est utilisé pour enregistrer un utilisateur****/
-    public UserAccount(UserDTO userDTO) {
+    public UserAccount(UserDto userDTO) {
         this.firstName = userDTO.getFirstName();
         this.lastName = userDTO.getLastName();
         this.email = userDTO.getEmail();
@@ -177,7 +177,7 @@ public class UserAccount implements UserDetails {
     public Double creditBalanceAmount(Transaction transaction) {
 
         var amount = transaction.getAmount();
-        return creditBalanceAmount(amount);
+        return creditBalanceAmount(Math.ceil(amount * 100) / 100.00);
     }
 
     @Override
@@ -191,11 +191,6 @@ public class UserAccount implements UserDetails {
     @Override
     public int hashCode() {
         return getClass().hashCode();
-    }
-
-    public double roundingAfterTheDecimalPoint(double value) {
-        BigDecimal bd = BigDecimal.valueOf(value).setScale(2, RoundingMode.HALF_UP);
-        return bd.doubleValue();
     }
 
 }

@@ -9,7 +9,7 @@ import javax.validation.constraints.NotEmpty;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BankAccountDTO {
+public class BankAccountDto {
 
     @NotEmpty
     private String bankName;

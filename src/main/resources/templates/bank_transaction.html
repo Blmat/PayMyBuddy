@@ -79,24 +79,29 @@
                 </div>
                 <div class=" d-flex ">
                     <div class="align-self-center col-5 ">
+
+                        <!-------- Select bank ---------->
                         <label>
                             <select class=" btn btn-lg border border-secondary dropdown-toggle  col-12"
-                                    type="text" name="accountType">
+                                    type="text"
+                                    name="BankName">
                                 <option>Select Bank Account</option>
                                 <option th:each="bankAccount : ${bankAttributes}"
                                         th:value="${bankAccount.accountName}"
-                                        th:text="${bankAccount.accountName}">
-                                </option>
+                                        th:text="${bankAccount.accountName}"></option>
                             </select>
                         </label>
-                        <small sec:if="${bankError}" sec:text="${bankError}"
+                        <small th:if="${bankError}" th:text="${bankError}"
                                class="form-text text-danger font-weight-bold text-center"></small>
                     </div>
+                    <!-------------End button-------------->
                     <div class="text-center align-self-center col-3">
                         <label>
-                            <select class="btn btn-lg border border-secondary " type="text" name="transferType">
-                                <option value="bank">&#x261A;</option>
-                                <option value="account">&#x261B;</option>
+                            <select class="btn btn-lg border border-secondary "
+                                    type="text"
+                                    name="transferType">
+                                <option value="debit">&#x261A;</option>
+                                <option value="credit">&#x261B;</option>
                             </select>
                         </label>
                     </div>

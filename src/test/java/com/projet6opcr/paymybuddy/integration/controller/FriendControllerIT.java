@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Transactional
 @SpringBootTest
-public class BuddyControllerIT {
+public class FriendControllerIT {
 
     private MockMvc mockMvc;
 

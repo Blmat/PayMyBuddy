@@ -1,6 +1,6 @@
 package com.projet6opcr.paymybuddy.controller;
 
-import com.projet6opcr.paymybuddy.model.dto.BankAccountDTO;
+import com.projet6opcr.paymybuddy.model.dto.BankAccountDto;
 import com.projet6opcr.paymybuddy.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,22 +23,22 @@ public class BankViewController {
     private final UserService userService;
 
     @ModelAttribute("bank")
-    public BankAccountDTO bankDTOAdded() {
-        return new BankAccountDTO();
+    public BankAccountDto bankDTOAdded() {
+        return new BankAccountDto();
     }
 
     @GetMapping("/profile")
     public String getProfile(Model model) {
         var bankAttributes = Optional.ofNullable(userService.getConnectedUser().getBank())
-                .map(BankAccountDTO::new)
-                .orElse(new BankAccountDTO());
+                .map(BankAccountDto::new)
+                .orElse(new BankAccountDto());
         model.addAttribute("bankAttributes", bankAttributes);
 
         return "profile";
     }
 
     @PostMapping("/profile")
-    public String addBankAccount(@Valid @ModelAttribute("bank") BankAccountDTO bankAccountDTO, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+    public String addBankAccount(@Valid @ModelAttribute("bank") BankAccountDto bankAccountDTO, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         log.debug("Add a new bank account");
 
         if (!result.hasErrors()) {

@@ -1,6 +1,6 @@
 package com.projet6opcr.paymybuddy.model;
 
-import com.projet6opcr.paymybuddy.model.dto.BankAccountDTO;
+import com.projet6opcr.paymybuddy.model.dto.BankAccountDto;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -29,7 +29,7 @@ public class BankAccount {
     @Column
     private String bic;
 
-    public BankAccount(BankAccountDTO bankAccountDto) {
+    public BankAccount(BankAccountDto bankAccountDto) {
         this.iban = bankAccountDto.getIban();
         this.accountName = bankAccountDto.getBankName();
         this.bic = bankAccountDto.getBic();

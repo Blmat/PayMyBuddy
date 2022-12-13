@@ -3,7 +3,7 @@ package com.projet6opcr.paymybuddy.service.implementation;
 import com.projet6opcr.paymybuddy.exception.InsufficientBalanceException;
 import com.projet6opcr.paymybuddy.model.BankAccount;
 import com.projet6opcr.paymybuddy.model.UserAccount;
-import com.projet6opcr.paymybuddy.model.dto.TransactionDTO;
+import com.projet6opcr.paymybuddy.model.dto.TransactionDto;
 import com.projet6opcr.paymybuddy.repository.TransactionRepository;
 import com.projet6opcr.paymybuddy.repository.UserRepository;
 import com.projet6opcr.paymybuddy.service.PrincipalUser;
@@ -35,8 +35,8 @@ class TransactionServiceImplTest {
 
     static UserAccount userCreditor;
     static UserAccount userDebtor;
-    TransactionDTO transaction1;
-    TransactionDTO transaction2;
+    TransactionDto transaction1;
+    TransactionDto transaction2;
 
     BankAccount bankAccount1;
     BankAccount bankAccount2;
@@ -47,8 +47,8 @@ class TransactionServiceImplTest {
         bankAccount2 = new BankAccount();
         userCreditor = new UserAccount(1, "Jacob", "Boyd", "jBoy@email.com", "456", 30.0, bankAccount1, null);
         userDebtor = new UserAccount(2, "John", "Boyd", "johnBoy@email.com", "123", 20.0, bankAccount2, null);
-        transaction1 = new TransactionDTO(userCreditor.getEmail(), 10.0, "achat smartphone");
-        transaction2 = new TransactionDTO(userCreditor.getEmail(), 19.95, "achat chargeur de smartphone");
+        transaction1 = new TransactionDto(userCreditor.getEmail(), 10.0, "achat smartphone");
+        transaction2 = new TransactionDto(userCreditor.getEmail(), 19.95, "achat chargeur de smartphone");
 
         transactionService = new TransactionServiceImpl(transactionRepository, userRepository, principalUser);
     }

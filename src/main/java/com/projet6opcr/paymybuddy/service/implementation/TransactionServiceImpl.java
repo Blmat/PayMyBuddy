@@ -1,7 +1,7 @@
 package com.projet6opcr.paymybuddy.service.implementation;
 
 import com.projet6opcr.paymybuddy.configuration.constant.Commission;
-import com.projet6opcr.paymybuddy.model.dto.TransactionDTO;
+import com.projet6opcr.paymybuddy.model.dto.TransactionDto;
 import com.projet6opcr.paymybuddy.exception.UserNotFoundException;
 import com.projet6opcr.paymybuddy.model.Transaction;
 import com.projet6opcr.paymybuddy.repository.TransactionRepository;
@@ -23,7 +23,7 @@ public class TransactionServiceImpl implements TransactionService {
     private final PrincipalUser principalUser;
 
     @Override
-    public TransactionDTO sendMoney(String friendEmail, TransactionDTO transactionDTO) {
+    public TransactionDto sendMoney(String friendEmail, TransactionDto transactionDTO) {
 
         var debtor = principalUser.getCurrentUserOrThrowException();
 

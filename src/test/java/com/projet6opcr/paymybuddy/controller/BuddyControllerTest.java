@@ -1,8 +1,8 @@
 package com.projet6opcr.paymybuddy.controller;
 
 import com.projet6opcr.paymybuddy.model.UserAccount;
-import com.projet6opcr.paymybuddy.model.dto.BuddyDTO;
-import com.projet6opcr.paymybuddy.model.dto.UserDTO;
+import com.projet6opcr.paymybuddy.model.dto.BuddyDto;
+import com.projet6opcr.paymybuddy.model.dto.UserDto;
 import com.projet6opcr.paymybuddy.service.implementation.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,8 +17,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
-import java.util.Set;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -59,7 +57,7 @@ class UserControllerTest {
         newUser.setLastName("obo");
         newUser.setEmail("test@mail.fr");
         newUser.setBalance(10.1);
-        BuddyDTO buddy = new BuddyDTO(newUser);
+        BuddyDto buddy = new BuddyDto(newUser);
 
         mockMvc.perform(get("/buddy").flashAttr("buddies", buddy))
                 .andDo(print())
@@ -78,7 +76,7 @@ class UserControllerTest {
     @Test
     @WithMockUser(username = "admin@admin.com", password = "admin")
     public void addBuddyController_OKTest() throws Exception {
-        UserDTO newUser = new UserDTO();
+        UserDto newUser = new UserDto();
         newUser.setEmail("test@mail.fr");
         // THEN
         mockMvc.perform(post("/buddy").flashAttr("email", newUser.getEmail()))

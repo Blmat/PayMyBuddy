@@ -6,8 +6,8 @@ import com.projet6opcr.paymybuddy.exception.InsufficientBalanceException;
 import com.projet6opcr.paymybuddy.exception.UserNotFoundException;
 import com.projet6opcr.paymybuddy.model.BankAccount;
 import com.projet6opcr.paymybuddy.model.UserAccount;
-import com.projet6opcr.paymybuddy.model.dto.BankAccountDTO;
-import com.projet6opcr.paymybuddy.model.dto.UserDTO;
+import com.projet6opcr.paymybuddy.model.dto.BankAccountDto;
+import com.projet6opcr.paymybuddy.model.dto.UserDto;
 import com.projet6opcr.paymybuddy.repository.UserRepository;
 import com.projet6opcr.paymybuddy.service.PrincipalUser;
 import org.assertj.core.api.Assertions;
@@ -152,7 +152,7 @@ class UserAccountServiceImplTest {
     @Test
     void saveUserTest() {
         //Give
-        var newUser = new UserDTO(userAccount1.getFirstName(), userAccount1.getLastName(), userAccount1.getEmail(), userAccount1.getPassword());
+        var newUser = new UserDto(userAccount1.getFirstName(), userAccount1.getLastName(), userAccount1.getEmail(), userAccount1.getPassword());
 
         // When
         when(userRepositoryMock.save(any())).thenAnswer(i -> i.getArguments()[0]);
@@ -176,8 +176,8 @@ class UserAccountServiceImplTest {
     @DisplayName("retourne une erreur car la personne utilise une adresse mail déjà enregistré dans la BDD")
     void error_sameEmail_Test() {
         //Give
-        var newUser = new UserDTO(userAccount1.getFirstName(), userAccount1.getLastName(), userAccount1.getEmail(), userAccount1.getPassword());
-        var newUser2 = new UserDTO(copy.getFirstName(), copy.getLastName(), copy.getEmail(), copy.getPassword());
+        var newUser = new UserDto(userAccount1.getFirstName(), userAccount1.getLastName(), userAccount1.getEmail(), userAccount1.getPassword());
+        var newUser2 = new UserDto(copy.getFirstName(), copy.getLastName(), copy.getEmail(), copy.getPassword());
 
         // When
         when(userRepositoryMock.save(any())).thenAnswer(i -> i.getArguments()[0]);
@@ -223,7 +223,7 @@ class UserAccountServiceImplTest {
     void addBankAccountTest() {
         //Given
         when(principalUser.getCurrentUserOrThrowException()).thenReturn(userAccount1);
-        final var bankAccountDto = new BankAccountDTO("IBANBANKACCOUNT1", "NAMEBANKACCOUNT1", "BICBANKACCOUNT1");
+        final var bankAccountDto = new BankAccountDto("IBANBANKACCOUNT1", "NAMEBANKACCOUNT1", "BICBANKACCOUNT1");
 
         //WHEN
         when(userRepositoryMock.save(any())).thenAnswer(i -> i.getArguments()[0]);
@@ -243,7 +243,7 @@ class UserAccountServiceImplTest {
     void addBankAccountErrorTest() {
         when(principalUser.getCurrentUserOrThrowException()).thenThrow(new UserNotFoundException("UserAccount not found with id = 1"));
 
-        final var bankAccountDto = new BankAccountDTO("IBANBANKACCOUNT1", "NAMEBANKACCOUNT1", "BICBANKACCOUNT1");
+        final var bankAccountDto = new BankAccountDto("IBANBANKACCOUNT1", "NAMEBANKACCOUNT1", "BICBANKACCOUNT1");
 
         var response = assertThrows(UserNotFoundException.class, () -> userService.addBankAccount(bankAccountDto));
 

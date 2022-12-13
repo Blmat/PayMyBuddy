@@ -1,7 +1,7 @@
 package com.projet6opcr.paymybuddy.controller;
 
-import com.projet6opcr.paymybuddy.model.dto.BuddyDTO;
-import com.projet6opcr.paymybuddy.model.dto.TransactionDTO;
+import com.projet6opcr.paymybuddy.model.dto.BuddyDto;
+import com.projet6opcr.paymybuddy.model.dto.TransactionDto;
 import com.projet6opcr.paymybuddy.service.TransactionService;
 import com.projet6opcr.paymybuddy.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +26,8 @@ public class TransferToFriendController {
     private final TransactionService transactionService;
 
     @ModelAttribute("transfer")
-    public TransactionDTO transactionDTO() {
-        return new TransactionDTO();
+    public TransactionDto transactionDTO() {
+        return new TransactionDto();
     }
 
 
@@ -37,7 +37,7 @@ public class TransferToFriendController {
         final var buddies = userService.getConnectedUser()
                 .getFriends()
                 .stream()
-                .map(BuddyDTO::new)
+                .map(BuddyDto::new)
                 .collect(Collectors.toSet());
 
         model.addAttribute("friends", buddies);
@@ -49,7 +49,7 @@ public class TransferToFriendController {
     }
 
     @PostMapping("transfer")
-    public String transferToSomeone(@Valid @ModelAttribute("transation") TransactionDTO transactionDTO, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+    public String transferToSomeone(@Valid @ModelAttribute("transation") TransactionDto transactionDTO, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
 
         log.debug("Transfer to buddy " + transactionDTO.getCreditorEmail());
 

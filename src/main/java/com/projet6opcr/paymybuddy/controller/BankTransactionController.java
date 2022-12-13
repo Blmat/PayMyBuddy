@@ -1,5 +1,6 @@
 package com.projet6opcr.paymybuddy.controller;
 
+import com.projet6opcr.paymybuddy.model.dto.BankAccountDto;
 import com.projet6opcr.paymybuddy.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,14 +45,14 @@ public class BankTransactionController {
         if (!result.hasErrors()) {
             try {
 
-                if (transferType.equals("bank")) {
+                if (transferType.equals("debit")) {
                     userService.debitMoney(amount);
                 } else {
                     userService.addMoney(amount);
                 }
 
-                log.debug("You have transferred   : " + amount);
-                redirectAttributes.addFlashAttribute("message", "You have transferred   : " + amount);
+                log.debug("You have transferred   : " + amount + "€");
+                redirectAttributes.addFlashAttribute("message", "You have transferred   : " + amount + "€");
                 return "redirect:/banktransfer";
             } catch (Exception e) {
                 log.error(e.getMessage(), e.getCause());

@@ -6,8 +6,8 @@ import com.projet6opcr.paymybuddy.exception.InsufficientBalanceException;
 import com.projet6opcr.paymybuddy.exception.UserNotFoundException;
 import com.projet6opcr.paymybuddy.model.BankAccount;
 import com.projet6opcr.paymybuddy.model.UserAccount;
-import com.projet6opcr.paymybuddy.model.dto.BankAccountDTO;
-import com.projet6opcr.paymybuddy.model.dto.UserDTO;
+import com.projet6opcr.paymybuddy.model.dto.BankAccountDto;
+import com.projet6opcr.paymybuddy.model.dto.UserDto;
 import com.projet6opcr.paymybuddy.repository.UserRepository;
 import com.projet6opcr.paymybuddy.service.PrincipalUser;
 import com.projet6opcr.paymybuddy.service.UserService;
@@ -16,8 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -48,7 +46,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserAccount saveUser(UserDTO userDTO) {
+    public UserAccount saveUser(UserDto userDTO) {
 
         userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         UserAccount user = new UserAccount(userDTO);
@@ -62,7 +60,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public BankAccount addBankAccount(BankAccountDTO bankAccountDto) {
+    public BankAccount addBankAccount(BankAccountDto bankAccountDto) {
 
         var user = principalUser.getCurrentUserOrThrowException();
         user.setBank(new BankAccount(bankAccountDto));

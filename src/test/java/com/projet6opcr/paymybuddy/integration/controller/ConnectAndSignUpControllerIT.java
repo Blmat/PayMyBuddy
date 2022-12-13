@@ -1,6 +1,6 @@
 package com.projet6opcr.paymybuddy.integration.controller;
 
-import com.projet6opcr.paymybuddy.model.dto.UserDTO;
+import com.projet6opcr.paymybuddy.model.dto.UserDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -57,7 +57,7 @@ class ConnectAndSignUpControllerIT {
         final var lastName = "boyd";
         final var email = "JBoyd@mail.com";
         final var password = "jboyd";
-        final var user = new UserDTO(firstname, lastName, email, password);
+        final var user = new UserDto(firstname, lastName, email, password);
 
         mockMvc.perform(post(url)
                         .with(csrf())
@@ -76,7 +76,7 @@ class ConnectAndSignUpControllerIT {
         final var lastName = "wick";
         final var email = "Babayagad@mail.com";
         final var password = "";
-        final var user = new UserDTO(firstname, lastName, email, password);
+        final var user = new UserDto(firstname, lastName, email, password);
 
         mockMvc.perform(post(url)
                         .with(csrf())
