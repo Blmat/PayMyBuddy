@@ -159,7 +159,7 @@ public class UserAccount implements UserDetails {
 
         var amountWithCommission = amount + (amount * Commission.TRANSACTION_COMMISSION);
 
-        return debitBalanceAmount(amountWithCommission);
+        return debitBalanceAmount(Math.ceil(amountWithCommission * 100) / 100.0); // permet d'arrondir au centième
     }
 
 
