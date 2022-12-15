@@ -25,6 +25,8 @@ public interface UserService {
 
     Double addMoney(Double amount);
 
+    Double debitMoney(Double amount);
+
     void deleteUserById(Integer id);
 
     UserAccount saveUser(UserDto user);

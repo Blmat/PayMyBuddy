@@ -1,5 +1,6 @@
 package com.projet6opcr.paymybuddy.model;
 
+import com.projet6opcr.paymybuddy.configuration.constant.Commission;
 import com.projet6opcr.paymybuddy.model.dto.TransactionDto;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -40,7 +41,7 @@ public class Transaction {
     private LocalDate date;
 
     @Column(name = "commission")
-    private Double commission;
+    private Double commission = Commission.TRANSACTION_COMMISSION;
 
     public Transaction(UserAccount debtor, UserAccount creditor, TransactionDto transactionDTO, Double commission) {
         if (transactionDTO.getAmount() <= 0) {

@@ -1,5 +1,7 @@
 package com.projet6opcr.paymybuddy.controller;
 
+import com.projet6opcr.paymybuddy.exception.BankAccountNotFoundException;
+import com.projet6opcr.paymybuddy.exception.UserNotFoundException;
 import com.projet6opcr.paymybuddy.model.dto.BankAccountDto;
 import com.projet6opcr.paymybuddy.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -39,12 +41,17 @@ public class BankTransactionController {
     }
 
     @PostMapping("/bankTransfer")
-    public String bankTransfer(@NotNull @ModelAttribute("transferType") String transferType, @NotNull @ModelAttribute("amount") Double amount, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+    public String bankTransfer(@NotNull @ModelAttribute("BankName") String bankName, @NotNull @ModelAttribute("transferType") String transferType, @NotNull @ModelAttribute("amount") Double amount, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         log.debug("internal transfer ");
+
+        final var bankAccount = userService.getConnectedUser().getBank();
 
         if (!result.hasErrors()) {
             try {
-
+                if (!bankName.equals(bankAccount.getAccountName())) {
+                    redirectAttributes.addFlashAttribute("error", "Please enter your bank name");
+                    return "redirect:/banktransfer";
+                }
                 if (transferType.equals("debit")) {
                     userService.debitMoney(amount);
                 } else {

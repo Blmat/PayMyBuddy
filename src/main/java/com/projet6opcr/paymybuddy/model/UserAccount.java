@@ -1,6 +1,7 @@
 package com.projet6opcr.paymybuddy.model;
 
 import com.projet6opcr.paymybuddy.configuration.constant.Commission;
+import com.projet6opcr.paymybuddy.exception.GenericNotFoundException;
 import com.projet6opcr.paymybuddy.exception.InsufficientBalanceException;
 import com.projet6opcr.paymybuddy.model.dto.UserDto;
 import com.sun.istack.NotNull;
@@ -93,8 +94,6 @@ public class UserAccount implements UserDetails {
 
     /**********************************************************************/
 
-
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.emptyList();
@@ -108,29 +107,26 @@ public class UserAccount implements UserDetails {
         return email;
     }
 
-
     @Override
     public boolean isAccountNonExpired() {
         return false;
     }
-
 
     @Override
     public boolean isAccountNonLocked() {
         return false;
     }
 
-
     @Override
     public boolean isCredentialsNonExpired() {
         return false;
     }
 
-
     @Override
     public boolean isEnabled() {
         return false;
     }
+
 
     public Double debitBalanceAmount(Double amount) {
 

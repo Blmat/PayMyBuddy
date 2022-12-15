@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * Cette méthode sert à ajouter de l'argent sur le compte d'un utilisateur
+     * Cette méthode sert à ajouter de l'argent sur le compte d'un utilisateur depuis sa banque.
      *
      * @param amount Double : l'argent à mettre sur le compte
      * @return la somme qu'il y a sur le compte de l'utilisateur.
