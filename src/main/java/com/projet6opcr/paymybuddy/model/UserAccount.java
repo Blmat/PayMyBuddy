@@ -1,10 +1,8 @@
 package com.projet6opcr.paymybuddy.model;
 
 import com.projet6opcr.paymybuddy.configuration.constant.Commission;
-import com.projet6opcr.paymybuddy.exception.GenericNotFoundException;
 import com.projet6opcr.paymybuddy.exception.InsufficientBalanceException;
 import com.projet6opcr.paymybuddy.model.dto.UserDto;
-import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
@@ -21,11 +20,9 @@ import java.util.*;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
 @Table
-
 public class UserAccount implements UserDetails {
 
     @Id
@@ -54,7 +51,7 @@ public class UserAccount implements UserDetails {
     private String password;
 
     @Column(nullable = false)
-    private Double balance = .0;
+    private BigDecimal balance = BigDecimal.valueOf(.0);
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private BankAccount bank;
@@ -74,7 +71,7 @@ public class UserAccount implements UserDetails {
         this.lastName = userDTO.getLastName();
         this.email = userDTO.getEmail();
         this.password = userDTO.getPassword();
-        this.balance = .0;
+        this.balance = BigDecimal.valueOf(.0);
     }
 
     /********************Constructeur pour la connexion********************/
@@ -83,13 +80,18 @@ public class UserAccount implements UserDetails {
         this.password = userAccount.getPassword();
     }
 
-    public UserAccount(@NotNull String lastname, @javax.validation.constraints.NotNull String firstname, @Email @NotNull String email, @NotNull String password, @NotNull double balance) {
+    public UserAccount(@NotNull String lastname, @NotNull String firstname, @Email @NotNull String email, @NotNull String password, @NotNull BigDecimal balance) {
         super();
         this.lastName = lastname;
         this.firstName = firstname;
         this.email = email;
         this.password = password;
         this.balance = balance;
+    }
+
+
+    public BigDecimal getBalance() {
+        return this.balance.setScale(2, RoundingMode.HALF_UP);
     }
 
     /**********************************************************************/
@@ -128,52 +130,56 @@ public class UserAccount implements UserDetails {
     }
 
 
-    public Double debitBalanceAmount(Double amount) {
+    public BigDecimal debitBalanceAmount(BigDecimal amount) {
 
-        if (amount <= 0) {
+        if (amount.signum() <= 0) {
             throw new IllegalArgumentException("Amount can not be null ot negative");
         }
 
-        if (this.balance - amount < 0) {
+        if (this.balance.subtract(amount).signum() < 0) {
             throw new InsufficientBalanceException("sorry you don't have enough money ");
         }
 
-        this.balance = this.balance - amount;
+        this.balance = this.balance.subtract(amount);
 
         return this.balance;
     }
 
 
-    public Double debitBalanceAmount(Transaction transaction) {
+    /**
+     * @param transaction
+     * @return
+     */
+    public BigDecimal debitBalanceAmount(Transaction transaction) {
 
         var amount = transaction.getAmount();
         var commission = transaction.getCommission();
 
-        if (commission < 0) {
+        if (commission.signum() < 0) {
             throw new IllegalArgumentException("Commission can not be negative");
         }
 
-        var amountWithCommission = amount + (amount * Commission.TRANSACTION_COMMISSION);
+        var amountWithCommission = amount.add(amount.multiply(Commission.TRANSACTION_COMMISSION));
 
-        return debitBalanceAmount(Math.ceil(amountWithCommission * 100) / 100.0); // permet d'arrondir au centième
+        return debitBalanceAmount(amountWithCommission); // permet d'arrondir au centième
     }
 
 
-    public Double creditBalanceAmount(Double amount) {
+    public BigDecimal creditBalanceAmount(BigDecimal amount) {
 
-        if (amount <= 0) {
+        if (amount.signum() <= 0) {
             throw new IllegalArgumentException("Amount can not be null ot negative");
         }
 
-        this.balance = this.balance + amount;
+        this.balance = this.balance.add(amount);
         return this.balance;
     }
 
 
-    public Double creditBalanceAmount(Transaction transaction) {
+    public BigDecimal creditBalanceAmount(Transaction transaction) {
 
         var amount = transaction.getAmount();
-        return creditBalanceAmount(Math.ceil(amount * 100) / 100.00);
+        return creditBalanceAmount(amount);
     }
 
     @Override

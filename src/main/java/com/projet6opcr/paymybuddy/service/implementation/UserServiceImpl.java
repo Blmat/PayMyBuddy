@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -30,11 +31,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserAccount addFriend(String friendEmail) {
         UserAccount currentUser = principalUser.getCurrentUserOrThrowException();
-        var friend = userRepository.findByEmail(friendEmail)
-                .orElseThrow(() -> new UserNotFoundException("User not found with email = " + friendEmail));
         if (Objects.equals(friendEmail, currentUser.getEmail())) {
             throw new GenericNotFoundException("You can't add yourself ");
         }
+
+        var friend = userRepository.findByEmail(friendEmail)
+                .orElseThrow(() -> new UserNotFoundException("User not found with email = " + friendEmail));
+
         currentUser.getFriends().add(friend);
         return userRepository.save(currentUser);
     }
@@ -47,6 +50,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserAccount saveUser(UserDto userDTO) {
+
+        if (userRepository.existsByEmail(userDTO.getEmail())) {
+            throw new EmailAlreadyExistingException("Email already used");
+        }
 
         userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         UserAccount user = new UserAccount(userDTO);
@@ -75,11 +82,11 @@ public class UserServiceImpl implements UserService {
     /**
      * Cette méthode sert à ajouter de l'argent sur le compte d'un utilisateur depuis sa banque.
      *
-     * @param amount Double : l'argent à mettre sur le compte
+     * @param amount BigDecimal : l'argent à mettre sur le compte
      * @return la somme qu'il y a sur le compte de l'utilisateur.
      */
     @Override
-    public Double addMoney(Double amount) {
+    public BigDecimal addMoney(BigDecimal amount) {
         var user = principalUser.getCurrentUserOrThrowException();
         user.creditBalanceAmount(amount);
 
@@ -89,13 +96,24 @@ public class UserServiceImpl implements UserService {
         return user.getBalance();
     }
 
+    @Override
+    public BigDecimal debitMoney(BigDecimal amount) {
+        var user = principalUser.getCurrentUserOrThrowException();
+        user.debitBalanceAmount(amount);
+
+        user = userRepository.save(user);
+        log.info("[Bank service] the money was withdrawn.");
+
+        return user.getBalance();
+    }
+
     /**
      * Cette méthode sert à transférer de l'argent sur le compte d'un ami
      *
-     * @param amount Double : l'argent à mettre sur le compte
+     * @param amount BigDecimal : l'argent à mettre sur le compte
      */
     @Override
-    public void transferMoney(String friendEmail, Double amount) throws InsufficientBalanceException {
+    public void transferMoney(String friendEmail, BigDecimal amount) throws InsufficientBalanceException {
         UserAccount currentUserAccount = principalUser.getCurrentUserOrThrowException();
         userRepository.findByEmail(friendEmail)
                 .orElseThrow(() -> new UserNotFoundException("User not found with email = " + friendEmail));

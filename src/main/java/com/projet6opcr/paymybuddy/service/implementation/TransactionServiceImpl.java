@@ -4,6 +4,7 @@ import com.projet6opcr.paymybuddy.configuration.constant.Commission;
 import com.projet6opcr.paymybuddy.model.dto.TransactionDto;
 import com.projet6opcr.paymybuddy.exception.UserNotFoundException;
 import com.projet6opcr.paymybuddy.model.Transaction;
+import com.projet6opcr.paymybuddy.model.dto.TransactionInfoDto;
 import com.projet6opcr.paymybuddy.repository.TransactionRepository;
 import com.projet6opcr.paymybuddy.repository.UserRepository;
 import com.projet6opcr.paymybuddy.service.PrincipalUser;
@@ -40,5 +41,18 @@ public class TransactionServiceImpl implements TransactionService {
         transactionRepository.save(transaction);
         userRepository.saveAll(List.of(debtor, creditor));
         return transactionDTO;
+    }
+
+    /**
+     * @return toutes les transactions faites par un utilisateur (creditor , amount ,reason and date).
+     */
+    @Override
+    public List<TransactionInfoDto> findAllTransactions() {
+
+        var debtor = principalUser.getCurrentUserOrThrowException();
+        return transactionRepository.findAllByDebtor_UserIdOrderByDateDesc(debtor.getUserId())
+                .stream()
+                .map(TransactionInfoDto::new)
+                .toList();
     }
 }
