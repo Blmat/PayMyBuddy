@@ -1,8 +1,5 @@
 package com.projet6opcr.paymybuddy.controller;
 
-import com.projet6opcr.paymybuddy.exception.BankAccountNotFoundException;
-import com.projet6opcr.paymybuddy.exception.UserNotFoundException;
-import com.projet6opcr.paymybuddy.model.dto.BankAccountDto;
 import com.projet6opcr.paymybuddy.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +25,7 @@ public class BankTransactionController {
         return "contact";
     }
 
-    @GetMapping("banktransfer")
+    @GetMapping("bank_transfer")
     public String getBankTransfer(@ModelAttribute("email") String email, Model model) {
 
         final var user = userService.getConnectedUser();
@@ -54,11 +51,11 @@ public class BankTransactionController {
             try {
                 if (!bankName.equals(bankAccount.getAccountName())) {
                     redirectAttributes.addFlashAttribute("error", "Please enter your bank name");
-                    return "redirect:/banktransfer";
+                    return "redirect:/bank_transfer";
                 }
                 if (amount < 1) {
                     redirectAttributes.addFlashAttribute("error", "Sorry but money can't be = or < to 0");
-                    return "redirect:/banktransfer";
+                    return "redirect:/bank_transfer";
                 }
                 if (transferType.equals("debit")) {
                     userService.debitMoney(amount);
@@ -69,7 +66,7 @@ public class BankTransactionController {
 
                 log.debug("You have transferred   : " + amount + "€");
                 redirectAttributes.addFlashAttribute("message", "You have transferred   : " + amount + "€");
-                return "redirect:/banktransfer";
+                return "redirect:/bank_transfer";
             } catch (Exception e) {
                 log.error(e.getMessage(), e.getCause());
                 model.addAttribute("addError", e.getMessage());

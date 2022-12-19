@@ -3,20 +3,20 @@ package com.projet6opcr.paymybuddy.controller;
 import com.projet6opcr.paymybuddy.model.UserAccount;
 import com.projet6opcr.paymybuddy.model.dto.BuddyDto;
 import com.projet6opcr.paymybuddy.model.dto.UserDto;
-import com.projet6opcr.paymybuddy.service.implementation.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.math.BigDecimal;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -27,13 +27,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-class UserControllerTest {
+class TransferToFriendControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @MockBean
-    UserServiceImpl userService;
 
     @Autowired
     private WebApplicationContext context;
@@ -56,7 +53,7 @@ class UserControllerTest {
         newUser.setFirstName("Bob");
         newUser.setLastName("obo");
         newUser.setEmail("test@mail.fr");
-        newUser.setBalance(10.1);
+        newUser.setBalance(BigDecimal.valueOf(10.1));
         BuddyDto buddy = new BuddyDto(newUser);
 
         mockMvc.perform(get("/buddy").flashAttr("buddies", buddy))
@@ -65,10 +62,10 @@ class UserControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "admin@admin.com", password = "admin")//todo getConnectedUser is null
+    @WithMockUser(username = "admin@admin.com", password = "admin")//todo find th good URL
     @WithUserDetails
     void getBalanceTest() throws Exception {
-        mockMvc.perform(get("/add_balance"))
+        mockMvc.perform(get("/bank_transfer"))
                 .andDo(print())
                 .andExpect((status().isOk()));
     }
