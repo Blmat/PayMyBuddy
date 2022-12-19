@@ -19,6 +19,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -52,7 +53,7 @@ class UserAccountServiceImplTest {
         userAccount1.setLastName("Boyd");
         userAccount1.setEmail("jboy@email.com");
         userAccount1.setPassword("123456");
-        userAccount1.setBalance(10.0);
+        userAccount1.setBalance(BigDecimal.valueOf(10.0));
         userAccount1.setBank(bankAccount);
 
 
@@ -62,7 +63,7 @@ class UserAccountServiceImplTest {
         buddy1.setLastName("Boyd");
         buddy1.setEmail("tenley@email.com");
         buddy1.setPassword("123456");
-        buddy1.setBalance(0.0);
+        buddy1.setBalance(BigDecimal.valueOf(0.0));
 
         copy = new UserAccount();
         copy.setUserId(3);
@@ -70,7 +71,7 @@ class UserAccountServiceImplTest {
         copy.setLastName("Wick");
         copy.setEmail("jboy@email.com");
         copy.setPassword("123456");
-        copy.setBalance(0.0);
+        copy.setBalance(BigDecimal.valueOf(0.0));
     }
 
     /******************************addFriendTest******************************/
@@ -167,7 +168,7 @@ class UserAccountServiceImplTest {
         assertThat(response.getLastName()).isEqualTo(userAccount1.getLastName());
         assertThat(response.getEmail()).isEqualTo(userAccount1.getEmail());
         assertThat(response.getPassword()).isEqualTo(passwordEncoder.encode(userAccount1.getPassword()));
-        assertThat(response.getBalance()).isEqualTo(.0);
+        assertThat(response.getBalance()).isEqualByComparingTo(BigDecimal.ZERO);
         assertThat(response.getBank()).isNull();
 
     }
@@ -176,14 +177,13 @@ class UserAccountServiceImplTest {
     @DisplayName("retourne une erreur car la personne utilise une adresse mail déjà enregistré dans la BDD")
     void error_sameEmail_Test() {
         //Give
-        var newUser = new UserDto(userAccount1.getFirstName(), userAccount1.getLastName(), userAccount1.getEmail(), userAccount1.getPassword());
-        var newUser2 = new UserDto(copy.getFirstName(), copy.getLastName(), copy.getEmail(), copy.getPassword());
+        var user = new UserDto(userAccount1.getFirstName(), userAccount1.getLastName(), userAccount1.getEmail(), userAccount1.getPassword());
 
         // When
-        when(userRepositoryMock.save(any())).thenAnswer(i -> i.getArguments()[0]);
+        when(userRepositoryMock.existsByEmail(user.getEmail())).thenReturn(true);
 
         // Then
-        var response = assertThrows(EmailAlreadyExistingException.class, () -> userService.saveUser(newUser2));
+        var response = assertThrows(EmailAlreadyExistingException.class, () -> userService.saveUser(user));
     }
 
     @Test
@@ -234,7 +234,7 @@ class UserAccountServiceImplTest {
         Assertions.assertThat(response)
                 .satisfies(u -> {
                     Assertions.assertThat(userAccount1.getUserId()).isEqualTo(1);
-                    Assertions.assertThat(userAccount1.getBalance()).isEqualTo(10.0);
+                    Assertions.assertThat(userAccount1.getBalance()).isEqualByComparingTo(BigDecimal.valueOf(10.0));
                 });
     }
 
@@ -290,10 +290,10 @@ class UserAccountServiceImplTest {
 
         when(userRepositoryMock.save(userAccount1)).thenAnswer(i -> i.getArguments()[0]);
 
-        userService.transferMoney(buddy1.getEmail(), 5.0);
+        userService.transferMoney(buddy1.getEmail(), BigDecimal.valueOf(5.0));
 
         verify(userRepositoryMock, times(1)).save(userAccount1);
-        assertThat(userAccount1.getBalance()).isEqualTo(5.0);
+        assertThat(userAccount1.getBalance()).isEqualByComparingTo(BigDecimal.valueOf(5.0));
     }
 
     @Test
@@ -302,7 +302,7 @@ class UserAccountServiceImplTest {
         when(principalUser.getCurrentUserOrThrowException()).thenReturn(userAccount1);
         when(userRepositoryMock.findByEmail(buddy1.getEmail())).thenReturn(Optional.of(buddy1));
 
-        var response = assertThrows(InsufficientBalanceException.class, () -> userService.transferMoney(buddy1.getEmail(), 20.0));
+        var response = assertThrows(InsufficientBalanceException.class, () -> userService.transferMoney(buddy1.getEmail(), BigDecimal.valueOf(20.0)));
         assertThat(response).hasMessage("sorry you don't have enough money ");
     }
 }

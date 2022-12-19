@@ -32,9 +32,6 @@ class ConnectAndSignUpControllerTest {
     private MockMvc mvc;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
-
-    @Autowired
     private WebApplicationContext context;
 
     @BeforeEach
@@ -77,6 +74,14 @@ class ConnectAndSignUpControllerTest {
     @Test
     void getRegistration() throws Exception {
         mvc.perform(get("/registration"))
+                .andDo(print())
+                .andExpect((status().isOk()));
+    }
+
+    @Test
+    @WithMockUser(username = "admin", password = "admin")
+    void getError() throws Exception {
+        mvc.perform(get("/error"))
                 .andDo(print())
                 .andExpect((status().isOk()));
     }

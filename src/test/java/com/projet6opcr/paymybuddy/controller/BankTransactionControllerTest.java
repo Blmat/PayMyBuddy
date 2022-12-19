@@ -26,8 +26,6 @@ class BankTransactionControllerTest {
     private MockMvc mvc;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
-    @Autowired
     private WebApplicationContext context;
 
     @BeforeEach

@@ -29,9 +29,6 @@ class BankViewControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
-    UserServiceImpl userService;
-
     @Autowired
     private WebApplicationContext context;
 
@@ -43,13 +40,13 @@ class BankViewControllerTest {
                 .build();
     }
 
-//    @Test
-//    @WithMockUser(username = "admin@admin.com", password = "admin")
-//    void getProfile() throws Exception {
-//        mockMvc.perform(get("/profile"))
-//                .andDo(print())
-//                .andExpect((status().isOk()));
-//    }
+    @Test
+    @WithMockUser(username = "admin@admin.com", password = "admin")
+    void getProfile() throws Exception {
+        mockMvc.perform(get("/profile"))
+                .andDo(print())
+                .andExpect((status().isOk()));
+    }
 
     @Test
     @WithMockUser(username = "admin@admin.com", password = "admin")

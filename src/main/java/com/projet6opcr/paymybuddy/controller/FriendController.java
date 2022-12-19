@@ -1,6 +1,9 @@
 package com.projet6opcr.paymybuddy.controller;
 
+
+import com.projet6opcr.paymybuddy.model.dto.BankAccountDto;
 import com.projet6opcr.paymybuddy.model.dto.BuddyDto;
+import com.projet6opcr.paymybuddy.model.dto.UserDto;
 import com.projet6opcr.paymybuddy.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

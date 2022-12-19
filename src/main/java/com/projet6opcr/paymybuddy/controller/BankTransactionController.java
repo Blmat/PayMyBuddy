@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 @Controller
 @Slf4j
@@ -40,7 +41,7 @@ public class BankTransactionController {
     @PostMapping("/bankTransfer")
     public String bankTransfer(@NotNull @ModelAttribute("BankName") String bankName,
                                @NotNull @ModelAttribute("transferType") String transferType,
-                               @NotNull @ModelAttribute("amount") Double amount,
+                               @NotNull @ModelAttribute("amount") BigDecimal amount,
                                BindingResult result, Model model, RedirectAttributes redirectAttributes) {
 
         log.debug("internal transfer ");
@@ -53,7 +54,7 @@ public class BankTransactionController {
                     redirectAttributes.addFlashAttribute("error", "Please enter your bank name");
                     return "redirect:/bank_transfer";
                 }
-                if (amount < 1) {
+                if (amount.signum() < 1) {
                     redirectAttributes.addFlashAttribute("error", "Sorry but money can't be = or < to 0");
                     return "redirect:/bank_transfer";
                 }

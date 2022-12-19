@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -32,7 +33,7 @@ public class Transaction {
     private UserAccount debtor;
 
     @Column(name = "amount")
-    private double amount;
+    private BigDecimal amount;
 
     @Column(name = "reason")
     private String reason;
@@ -41,10 +42,10 @@ public class Transaction {
     private LocalDate date;
 
     @Column(name = "commission")
-    private Double commission = Commission.TRANSACTION_COMMISSION;
+    private BigDecimal commission = Commission.TRANSACTION_COMMISSION;
 
-    public Transaction(UserAccount debtor, UserAccount creditor, TransactionDto transactionDTO, Double commission) {
-        if (transactionDTO.getAmount() <= 0) {
+    public Transaction(UserAccount debtor, UserAccount creditor, TransactionDto transactionDTO, BigDecimal commission) {
+        if (transactionDTO.getAmount().signum() <= 0) {
             throw new IllegalArgumentException("Transaction amount can not be null ot negative");
         }
 

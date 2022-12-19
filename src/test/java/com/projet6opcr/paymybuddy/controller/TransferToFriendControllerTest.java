@@ -1,9 +1,11 @@
 package com.projet6opcr.paymybuddy.controller;
 
 import com.projet6opcr.paymybuddy.model.UserAccount;
+import com.projet6opcr.paymybuddy.model.dto.BankAccountDto;
 import com.projet6opcr.paymybuddy.model.dto.BuddyDto;
 import com.projet6opcr.paymybuddy.model.dto.UserDto;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +48,6 @@ class TransferToFriendControllerTest {
 
     @Test
     @WithMockUser(username = "admin@admin.com", password = "admin")
-//todo getConnectedUser is null
     void getBuddyTest() throws Exception {
 
         UserAccount newUser = new UserAccount();
@@ -62,7 +63,7 @@ class TransferToFriendControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "admin@admin.com", password = "admin")//todo find th good URL
+    @WithMockUser(username = "admin@admin.com", password = "admin")
     @WithUserDetails
     void getBalanceTest() throws Exception {
         mockMvc.perform(get("/bank_transfer"))
@@ -70,17 +71,38 @@ class TransferToFriendControllerTest {
                 .andExpect((status().isOk()));
     }
 
-    @Test
+    @Test // todo n'enregistre pas l'ami
     @WithMockUser(username = "admin@admin.com", password = "admin")
-    public void addBuddyController_OKTest() throws Exception {
-        UserDto newUser = new UserDto();
+    public void addBuddyController_OK_Test() throws Exception {
+        UserAccount newUser = new UserAccount();
+        newUser.setFirstName("Bob");
+        newUser.setLastName("obo");
         newUser.setEmail("test@mail.fr");
+        newUser.setBalance(BigDecimal.valueOf(10.1));
+        BuddyDto buddy = new BuddyDto(newUser);
         // THEN
-        mockMvc.perform(post("/buddy").flashAttr("email", newUser.getEmail()))
+        mockMvc.perform(post("/buddy").flashAttr("email", buddy.getEmail()))
                 .andDo(print())
-                .andExpect(status().isFound())
-                .andExpect(status().is3xxRedirection())
-                .andExpect(model().hasNoErrors())
-                .andExpect(redirectedUrl("/buddy"));
+//                .andExpect(status().isFound())
+                .andExpect(status().isOk());
+
     }
+
+    @Test
+    @DisplayName("capte l'erreur car l'ami n'est pas dans la base de donnée")
+    @WithMockUser(username = "admin@admin.com", password = "admin")
+    void addBuddyController_KO_Test() throws Exception {
+        UserAccount newUser = new UserAccount();
+        newUser.setFirstName("Bob");
+        newUser.setLastName("obo");
+        newUser.setEmail("test@mail.fr");
+        newUser.setBalance(BigDecimal.valueOf(10.1));
+        BuddyDto buddy = new BuddyDto(newUser);
+
+        // THEN
+        mockMvc.perform(post("/buddy").flashAttr("email", "buddy.getEmail()"))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
 }
