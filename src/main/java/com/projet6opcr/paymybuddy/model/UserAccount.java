@@ -24,6 +24,7 @@ import java.util.*;
 @AllArgsConstructor
 @Table
 public class UserAccount implements UserDetails {
+    String ROLE_PREFIX = "ROLE_";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -130,7 +131,12 @@ public class UserAccount implements UserDetails {
     }
 
 
-    public BigDecimal debitBalanceAmount(BigDecimal amount) {
+    /**
+     * Sert à retirer de l'argent sur le compte d'un utilisateur vers sa banque
+     *
+     * @param amount = l'argent à retirer
+     */
+    public void debitBalanceAmount(BigDecimal amount) {
 
         if (amount.signum() <= 0) {
             throw new IllegalArgumentException("Amount can not be null ot negative");
@@ -142,15 +148,16 @@ public class UserAccount implements UserDetails {
 
         this.balance = this.balance.subtract(amount);
 
-        return this.balance;
     }
 
 
     /**
-     * @param transaction
-     * @return
+     * Sert à retirer de l'argent sur le compte d'un utilisateur et à calculer la commission qui sera prélevée
+     * afin de pouvoir l'envoyer sur le compte d'un ami
+     *
+     * @param transaction = le montant de la somme à transférer.
      */
-    public BigDecimal debitBalanceAmount(Transaction transaction) {
+    public void debitBalanceAmount(Transaction transaction) {
 
         var amount = transaction.getAmount();
         var commission = transaction.getCommission();
@@ -161,25 +168,29 @@ public class UserAccount implements UserDetails {
 
         var amountWithCommission = amount.add(amount.multiply(Commission.TRANSACTION_COMMISSION));
 
-        return debitBalanceAmount(amountWithCommission); // permet d'arrondir au centième
+        debitBalanceAmount(amountWithCommission);
     }
 
 
-    public BigDecimal creditBalanceAmount(BigDecimal amount) {
+    /**
+     * Sert à ajouter de l'argent sur le compte d'un utilisateur depuis sa banque
+     *
+     * @param amount = l'argent à ajouter.
+     */
+    public void creditBalanceAmount(BigDecimal amount) {
 
         if (amount.signum() <= 0) {
             throw new IllegalArgumentException("Amount can not be null ot negative");
         }
 
         this.balance = this.balance.add(amount);
-        return this.balance;
     }
 
 
-    public BigDecimal creditBalanceAmount(Transaction transaction) {
+    public void creditBalanceAmount(Transaction transaction) {
 
         var amount = transaction.getAmount();
-        return creditBalanceAmount(amount);
+        creditBalanceAmount(amount);
     }
 
     @Override
