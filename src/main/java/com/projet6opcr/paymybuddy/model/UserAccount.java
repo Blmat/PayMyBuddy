@@ -24,7 +24,6 @@ import java.util.*;
 @AllArgsConstructor
 @Table
 public class UserAccount implements UserDetails {
-    String ROLE_PREFIX = "ROLE_";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
