@@ -186,6 +186,11 @@ public class UserAccount implements UserDetails {
     }
 
 
+    /**
+     * Cette méthode sert à récuperer l'argent pour ensuite l'ajouter sur solde de la personne choisie.
+     *
+     * @param transaction= le montant, la raison, le débiteur et créditeur de la transaction à effectuer.
+     */
     public void creditBalanceAmount(Transaction transaction) {
 
         var amount = transaction.getAmount();

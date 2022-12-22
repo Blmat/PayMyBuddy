@@ -8,9 +8,9 @@ import java.io.Serializable;
 @Value
 public class BuddyDto implements Serializable {
 
-    private final String firstName;
-    private final String lastName;
-    private final String email;
+    String firstName;
+    String lastName;
+    String email;
 
     public BuddyDto(UserAccount userAccount) {
         firstName = userAccount.getFirstName();
