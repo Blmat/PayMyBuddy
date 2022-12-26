@@ -3,7 +3,7 @@
     "_class": "com.projet6opcr.paymybuddy.model.UserAccount",
     "id": 1,
     "email": "user@email.com",
-    "firstName": "user",
+    "firstName": "userFirstName",
     "lastName": "userLastName",
     "password": "$2y$10$J7t5BLikbkAh5Kx4xVEUWOMd2vALi/Pz5AhXQl8Mmuwi/Ab7vmWFm",
     "balance": 120.53,

@@ -29,6 +29,10 @@ public class ProfileController {
 
     @GetMapping("/profile")
     public String getProfile(Model model) {
+        var user = userService.getConnectedUser();
+
+        model.addAttribute("user", user);
+
         var bankAttributes = Optional.ofNullable(userService.getConnectedUser().getBank())
                 .map(BankAccountDto::new)
                 .orElse(new BankAccountDto());
@@ -40,6 +44,9 @@ public class ProfileController {
     @PostMapping("/profile")
     public String addBankAccount(@Valid @ModelAttribute("bank") BankAccountDto bankAccountDTO, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         log.debug("Add a new bank account");
+
+        var user = userService.getConnectedUser();
+        model.addAttribute("user", user);
 
         if (!result.hasErrors()) {
             try {

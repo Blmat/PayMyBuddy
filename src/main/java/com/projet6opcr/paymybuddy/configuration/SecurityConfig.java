@@ -36,7 +36,6 @@ public class SecurityConfig {
         return http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/registration/**", "/h2-console/**").permitAll()
-                .antMatchers("/user").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
