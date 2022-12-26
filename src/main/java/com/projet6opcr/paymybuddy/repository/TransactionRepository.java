@@ -1,6 +1,7 @@
 package com.projet6opcr.paymybuddy.repository;
 
 import com.projet6opcr.paymybuddy.model.Transaction;
+import com.projet6opcr.paymybuddy.model.dto.TransactionDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

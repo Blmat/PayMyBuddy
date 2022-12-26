@@ -55,7 +55,7 @@
         <small class="form-text mb-2 text-center ">FirstName</small>
         <div class="d-flex justify-content-center ">
             <div class="col-4 border border-secondary rounded bg-light ">
-                <h4 sec:text="${user.firstName}" class="text-center "></h4>
+                <h4 th:text="${user.firstName}" class="text-center "></h4>
             </div>
         </div>
     </div>
@@ -63,7 +63,7 @@
         <small class="form-text mb-2 text-center ">LastName</small>
         <div class="d-flex justify-content-center ">
             <div class="col-4 border border-secondary rounded bg-light ">
-                <h4 sec:text="${user.lastName}" class="text-center "></h4>
+                <h4 th:text="${user.lastName}" class="text-center "></h4>
             </div>
         </div>
     </div>
@@ -71,7 +71,7 @@
         <small class="form-text mb-2 text-center ">Email</small>
         <div class="d-flex justify-content-center ">
             <div class="col-4 border border-secondary rounded bg-light ">
-                <h5 sec:text="${user.email}" class="text-center "></h5>
+                <h5 th:text="${user.email}" class="text-center "></h5>
             </div>
         </div>
     </div>

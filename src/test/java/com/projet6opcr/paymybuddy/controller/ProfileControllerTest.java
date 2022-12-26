@@ -24,7 +24,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-class BankViewControllerTest {
+@Transactional
+class ProfileControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -52,7 +53,7 @@ class BankViewControllerTest {
     @WithMockUser(username = "admin@admin.com", password = "admin")
     void addBankAccount_OK_Test() throws Exception {
         BankAccountDto newBank = new BankAccountDto();
-        newBank.setBankName("bankName");
+        newBank.setBankName("Labanque");
         newBank.setIban("IbanTest");
         newBank.setBic("BicTest");
         // THEN

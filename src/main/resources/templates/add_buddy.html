@@ -70,7 +70,7 @@
                         <h5 class="modal-title" id="addFriendLabel">looking for Buddy</h5>
                     </div>
                     <div class="modal-body">
-                        <form th:action="@{/buddy}" method="post">
+                        <form th:action="@{/buddy}" th:object="${email}" method="post">
                             <div class="modal-body p-12 pt-0 pb-3">
                                 <label class="floatingInput" for="email"> Friend email </label>
                                 <input title="Enter your friend's email address"

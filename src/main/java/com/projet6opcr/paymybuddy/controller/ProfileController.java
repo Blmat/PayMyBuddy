@@ -18,7 +18,7 @@ import java.util.Optional;
 @Controller
 @Slf4j
 @RequiredArgsConstructor
-public class BankViewController {
+public class ProfileController {
 
     private final UserService userService;
 

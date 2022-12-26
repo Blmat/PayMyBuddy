@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Transactional
 @SpringBootTest
-class BankViewControllerIT {
+class ProfileControllerIT {
 
     private MockMvc mockMvc;
 

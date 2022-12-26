@@ -46,11 +46,6 @@ public class SecurityConfig {
                 .passwordParameter("password")
                 .defaultSuccessUrl("/home", true)
                 .and()
-                /* Partie Oauth2.0**/
-                .oauth2Login() //todo ne fonctionne pas, renvoie sur "/login"
-                .loginPage("/registration")
-                .defaultSuccessUrl("/home", true)
-                .and()
                 .logout()
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
