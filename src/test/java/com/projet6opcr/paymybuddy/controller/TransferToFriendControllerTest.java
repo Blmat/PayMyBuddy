@@ -54,7 +54,7 @@ class TransferToFriendControllerTest {
                 .andExpect(status().isOk());
     }
 
-    @Test
+    @Test //todo le creditorEmail est null
     @WithMockUser(username = "admin@admin.com", password = "admin")
     void transfer_to_friend_OK_test() throws Exception {
 
