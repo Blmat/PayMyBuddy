@@ -64,7 +64,7 @@ class TransferToFriendControllerTest {
         final var reason = "Remboursement restau";
 
         mvc.perform(post(url)
-                        .flashAttr("creditorEmail", "friend@mail.fr")
+                        .flashAttr("creditorEmail", creditorEmail)
                         .flashAttr("amount", amount)
                         .flashAttr("reason", reason))
                 .andDo(print())
