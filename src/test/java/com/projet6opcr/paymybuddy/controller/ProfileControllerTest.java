@@ -72,7 +72,8 @@ class ProfileControllerTest {
         newBank.setIban(null);
         newBank.setBic("BicTest");
         // THEN
-        mockMvc.perform(post("/profile").flashAttr("bank", newBank))
+        mockMvc.perform(post("/profile")
+                        .flashAttr("bank", newBank))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(model().hasErrors());

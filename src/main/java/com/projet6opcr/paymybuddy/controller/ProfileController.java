@@ -43,6 +43,7 @@ public class ProfileController {
 
     @PostMapping("/profile")
     public String addBankAccount(@Valid @ModelAttribute("bank") BankAccountDto bankAccountDTO, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+
         log.debug("Add a new bank account");
 
         var user = userService.getConnectedUser();

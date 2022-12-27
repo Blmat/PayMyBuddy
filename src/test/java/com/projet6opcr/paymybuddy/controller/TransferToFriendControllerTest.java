@@ -2,6 +2,8 @@ package com.projet6opcr.paymybuddy.controller;
 
 import com.projet6opcr.paymybuddy.model.UserAccount;
 import com.projet6opcr.paymybuddy.model.dto.TransactionDto;
+import com.projet6opcr.paymybuddy.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -32,8 +35,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class TransferToFriendControllerTest {
     @Autowired
     private MockMvc mvc;
-    @MockBean
-    TransactionDto transactionDto;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private WebApplicationContext context;
@@ -54,19 +58,27 @@ class TransferToFriendControllerTest {
                 .andExpect(status().isOk());
     }
 
-    @Test //todo le creditorEmail est null
+    @Test
     @WithMockUser(username = "admin@admin.com", password = "admin")
     void transfer_to_friend_OK_test() throws Exception {
 
+
+        UserAccount friend = new UserAccount();
+        friend.setFirstName("Bob");
+        friend.setLastName("obo");
+        friend.setPassword("password");
+        friend.setEmail("friend@mail.fr");
+        friend.setBalance(BigDecimal.valueOf(100.56));
+        userRepository.save(friend); //enregistrement d'un ami dans la base de donnée
+
         final var url = "/transfer";
-        final var creditorEmail = "leMail@mail.fr";
-        final var amount = BigDecimal.valueOf(13.4);
-        final var reason = "Remboursement restau";
+        final var creditorEmail = "friend@mail.fr";
+        final var amount = BigDecimal.valueOf(15.20);
+        final var reason = "Remboursement restau"; // initialisation des données pour le test
+
 
         mvc.perform(post(url)
-                        .flashAttr("creditorEmail", creditorEmail)
-                        .flashAttr("amount", amount)
-                        .flashAttr("reason", reason))
+                        .flashAttr("transation", new TransactionDto(creditorEmail, amount, reason)))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())
