@@ -50,7 +50,7 @@ public class TransactionServiceImpl implements TransactionService {
     public List<TransactionInfoDto> findAllTransactions() {
 
         var debtor = principalUser.getCurrentUserOrThrowException();
-        return transactionRepository.findAllByDebtor_UserIdOrderByDateDesc(debtor.getUserId())
+        return transactionRepository.findAllByDebtorUserIdOrderByDateDesc(debtor.getUserId())
                 .stream()
                 .map(TransactionInfoDto::new)
                 .toList();

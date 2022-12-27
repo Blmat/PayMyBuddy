@@ -1,9 +1,7 @@
 package com.projet6opcr.paymybuddy.controller;
 
 
-import com.projet6opcr.paymybuddy.model.dto.BankAccountDto;
 import com.projet6opcr.paymybuddy.model.dto.BuddyDto;
-import com.projet6opcr.paymybuddy.model.dto.UserDto;
 import com.projet6opcr.paymybuddy.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.validation.Valid;
 import java.util.stream.Collectors;
 
 @Slf4j

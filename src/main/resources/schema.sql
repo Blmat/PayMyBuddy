@@ -58,21 +58,3 @@ create table UserAccount
     primary key (userId)
 );
 
-alter table UserAccount
-    add constraint UK_hqo0emx3b1cgbtl1aany7lugc unique (email);
-
-alter table relation
-    add constraint FK83lyfheuwr3kltpenl9vd2sca foreign key (buddy) references UserAccount (userId);
-
-alter table relation
-    add constraint FKe7gred6yqfarjeehm4e520ftn foreign key (owner) references UserAccount (userId);
-
-alter table transaction
-    add constraint FKdfq2b635r033ud9mqx368wwn4 foreign key (creditor) references UserAccount (userId);
-
-alter table transaction
-    add constraint FKa4xpyw98jxxwl9ww7u9vcc4xg foreign key (debtor) references UserAccount (userId);
-
-alter table UserAccount
-    add constraint FK2mwtxcjirqpi2f28r5ye5ljj1 foreign key (bank_id) references BankAccount (id);
-
