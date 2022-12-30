@@ -17,7 +17,6 @@ public class HomePageController {
 
     private final UserService userService;
 
-    @RolesAllowed("USER")
     @GetMapping("/home")
     public ModelAndView getHome() {
         log.info("New request: show the homepage template in the view ");

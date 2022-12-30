@@ -1,12 +1,3 @@
-drop table if exists BankAccount;
-
-drop table if exists hibernate_sequence;
-
-drop table if exists relation;
-
-drop table if exists transaction;
-
-drop table if exists UserAccount;
 
 create table BankAccount
 (
