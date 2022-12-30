@@ -1,5 +1,5 @@
 diagramme de classe UML:
-![](BDD PMBD.jpg)
+![](UML.png)
 --------------------------------------------
 Table de ma base de donnée :
 ![](pmbdb.png)
