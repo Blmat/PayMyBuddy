@@ -1,6 +1,5 @@
 package com.projet6opcr.paymybuddy.controller;
 
-import com.projet6opcr.paymybuddy.model.BankAccount;
 import com.projet6opcr.paymybuddy.model.UserAccount;
 import com.projet6opcr.paymybuddy.model.dto.BuddyDto;
 import com.projet6opcr.paymybuddy.repository.UserRepository;
@@ -16,11 +15,11 @@ import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.math.BigDecimal;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -38,6 +37,9 @@ class FriendControllerTest {
 
     @Autowired
     private WebApplicationContext context;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @BeforeEach
     void setUp() {
@@ -79,11 +81,14 @@ class FriendControllerTest {
         UserAccount newUser = new UserAccount();
         newUser.setFirstName("Bob");
         newUser.setLastName("obo");
+        newUser.setPassword("password");
         newUser.setEmail("test@mail.fr");
         newUser.setBalance(BigDecimal.valueOf(10.1));
-        BuddyDto buddy = new BuddyDto(newUser);
+
+        userRepository.save(newUser);
+
         // THEN
-        mockMvc.perform(post("/buddy").flashAttr("email", buddy.getEmail()))
+        mockMvc.perform(post("/buddy").flashAttr("email", newUser.getEmail()))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(model().hasNoErrors())

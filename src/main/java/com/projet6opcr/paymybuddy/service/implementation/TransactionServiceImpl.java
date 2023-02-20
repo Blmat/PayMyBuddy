@@ -23,6 +23,13 @@ public class TransactionServiceImpl implements TransactionService {
     private final UserRepository userRepository;
     private final PrincipalUser principalUser;
 
+    /**
+     * Sert à envoyer sde l'argent de l'utilisateur principal vers le compte d'un ami
+     *
+     * @param friendEmail    = l'email de l'ami
+     * @param transactionDTO comprend l'email de l'ami, le montant à transmettre et la description du virement.
+     * @return les informations contenues dans transactionDto
+     */
     @Override
     public TransactionDto sendMoney(String friendEmail, TransactionDto transactionDTO) {
 

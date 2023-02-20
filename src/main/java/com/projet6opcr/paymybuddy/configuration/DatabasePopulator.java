@@ -15,5 +15,4 @@ public class DatabasePopulator {
 
         return factory;
     }
-
 }
